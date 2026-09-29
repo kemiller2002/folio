@@ -239,11 +239,13 @@ try {
     if (fixture.reference) {
       const reference = manifest.references[fixture.reference];
       const defects = manifest.referenceDefects.filter(defect => defect.variants.includes(fixture.reference));
-      const referenceWords = counts(words(await readFile(resolve(root, profileDir, "reference", reference.file), "utf8")));
-      const expectedMissing = defects.flatMap(defect => defect.words).sort();
-      const expectedExtra = defects.flatMap(defect => defect.extraWords ?? []).sort();
-      assert.deepEqual(subtract(referenceWords, folioWords), expectedMissing, `${label}: only declared reference defects are absent from the reproduction`);
-      assert.deepEqual(subtract(folioWords, referenceWords), expectedExtra, `${label}: no duplicated or invented words beyond declared defect corrections`);
+      // Hyphen-insensitive: line-break hyphenation depends on installed fonts.
+      const referenceWords = counts(looseWords(await readFile(resolve(root, profileDir, "reference", reference.file), "utf8")));
+      const folioLooseWords = counts(looseWords(pdfText(pdfPath)));
+      const expectedMissing = defects.flatMap(defect => defect.words.flatMap(looseWords)).sort();
+      const expectedExtra = defects.flatMap(defect => (defect.extraWords ?? []).flatMap(looseWords)).sort();
+      assert.deepEqual(subtract(referenceWords, folioLooseWords), expectedMissing, `${label}: only declared reference defects are absent from the reproduction`);
+      assert.deepEqual(subtract(folioLooseWords, referenceWords), expectedExtra, `${label}: no duplicated or invented words beyond declared defect corrections`);
       assert.ok(Math.abs(info.pages - reference.pages) <= 1, `${label}: page count ${info.pages} is within one page of the reference ${reference.pages}`);
       Object.assign(result, {referencePages: reference.pages, declaredDefects: defects.map(defect => defect.id)});
     }
