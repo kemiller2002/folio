@@ -726,3 +726,48 @@ The Folio test suite MUST add canonical fixtures for at least:
 - **EPC-RPT-095 MUST** document the Signal integration as a consumer recipe rather than make Signal a runtime dependency.
 - **EPC-RPT-096 MUST** preserve Folio's standards-first, semantic-HTML, CSS-pagination architecture while adding report composition support.
 
+
+
+## 27. Object metadata and diagram/workflow print projection
+
+The detailed cross-cutting contract is defined in `docs/requirements/OBJECT-METADATA-AND-DIAGRAM-PRINT.md`.
+
+### 27.1 Object metadata
+
+- **EPC-OBJMETA-001 MUST** allow printable objects/compositions to carry consumer-supplied descriptive metadata.
+- **EPC-OBJMETA-002 MUST** preserve stable consumer object IDs/references when supplied.
+- **EPC-OBJMETA-003 MUST** keep metadata independent from pagination, geometry, visual color, and DOM position.
+- **EPC-OBJMETA-004 MUST** distinguish source-only, rendered, export/provenance, and accessibility metadata.
+- **EPC-OBJMETA-005 MUST** default unknown custom metadata to non-rendered/non-exported unless explicitly promoted by the consumer.
+- **EPC-OBJMETA-006 MUST NOT** serialize secrets or suppressed data through custom-element attributes, generated CSS, comments, hidden text, PDF metadata, diagnostics, or export manifests.
+- **EPC-OBJMETA-007 SHOULD** provide semantic metadata-list/detail recipes before introducing a new public custom element.
+- **EPC-OBJMETA-008 MUST** preserve label/value relationships and logical source order.
+
+### 27.2 Diagram/workflow projection
+
+- **EPC-OBJMETA-020 MUST** support consumer-provided diagram/workflow content through vector/semantic projection where practical.
+- **EPC-OBJMETA-021 MUST** leave graph topology, routing, workflow legality, and application/domain state outside Folio.
+- **EPC-OBJMETA-022 MUST** exclude Studio/editor chrome from ordinary output.
+- **EPC-OBJMETA-023 MUST** support fit-to-page and MUST NOT silently clip required diagram content.
+- **EPC-OBJMETA-024 SHOULD** support actual-size and multi-page tiling where the output contract warrants them.
+- **EPC-OBJMETA-025 MUST** keep fitting/tiling from rewriting graph geometry.
+- **EPC-OBJMETA-026 MUST** preserve labels, relationship labels, legend/key, selected rendered metadata, and non-color cues.
+
+### 27.3 Authored color
+
+- **EPC-OBJMETA-040 MUST** preserve eligible workflow/diagram fill, stroke/border, accent, and connector color in color-capable output.
+- **EPC-OBJMETA-041 MUST** keep color independent from semantic workflow status/type.
+- **EPC-OBJMETA-042 MUST NOT** infer Error/Approved/Warning/etc. from color.
+- **EPC-OBJMETA-043 MUST** support grayscale and backgrounds-disabled fallbacks in which workflow meaning remains understandable.
+- **EPC-OBJMETA-044 MUST** keep node boundaries and labels visible if background fills are suppressed.
+- **EPC-OBJMETA-045 SHOULD** retain connector category through labels, line styles, or markers when color disappears.
+- **EPC-OBJMETA-046 MUST** verify that selected authored colors do not make text/metadata illegible.
+
+### 27.4 Public primitive discipline
+
+- **EPC-OBJMETA-060 MUST** begin with existing `ef-print-figure`, `ef-print-layer`, layout primitives, semantic HTML, and Forma diagram presentation where sufficient.
+- **EPC-OBJMETA-061 MAY** add `ef-print-diagram` only after fixtures demonstrate a stable reusable print-layout need not covered adequately by existing primitives.
+- **EPC-OBJMETA-062 MUST** keep any new diagram print element passive, light-DOM, and useful before upgrade.
+- **EPC-OBJMETA-063 MUST** add site metadata and at least three examples for every newly public element.
+- **EPC-OBJMETA-064 MUST** test Letter, A4, color, grayscale, backgrounds-disabled, and deterministic Chromium output before promoting a diagram print contract.
+
