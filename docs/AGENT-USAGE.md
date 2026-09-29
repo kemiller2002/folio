@@ -28,6 +28,8 @@ Before creating or changing printable document UI:
 7. Prefer CSS/native browser pagination and fragmentation over DOM measurement.
 8. Use Limen/Ordo only for meaningful preview/configuration state, not physical pagination.
 9. Run print experiments and Folio site validation before claiming completion.
+10. Preserve consumer-supplied object metadata only through an explicit visibility/transport policy; do not leak source-only metadata into print/PDF.
+11. When printing workflows/diagrams, preserve authored color where supported but ensure the same meaning survives grayscale and backgrounds-disabled output.
 
 ## Current public component surface
 
@@ -216,3 +218,19 @@ npm run site:test:browser
 ```
 
 The established print experiment suite remains the authority for PDF/browser output evidence.
+
+
+## Object metadata and workflow/diagram print
+
+Read `docs/requirements/OBJECT-METADATA-AND-DIAGRAM-PRINT.md`.
+
+- Printable objects may have descriptive metadata and stable external/object IDs.
+- Keep source-only metadata, rendered metadata, export/provenance metadata, and accessibility metadata separate.
+- Metadata remains consumer-owned. Folio does not infer domain meaning from it.
+- Do not store hidden secrets or suppressed values in custom-element attributes, generated CSS, comments, SVG metadata, or PDF diagnostics.
+- Workflow/diagram items may preserve authored fill, border/stroke, accent, connector, and safe foreground colors.
+- Color never becomes the semantic source of workflow status/type.
+- Use labels, shapes, line styles, markers, legends, or other non-color cues so output survives grayscale/background suppression.
+- Prefer vector/semantic diagram projection and a structured/textual equivalent.
+- Use content bounds plus fit-to-page/tiling rules; never rewrite graph geometry just to fit the page.
+- Graph topology, routing, execution, legality, and application state remain outside Folio.
