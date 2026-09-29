@@ -94,3 +94,14 @@ Agent usage rules are in [docs/AGENT-USAGE.md](docs/AGENT-USAGE.md).
 Folio now includes a canonical Signal consumer fixture at `tests/fixtures/reports/signal-results.html` and a generated documentation example at `reports/signal-results/`.
 
 The fixture proves a substantial results document using existing Folio primitives plus three report-specific presentation contracts: `ef-print-metric`, `ef-print-integrity`, and `ef-print-finding`. Scoring, privacy, comparability, confidence, and recommendations remain application-owned. See `docs/recipes/SIGNAL-RESULTS-REPORT.md`.
+
+
+## Object metadata and diagram/workflow printing
+
+Folio's architecture now explicitly supports consumer-supplied descriptive object metadata and print/PDF projection of workflow/diagram content.
+
+Metadata is not hidden application state inside Folio. Consumers decide which fields are source-only, visible, export/provenance, or accessibility metadata.
+
+Workflow/diagram objects may preserve authored colors, but printed meaning must survive grayscale and backgrounds-disabled output. Folio owns page fitting, tiling, fragmentation, and renderer capability behavior; graph semantics/routing remain with the consuming application/Studio.
+
+See `docs/requirements/OBJECT-METADATA-AND-DIAGRAM-PRINT.md`.
