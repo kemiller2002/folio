@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "ros-bootstrap",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-09-23T17:05:32.000Z",
+  "updatedAt": "2026-09-29T10:25:16.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -288,6 +288,113 @@
         "EXE-20260923T170528378Z-d7cde504"
       ],
       "completedAt": "2026-09-23T17:05:32.000Z"
+    },
+    {
+      "id": "GH-17",
+      "type": "feature",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "requirements",
+          "path": "docs/requirements/PRINT-COMPONENTS-REQUIREMENTS.md"
+        },
+        {
+          "type": "implementation",
+          "path": "src/styles/print.css"
+        },
+        {
+          "type": "implementation",
+          "path": "tests/fixtures/profiles/resume-01.html"
+        },
+        {
+          "type": "implementation",
+          "path": "tests/fixtures/profiles/resume-02.html"
+        },
+        {
+          "type": "implementation",
+          "path": "tests/fixtures/profiles/profile-03.html"
+        },
+        {
+          "type": "implementation",
+          "path": "tools/recipe-metadata.mjs"
+        },
+        {
+          "type": "implementation",
+          "path": "tools/build-site.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-profile-fixture-tests.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/site-build.test.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-site-browser-tests.mjs"
+        },
+        {
+          "type": "decision",
+          "path": "research/decisions/DF-PRINT-2026-0004--adopt-stylesheet-recipes-for-professional-profile-layout.md"
+        },
+        {
+          "type": "evidence",
+          "path": "research/evidence/EV-PRINT-2026-0006--resume-reference-reproduction-evidence.md"
+        },
+        {
+          "type": "documentation",
+          "path": "docs/recipes/PROFESSIONAL-PROFILE.md"
+        }
+      ],
+      "updatedAt": "2026-09-29T09:19:05.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260929T085240816Z-724b7d31"
+      ],
+      "completedAt": "2026-09-29T09:19:05.000Z"
+    },
+    {
+      "id": "GH-18",
+      "type": "maintenance",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "tools/build-site.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/site-build.test.mjs"
+        }
+      ],
+      "updatedAt": "2026-09-29T09:09:20.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260929T090828786Z-ece2341c"
+      ],
+      "completedAt": "2026-09-29T09:09:20.000Z"
+    },
+    {
+      "id": "GH-19",
+      "type": "maintenance",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "src/styles/print.css"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-profile-fixture-tests.mjs"
+        }
+      ],
+      "updatedAt": "2026-09-29T10:25:16.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260929T092121704Z-fff98c53"
+      ],
+      "completedAt": "2026-09-29T10:25:16.000Z"
     }
   ]
 }

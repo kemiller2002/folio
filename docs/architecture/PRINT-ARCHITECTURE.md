@@ -220,6 +220,12 @@ As of Folio 0.2.0, the original core surface is registered and styled: document,
 
 This does not collapse renderer tiers. In particular, repeated page-margin headers/footers, physical current/total page counters, automatic target-page TOC counters, automatic footnotes/sidenotes, bleed, and marks remain capability-specific. Core components express semantic/layout intent and preserve useful fallback content; they do not synthesize unsupported paged-media behavior.
 
+## 3.2 Recipe layer
+
+`DF-PRINT-2026-0004` adds a third public cascade layer, `ef-print-recipes`, after `ef-print-foundation` and `ef-print-components`. Recipes are documented class contracts applied to native elements when a reusable layout contract exists but the right host element depends on meaning (`header`, `li`, `div`, `ul`, `dl`). The first recipe family serves professional profiles: `.ef-identity`, `.ef-row`/`[data-row-end]`, `.ef-entry`, `.ef-lead-list`, `.ef-inline-list`, `.ef-labeled`, `.ef-category-grid`, and `.ef-dense` (see `docs/recipes/PROFESSIONAL-PROFILE.md`).
+
+Recipes follow the same public-API obligations as elements: capability/maturity metadata, three documented examples, fixture evidence, and screen-only responsive rules that never change the print contract. Prefer a recipe over a new element when the layout contract does not also need an element boundary; prefer native HTML over both when no reusable layout contract exists.
+
 ## 4. Public component philosophy
 
 Do not create custom replacements for ordinary semantic HTML.

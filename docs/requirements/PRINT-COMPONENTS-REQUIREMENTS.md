@@ -727,12 +727,108 @@ The Folio test suite MUST add canonical fixtures for at least:
 - **EPC-RPT-096 MUST** preserve Folio's standards-first, semantic-HTML, CSS-pagination architecture while adding report composition support.
 
 
+## 27. Professional profile / resume document family
 
-## 27. Object metadata and diagram/workflow print projection
+Work item: `kemiller2002/folio#17`. Reference evidence: `kemiller2002/resume` at `master` commit `ba786e4` (`index.html`, `developer.html`, `resume.css`, `resume.json`); see `EV-PRINT-2026-0006`.
+
+Folio must be able to reproduce the existing resume, its developer variant, and materially different professional profiles (CVs, speaker sheets, staff biographies, credentials sheets, capability statements, project histories, publication lists) without resume-specific public primitives. The IDs below preserve the intent recorded in issue #17; `FOLIO-RES-090` onward add verification, documentation, and ownership obligations discovered during implementation.
+
+### 27.1 Ownership and composition boundary
+
+- **FOLIO-RES-001 MUST** reproduce the current resume's information hierarchy and visual relationships using Folio.
+- **FOLIO-RES-002 MUST** support A4 with 10 mm margins and SHOULD validate Letter adaptation without silently changing content semantics.
+- **FOLIO-RES-003 MUST** preserve meaningful semantic/source order independently of the visual layout.
+- **FOLIO-RES-004 MUST** remain useful with JavaScript disabled once the consuming application has rendered the document content.
+- **FOLIO-RES-005 MUST NOT** make application data binding or resume schema part of Folio core.
+- **FOLIO-RES-006 MUST NOT** add `ef-print-resume`, `ef-print-job`, `ef-print-education`, `ef-print-employer`, or any other element whose meaning is a resume domain concept.
+- **FOLIO-RES-007 MUST** express the reusable professional-profile patterns as documented CSS recipes over semantic HTML unless a recipe demonstrably cannot express the layout contract (`DF-PRINT-2026-0004`).
+- **FOLIO-RES-008 MUST** keep content selection, filtering, sorting, variant choice (for example executive versus developer), and date formatting application-owned.
+
+### 27.2 Identity/contact header
+
+- **FOLIO-RES-010 MUST** support a compact identity header containing a dominant name/title region plus a contact region.
+- **FOLIO-RES-011 MUST** support stacked or wrapped contact values without overlap.
+- **FOLIO-RES-012 MUST** allow links and plain-text equivalents.
+- **FOLIO-RES-013 MUST** degrade cleanly on narrow screens while preserving the authored print layout.
+- **FOLIO-RES-014 SHOULD** support alternate alignment patterns through tokens/recipes rather than domain-specific elements.
+
+### 27.3 Dated entries
+
+- **FOLIO-RES-020 MUST** support repeated entries with primary identity metadata on the left and a date/date-range region aligned to the right.
+- **FOLIO-RES-021 MUST** support one or multiple titles/roles under or beside the organization.
+- **FOLIO-RES-022 MUST** support open-ended ranges such as Present.
+- **FOLIO-RES-023 MUST** handle long organization/title text without colliding with dates.
+- **FOLIO-RES-024 MUST** define fragmentation behavior so entry headings are not orphaned from the first meaningful line of entry content where the renderer can honor keep intent.
+- **FOLIO-RES-025 MUST** avoid requiring fixed grid coordinates that are specific to this resume.
+- **FOLIO-RES-026 MUST** keep the terminal date region on one line in print and wide screen layouts and let the primary region wrap instead.
+- **FOLIO-RES-027 SHOULD** let authors mark dates with `<time>` so machine-readable values do not depend on visual formatting.
+
+### 27.4 Accomplishment blocks
+
+- **FOLIO-RES-030 MUST** support compact accomplishment lists.
+- **FOLIO-RES-031 MUST** support an emphasized lead phrase followed by normal-weight explanatory text within one list item.
+- **FOLIO-RES-032 MUST** preserve native list semantics.
+- **FOLIO-RES-033 MUST** support dense vertical rhythm without relying on unreadably small text.
+- **FOLIO-RES-034 MUST** place a list's visible label before the list in source order rather than relying on visual reordering.
+
+### 27.5 Compact metadata rows
+
+- **FOLIO-RES-040 MUST** support rows such as project/institution/description/date where one region can grow and the terminal metadata remains aligned.
+- **FOLIO-RES-041 MUST** support inline separators such as hyphens, commas, middots, or other authored separators without moving meaningful punctuation into inaccessible visual-only content where it changes meaning.
+- **FOLIO-RES-042 MUST** wrap gracefully when the row cannot fit on one line.
+- **FOLIO-RES-043 SHOULD** provide a general recipe or primitive usable by resumes, credentials, publications, bibliographies, case studies, and project histories.
+
+### 27.6 Compact inline collections
+
+- **FOLIO-RES-050 MUST** support inline compact collections such as study areas and focus areas.
+- **FOLIO-RES-051 MUST** support configurable separators.
+- **FOLIO-RES-052 MUST** wrap naturally and remain readable when entries exceed one line.
+- **FOLIO-RES-053 MUST** preserve list semantics in source HTML when the content is logically a list.
+- **FOLIO-RES-054 MUST** support an inline label/value composition (for example `Focus Areas:` followed by the collection) using native description-list or heading semantics.
+
+### 27.7 Categorized dense grid
+
+- **FOLIO-RES-060 MUST** reproduce the categorized technology grid using responsive CSS without JavaScript layout.
+- **FOLIO-RES-061 MUST** allow a variable number of categories and entries.
+- **FOLIO-RES-062 MUST** support compact category headings and lists.
+- **FOLIO-RES-063 MUST** avoid clipping or overlap when category names or technology names are long.
+- **FOLIO-RES-064 MUST** define print fragmentation behavior for a category block.
+- **FOLIO-RES-065 MUST** collapse/reflow appropriately for narrow screen preview without changing the print-media contract.
+
+### 27.8 Pagination and keeps
+
+- **FOLIO-RES-070 MUST** support keep-together intent for small logical blocks.
+- **FOLIO-RES-071 MUST** support heading-with-next-content keep intent where practical.
+- **FOLIO-RES-072 MUST** record that keep behavior is renderer intent rather than an absolute guarantee when the block cannot fit.
+- **FOLIO-RES-073 MUST** detect missing/duplicated content across page fragmentation in deterministic PDF tests.
+- **FOLIO-RES-074 MUST NOT** introduce DOM measurement or manual repagination.
+
+### 27.9 Typography and density
+
+- **FOLIO-RES-080 MUST** permit a restrained professional typographic system equivalent to the existing Arial/Helvetica-based resume.
+- **FOLIO-RES-081 MUST** expose spacing/type tokens needed for dense professional documents.
+- **FOLIO-RES-082 MUST** keep hierarchy clear across h1-h5-equivalent semantic levels without requiring invalid heading structure.
+- **FOLIO-RES-083 MUST** support emphasized inline lead text and italic/secondary role text.
+- **FOLIO-RES-084 MUST** remain legible in print and not solve overflow by arbitrary global font shrinking.
+
+### 27.10 Fixtures, verification, and documentation
+
+- **FOLIO-RES-090 MUST** provide canonical fixture `RESUME-01` reproducing the reference `index.html` rendering, including its rendered text, section order, and A4/10 mm page contract.
+- **FOLIO-RES-091 MUST** provide canonical fixture `RESUME-02` reproducing the reference `developer.html` composition with the same recipe vocabulary as `RESUME-01`.
+- **FOLIO-RES-092 MUST** provide at least one generalized professional-profile fixture that uses different content, section types, and person to prove the recipes are not hard-coded to the reference resume.
+- **FOLIO-RES-093 MUST** compare each reproduction fixture against a committed text snapshot of the reference PDF so omitted or duplicated words are detected.
+- **FOLIO-RES-094 MUST** verify A4 page size, 10 mm content bounds, no horizontal overflow, header non-overlap, date alignment, date/heading non-collision, lead-phrase emphasis, grid grouping, and Letter adaptation in deterministic Chromium.
+- **FOLIO-RES-095 MUST** verify narrow-screen preview at 320, 390, and 430 CSS pixels without page-level horizontal overflow, and MUST verify that print media restores the authored layout.
+- **FOLIO-RES-096 MUST** record reference defects (application defects in the reference, not Folio behavior) separately from reproduction evidence and MUST NOT reproduce them in the developer fixture when they are clearly data-binding errors.
+- **FOLIO-RES-097 MUST** document the Resume / Professional Profile family on the Folio site with rendered examples, semantic source, recipes used, page dimensions, capability tier, renderer limitations, and mobile behavior.
+- **FOLIO-RES-098 MUST** document every public recipe with its allowed structure, tokens, fragmentation behavior, capability tier, and at least three examples, matching the obligation for public elements.
+- **FOLIO-RES-099 MUST** treat Chromium-only page-box decoration (for example `@page` borders used by the reference as a page frame) as consumer styling at P2, not as a portable Folio guarantee.
+
+## 28. Object metadata and diagram/workflow print projection
 
 The detailed cross-cutting contract is defined in `docs/requirements/OBJECT-METADATA-AND-DIAGRAM-PRINT.md`.
 
-### 27.1 Object metadata
+### 28.1 Object metadata
 
 - **EPC-OBJMETA-001 MUST** allow printable objects/compositions to carry consumer-supplied descriptive metadata.
 - **EPC-OBJMETA-002 MUST** preserve stable consumer object IDs/references when supplied.
@@ -743,7 +839,7 @@ The detailed cross-cutting contract is defined in `docs/requirements/OBJECT-META
 - **EPC-OBJMETA-007 SHOULD** provide semantic metadata-list/detail recipes before introducing a new public custom element.
 - **EPC-OBJMETA-008 MUST** preserve label/value relationships and logical source order.
 
-### 27.2 Diagram/workflow projection
+### 28.2 Diagram/workflow projection
 
 - **EPC-OBJMETA-020 MUST** support consumer-provided diagram/workflow content through vector/semantic projection where practical.
 - **EPC-OBJMETA-021 MUST** leave graph topology, routing, workflow legality, and application/domain state outside Folio.
@@ -753,7 +849,7 @@ The detailed cross-cutting contract is defined in `docs/requirements/OBJECT-META
 - **EPC-OBJMETA-025 MUST** keep fitting/tiling from rewriting graph geometry.
 - **EPC-OBJMETA-026 MUST** preserve labels, relationship labels, legend/key, selected rendered metadata, and non-color cues.
 
-### 27.3 Authored color
+### 28.3 Authored color
 
 - **EPC-OBJMETA-040 MUST** preserve eligible workflow/diagram fill, stroke/border, accent, and connector color in color-capable output.
 - **EPC-OBJMETA-041 MUST** keep color independent from semantic workflow status/type.
@@ -763,11 +859,12 @@ The detailed cross-cutting contract is defined in `docs/requirements/OBJECT-META
 - **EPC-OBJMETA-045 SHOULD** retain connector category through labels, line styles, or markers when color disappears.
 - **EPC-OBJMETA-046 MUST** verify that selected authored colors do not make text/metadata illegible.
 
-### 27.4 Public primitive discipline
+### 28.4 Public primitive discipline
 
 - **EPC-OBJMETA-060 MUST** begin with existing `ef-print-figure`, `ef-print-layer`, layout primitives, semantic HTML, and Forma diagram presentation where sufficient.
 - **EPC-OBJMETA-061 MAY** add `ef-print-diagram` only after fixtures demonstrate a stable reusable print-layout need not covered adequately by existing primitives.
 - **EPC-OBJMETA-062 MUST** keep any new diagram print element passive, light-DOM, and useful before upgrade.
 - **EPC-OBJMETA-063 MUST** add site metadata and at least three examples for every newly public element.
 - **EPC-OBJMETA-064 MUST** test Letter, A4, color, grayscale, backgrounds-disabled, and deterministic Chromium output before promoting a diagram print contract.
+
 

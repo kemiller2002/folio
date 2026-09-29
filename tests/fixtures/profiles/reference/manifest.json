@@ -1,0 +1,20 @@
+{
+  "source": "kemiller2002/resume",
+  "branch": "master",
+  "commit": "ba786e461d6ead25e28dde0913d2a7773e780379",
+  "captured": "2026-09-29",
+  "renderer": "Chromium 141.0.7390.37 (Playwright), print media, preferCSSPageSize, printBackground",
+  "extraction": "pdftotext -layout (poppler 24.02)",
+  "knockout": "3.5.1 from npm, byte-identical to the SRI-pinned cdnjs file",
+  "references": {
+    "index": {"file": "resume-index.txt", "pages": 4, "pageSize": "A4", "fixture": "RESUME-01"},
+    "developer": {"file": "resume-developer.txt", "pages": 3, "pageSize": "A4", "fixture": "RESUME-02"}
+  },
+  "referenceDefects": [
+    {"id": "RD-01", "variants": ["index", "developer"], "words": ["Projects"], "description": "Empty Projects section heading rendered because resume.json projects is an empty array."},
+    {"id": "RD-02", "variants": ["index", "developer"], "words": ["Test", "Automation"], "description": "Technology category heading rendered with no items because every entry is inactive."},
+    {"id": "RD-03", "variants": ["developer"], "words": ["[object", "Object]"], "description": "developer.html binds the stackoverflow object as text/href; index.html hides it (display false, commit af11d1e removed the link)."},
+    {"id": "RD-04", "variants": ["developer"], "words": [], "extraWords": ["Present"], "description": "developer.html omits the Present label for open-ended ranges and prints 'February 2024 -'."},
+    {"id": "RD-05", "variants": ["developer"], "words": ["Learning),Coursework"], "extraWords": ["Learning),", "Coursework"], "description": "developer.html stringifies the study array without a separator."}
+  ]
+}

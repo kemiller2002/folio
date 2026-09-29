@@ -113,5 +113,22 @@
     "supersedes": [],
     "supporting_evidence": [],
     "title": "Deterministic Chromium export can deliberately produce a tagged PDF"
+  },
+  {
+    "author_agent": "claude-code",
+    "confidence": "medium",
+    "contradicting_evidence": [],
+    "created": "2026-09-29",
+    "id": "HY-PRINT-2026-0008",
+    "path": "research/hypotheses/HY-PRINT-2026-0008--semantic-html-plus-stylesheet-recipes-reproduce-dense-professional-profiles.md",
+    "related_theories": [],
+    "research_area": "print-components",
+    "status": "supported",
+    "superseded_by": [],
+    "supersedes": [],
+    "supporting_evidence": [
+      "EV-PRINT-2026-0006"
+    ],
+    "title": "Semantic HTML plus stylesheet recipes reproduce dense professional profiles without domain-specific elements"
   }
 ]

@@ -128,5 +128,32 @@
       "chromium"
     ],
     "title": "TABLE-01 multipage and landscape evidence"
+  },
+  {
+    "confidence": "medium",
+    "contradicts": [],
+    "created_by_agent": "claude-code",
+    "evidence_type": "primary",
+    "id": "EV-PRINT-2026-0006",
+    "path": "research/evidence/EV-PRINT-2026-0006--resume-reference-reproduction-evidence.md",
+    "related_theories": [],
+    "research_area": "print-components",
+    "retrieved": "2026-09-29",
+    "source_author": "echelon-print-components",
+    "source_date": "2026-09-29",
+    "source_title": "kemiller2002/resume reference renders and Folio profile fixture suite",
+    "source_uri": "https://github.com/kemiller2002/resume/tree/ba786e461d6ead25e28dde0913d2a7773e780379",
+    "supports": [
+      "HY-PRINT-2026-0008"
+    ],
+    "tags": [
+      "print",
+      "resume",
+      "professional-profile",
+      "recipes",
+      "chromium",
+      "fragmentation"
+    ],
+    "title": "RESUME-01/RESUME-02/PROFILE-03 reference reproduction evidence"
   }
 ]

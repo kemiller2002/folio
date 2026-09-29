@@ -129,3 +129,9 @@ Mobile support is a first-class documentation requirement.
 `site-dist/` is generated output and MUST be gitignored.
 
 Agents MUST NOT edit generated site files manually.
+
+## 12. Recipes and document families
+
+- Every public recipe in the `ef-print-recipes` layer MUST have one generated page with its selector, capability, maturity, contract note, and at least three standalone examples; a recipe with fewer MUST fail the site build.
+- The Resume / Professional Profile family page MUST publish RESUME-01, RESUME-02, and PROFILE-03 with rendered preview, semantic source, primitives/recipes used, page dimensions, capability tier, renderer limitations, and mobile behavior (`FOLIO-RES-097`, `FOLIO-RES-098`).
+- Recipe and family pages MUST pass the same no-script, no-overflow (320/390/430 px), and cross-engine browser checks as component pages.

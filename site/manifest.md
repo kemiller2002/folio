@@ -83,3 +83,9 @@ The example:
 - demonstrates Letter/A4-compatible composition, result integrity, report metrics, findings, chart accessibility fallback, distributions, landscape comparison, and provenance;
 - remains a consumer example, not a Signal runtime dependency;
 - must stay synchronized with `docs/recipes/SIGNAL-RESULTS-REPORT.md`.
+
+## Recipes and the professional-profile family
+
+The generated site publishes one page per public recipe under `recipes/<slug>/` from `tools/recipe-metadata.mjs`, each with at least three standalone demos under `demos/recipe-<slug>/`. The generator fails if a recipe has fewer than three examples.
+
+`profiles/` publishes the Resume / Professional Profile family: `RESUME-01`, `RESUME-02`, and `PROFILE-03` from `tests/fixtures/profiles/`. Each page shows the rendered preview, semantic source, primitives and recipes used, page dimensions, capability tier, renderer limitations, and mobile behavior. Previews use the actual Folio stylesheet plus the fixture's consumer stylesheet, contain no browser JavaScript, and must stay synchronized with `docs/recipes/PROFESSIONAL-PROFILE.md`.

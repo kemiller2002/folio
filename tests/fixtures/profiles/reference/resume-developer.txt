@@ -1,0 +1,152 @@
+                                                                      317.450.0255
+
+                         Kevin Miller                                 kevin@echelonfoundry.com
+                                                                      [object Object]
+                                                                      http://kevinmmiller.us
+
+Technology executive with more than 25 years of experience leading engineering organizations,
+modernizing enterprise platforms, and improving delivery performance across financial services,
+government, nonprofit, and consumer sectors. Led nine engineering teams, reduced release
+cycles from six weeks to two days, cut annual operating costs by more than $500,000, and
+improved organizational predictability and productivity. Combines executive leadership, enterprise
+architecture, AI-enabled systems, and evidence-based decision practices to turn complex
+technical environments into measurable business outcomes.
+
+Career Highlights
+Led nine engineering teams delivering platforms used by 17 of the top 20 financial institutions
+managing donor-advised funds
+Reduced release cycles from 6 weeks to 2 days and cut hotfix incidents by more than 75%
+Cut annual operating expenses by more than $500,000 through architecture redesign and vendor
+optimization
+Built and led modernization, AI, and diagnostic initiatives spanning enterprise software,
+governance, and executive decision support
+Partnered closely with product and business stakeholders to align engineering priorities with
+customer impact and growth strategy
+Created Clarity, an evidence-based decision framework now applied to executive decision
+support, investigations, modernization efforts, and complex diagnostic analysis
+
+Founder & Principal Consultant                                                    February 2024 -
+Echelon Foundry
+      Accomplishments
+          Created and applied Clarity to structure evidence, assumptions, risks, decisions, and
+          reevaluation criteria in complex executive and investigative work
+          Developed HelixNote as an AI-assisted platform for structured documentation,
+          evidence management, source traceability, and reporting
+          Advised nonprofit and financial organizations on donor-advised fund architecture,
+          modernization strategy, grant workflows, and compliance risk
+          Conducted technology and operating-model due diligence for investment, acquisition,
+          modernization, and funding decisions
+
+Director of Engineering,                                            January 2020 - January 2025
+Senior Architect
+Ren
+
+
+Senior Developer                                                    October 2018 - January 2020
+T2 Systems
+
+
+Development Manager,                                                 April 2015 - September 2018
+Senior Architect
+TCC Software Solutions
+
+
+Previous Roles                                                                        2000 - 2014
+
+
+Entrepreneurial Ventures
+Vice President                                                             June 1996 - March 2020
+The Candy Dish
+
+
+Co-Founder                                                             October 2016 - March 2019
+Full Out Solutions
+
+
+Co-Founder                                                            February 2018 - March 2019
+Devatoria
+
+
+Projects
+
+Volunteering
+IPS 55
+Teaching Programming and Computer Science                                                 2016 - 2020
+
+Specializations
+Accessibility & Adaptive Technologies, Vision Impairment Solutions, Human-Centered Design
+
+Technologies
+Programming Languages          Cloud Platforms and DevOps    Web and Frontend
+C#                             AWS                           Technologies
+F#                             Azure                         ASP.NET
+JavaScript                     Azure DevOps                  Node.js
+Python                         Docker                        React
+SQL                            Kubernetes                    Vue.js
+TypeScript                                                   Web Components
+
+Databases                      AI, ML, and Cognitive         Software Development and
+MSSQL Server                   Technologies                  Architecture
+Oracle                         Anthropic Claude              Distributed Systems
+PostgreSQL                     Azure OpenAI Service          Microservices Architecture
+Redis                          Google Gemini                 Secure Software
+                               LangChain                     Development Lifecycle
+                               OpenAI GPT                    (SSDLC)
+                                                             Technical Roadmapping
+                                                             and Prioritization
+
+Agile and Project Management   Test Automation
+Tools
+Azure DevOps Boards
+Jira
+
+
+Education
+Kalamazoo College
+B.A. Psychology (Cognition and Learning),Coursework in Economics                          1996 - 2000
+Academic Scholarship
+Award for Excellence in Education
+
+Awards and Distinctions
+Microsoft
+Developer Technologies                                                                          2016
+CompleteLife
+Visual Chronicles Art Show                                                        2024
+Indiana State Fair
+Second Place                                                                      2025
+Indiana State Fair
+Honorable Mention (x2)                                                            2023
+No Starch Press
+Book of F#                                                                        2014
+
+Public Speaking Engagements
+C#                                           JavaScript
+Code Contracts                               Currying in JavaScript
+Covariance and Contravariance in C#          Functional Pipelining
+Creating an Application Performance          Introduction to JavaScript
+Monitoring Solution
+Dependency Injection
+Dynamic Language Runtime in C#
+Functional Programming in C#
+Introduction to LINQ
+New Features in C# 7
+Obfuscation in .NET
+
+Software Development Methodologies           General Development
+Agile and Scrum using Team Foundation        Regular Expressions
+Server                                       Time: Taking a Minute to Ponder It
+My Team is Awesome and Yours Is Too
+Process Isn't Your Problem. The Cultural
+Requirements of Agile
+
+Hacking                                      F#
+Attacking the System: SQL Injection          Introduction to F#
+Attacks
+Hacking .NET and IIS
+Social Engineering
+The Social Engineering Savants – The
+Psychopathic Profile
+
+Git
+Git: The Last Database You'll Ever Need ;)
+

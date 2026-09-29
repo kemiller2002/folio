@@ -84,7 +84,10 @@ const mobileRoutes = [
   "/reports/signal-results/",
   "/reports/signal-results/preview.html",
   ...siteManifest.components.map(component => `/components/${component.slug}/`),
-  ...siteManifest.components.map(component => `/demos/${component.slug}/1.html`)
+  ...siteManifest.components.map(component => `/demos/${component.slug}/1.html`),
+  "/profiles/",
+  ...siteManifest.profileExamples.flatMap(profile => [`/profiles/${profile.slug}/`, `/profiles/${profile.slug}/preview.html`]),
+  ...siteManifest.recipes.flatMap(recipe => [`/recipes/${recipe.slug}/`, `/demos/${recipe.demoSlug}/1.html`, `/demos/${recipe.demoSlug}/2.html`, `/demos/${recipe.demoSlug}/3.html`])
 ];
 
 try {
@@ -94,7 +97,8 @@ try {
 
     await page.goto(baseURL + "/");
     assert.equal(await page.locator("h1").textContent(), "Folio", `${name}: home title`);
-    assert.equal(await page.locator(".component-card").count(), siteManifest.componentCount, `${name}: component count`);
+    assert.equal(await page.locator("#components .component-card").count(), siteManifest.componentCount, `${name}: component count`);
+    assert.equal(await page.locator("#recipes .component-card").count(), siteManifest.recipeCount, `${name}: recipe count`);
 
     await page.goto(baseURL + "/components/columns/");
     assert.equal(await page.locator("[data-example]").count(), 3, `${name}: three examples`);
@@ -115,6 +119,17 @@ try {
     const reportPreview = page.frameLocator("iframe").first();
     await reportPreview.locator("ef-print-integrity").first().waitFor({state: "attached"});
     assert.equal(await reportPreview.locator("ef-print-metric").count() >= 4, true, `${name}: report preview exposes metrics`);
+
+    await page.goto(baseURL + "/profiles/");
+    assert.match(await page.locator("h1").innerText(), /Resume and professional profile/i, `${name}: profile family title`);
+    for (const profile of siteManifest.profileExamples) {
+      await page.goto(baseURL + `/profiles/${profile.slug}/`);
+      const profilePreview = page.frameLocator("iframe").first();
+      const rowEnd = profilePreview.locator(".ef-row > [data-row-end]").first();
+      await rowEnd.waitFor({state: "attached"});
+      assert.equal(await rowEnd.evaluate(element => getComputedStyle(element).whiteSpace), "nowrap", `${name}: ${profile.id} preview applies Folio recipes`);
+      assert.match(await page.locator("details pre").textContent(), /class="ef-row"/, `${name}: ${profile.id} exposes semantic source`);
+    }
 
     await page.goto(baseURL + "/agents/");
     assert.match(await page.locator("h1").innerText(), /not a pagination engine/i, `${name}: agent boundary`);
@@ -186,6 +201,16 @@ try {
       assert.equal(printColumnCount, "2", `${name} ${width}px: print media keeps Folio column contract`);
 
       await page.emulateMedia({ media: "screen" });
+      for (const profile of siteManifest.profileExamples) {
+        await page.goto(baseURL + `/profiles/${profile.slug}/preview.html`);
+        const stacked = await page.locator(".ef-row").first().evaluate(element => getComputedStyle(element).gridTemplateColumns.split(" ").filter(Boolean).length);
+        assert.equal(stacked, 1, `${name} ${width}px: ${profile.id} rows stack on phones`);
+        await page.emulateMedia({ media: "print" });
+        const printTracks = await page.locator(".ef-row").first().evaluate(element => getComputedStyle(element).gridTemplateColumns.split(" ").filter(Boolean).length);
+        assert.equal(printTracks, 2, `${name} ${width}px: ${profile.id} print media restores aligned rows`);
+        await page.emulateMedia({ media: "screen" });
+      }
+
       await page.goto(baseURL + "/demos/sidebar/1.html");
       const mobileSidebarTracks = await page.locator("ef-print-sidebar").evaluate(element =>
         getComputedStyle(element).gridTemplateColumns.split(" ").filter(Boolean).length
@@ -203,7 +228,7 @@ try {
     await browser.close();
   }
 
-  console.log("Folio site browser checks passed at desktop and 320/390/430px in Chromium, Firefox, and WebKit.");
+  console.log(`Folio site browser checks passed at desktop and 320/390/430px in ${engines.map(([engineName]) => engineName).join(", ")}.`);
 } finally {
   await new Promise(resolve => server.close(resolve));
 }

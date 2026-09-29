@@ -95,6 +95,9 @@ Folio now includes a canonical Signal consumer fixture at `tests/fixtures/report
 
 The fixture proves a substantial results document using existing Folio primitives plus three report-specific presentation contracts: `ef-print-metric`, `ef-print-integrity`, and `ef-print-finding`. Scoring, privacy, comparability, confidence, and recommendations remain application-owned. See `docs/recipes/SIGNAL-RESULTS-REPORT.md`.
 
+## Professional profile / resume family
+
+Folio reproduces a real two-variant resume and a generalized professional profile from semantic HTML plus stylesheet recipes in the public `ef-print-recipes` layer: `.ef-identity`, `.ef-row` with `[data-row-end]`, `.ef-entry`, `.ef-lead-list`, `.ef-inline-list`, `.ef-labeled`, `.ef-category-grid`, and `.ef-dense`. No resume-specific elements exist. Fixtures live in `tests/fixtures/profiles/`; the generated site shows them under `profiles/`. See `docs/recipes/PROFESSIONAL-PROFILE.md`.
 
 ## Object metadata and diagram/workflow printing
 
