@@ -1,0 +1,178 @@
+/*
+ * Consumer stylesheet for RESUME-01 and RESUME-02.
+ *
+ * Everything here is resume-specific visual identity reproduced from
+ * kemiller2002/resume resume.css (ba786e4): type sizes, the page frame, and
+ * spacing. Reusable layout behavior comes from Folio recipes in print.css
+ * (.ef-identity, .ef-row, .ef-entry, .ef-lead-list, .ef-inline-list,
+ * .ef-labeled, .ef-category-grid, .ef-dense).
+ */
+
+@page {
+  size: A4;
+  margin: 10mm;
+  /* Page frame: Chromium page-box decoration (P2). Other renderers omit it. */
+  border: 1px solid black;
+  padding-top: 0.4em;
+}
+
+:root {
+  --ef-print-font-family: Arial, Helvetica, sans-serif;
+  --ef-print-font-size: 16px;
+  --ef-print-line-height: normal;
+  --ef-print-text: #000;
+  --ef-print-lead-weight: 600;
+  --ef-print-lead-list-indent: 5%;
+  --ef-print-dense-heading-space: 0.83em;
+  --ef-print-dense-block-space: 0;
+  --ef-print-category-min: 200px;
+  --ef-print-category-max: 200px;
+  --ef-print-category-gap: 10px;
+}
+
+body {
+  margin: 0;
+}
+
+.resume {
+  max-inline-size: 800px;
+  margin-inline: auto;
+  padding: 12px;
+}
+
+.resume h1 {
+  margin-block: 0.67em;
+  font-size: 2em;
+}
+
+.resume h2 {
+  font-size: 1.5em;
+}
+
+.resume h3 {
+  font-size: 1em;
+}
+
+.resume h4 {
+  margin: 0;
+  font-size: 1em;
+}
+
+.resume section {
+  margin-block-end: 0.5em;
+}
+
+.resume .ef-identity {
+  align-items: start;
+  margin-block-end: 0.25em;
+}
+
+.resume .ef-identity > h1 {
+  margin-block: 0.67em;
+}
+
+.resume-about p {
+  margin-block: 1em;
+}
+
+.resume .resume-subhead {
+  margin-block: 0.25em;
+  font-size: 1.17em;
+}
+
+.resume-highlights {
+  margin-block-start: 0.5em;
+}
+
+.resume-highlights li {
+  margin-block-end: 0.2em;
+}
+
+.resume hr {
+  margin-block: 0.5em;
+}
+
+.resume .ef-entry > header {
+  margin-block-end: 0.25em;
+}
+
+.resume .ef-entry > header > h3 {
+  margin: 0;
+}
+
+.resume-roles {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.resume-roles > span,
+.resume--developer .ef-entry > header > h3 > span {
+  white-space: nowrap;
+}
+
+.resume-items,
+.resume-awards,
+.resume-education-awards {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resume-items h3 {
+  margin: 0;
+}
+
+.resume-degree {
+  font-size: 0.83em;
+  font-weight: 700;
+}
+
+.resume-education-awards > li,
+.resume-awards > li,
+.resume-award-rows > li,
+.resume-speaking > li {
+  margin-block-end: 0.25em;
+}
+
+.resume-technologies > li {
+  margin-block-end: 0.5em;
+}
+
+.resume .ef-category-grid h3 {
+  font-size: 0.83em;
+}
+
+.resume-focus {
+  --ef-print-inline-list-separator: "\a0·";
+}
+
+/* RESUME-02 developer composition: role title dominates, organization is secondary. */
+.resume--developer .ef-entry > header {
+  --ef-print-row-end-min: 50%;
+}
+
+.resume--developer .ef-entry > header > h3 {
+  font-size: 1.17em;
+}
+
+.resume-org {
+  font-size: 0.83em;
+  font-weight: 700;
+}
+
+.resume-accomplishments {
+  margin-inline-start: 5%;
+}
+
+.resume-accomplishments > .ef-lead-list {
+  padding-inline-start: 40px;
+}
+
+.resume-presentations {
+  --ef-print-category-min: 300px;
+  --ef-print-category-max: 300px;
+}
+
+.resume-presentations > li > ul {
+  margin-block-end: 0.5em;
+}

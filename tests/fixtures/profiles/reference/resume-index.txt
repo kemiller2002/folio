@@ -1,0 +1,187 @@
+                                                                        317.450.0255
+
+                       Kevin Miller                                     kevin@echelonfoundry.com
+                                                                        http://kevinmmiller.us
+
+
+Technology executive with more than 25 years of experience leading engineering organizations,
+modernizing enterprise platforms, and improving delivery performance across financial services,
+government, nonprofit, and consumer sectors. Led nine engineering teams, reduced release
+cycles from six weeks to two days, cut annual operating costs by more than $500,000, and
+improved organizational predictability and productivity. Combines executive leadership, enterprise
+architecture, AI-enabled systems, and evidence-based decision practices to turn complex
+technical environments into measurable business outcomes.
+
+Career Highlights
+Led nine engineering teams delivering platforms used by 17 of the top 20 financial institutions
+managing donor-advised funds
+Reduced release cycles from 6 weeks to 2 days and cut hotfix incidents by more than 75%
+Cut annual operating expenses by more than $500,000 through architecture redesign and vendor
+optimization
+Built and led modernization, AI, and diagnostic initiatives spanning enterprise software,
+governance, and executive decision support
+Partnered closely with product and business stakeholders to align engineering priorities with
+customer impact and growth strategy
+Created Clarity, an evidence-based decision framework now applied to executive decision
+support, investigations, modernization efforts, and complex diagnostic analysis
+
+Leadership Experience
+Echelon Foundry                                                               February 2024 - Present
+Founder & Principal Consultant
+    Founded an executive technology advisory practice focused on modernization, AI
+    adoption, technical due diligence, architecture governance, and complex evidence-based
+    investigations.
+    Developed HelixNote, an AI-assisted evidence management and reporting platform
+    designed to preserve source traceability across medical, technical, and investigative
+    workflows.
+    Created Clarity and the Echelon Diagnostic Framework to make evidence, assumptions,
+    risks, decisions, and reevaluation criteria explicit in complex initiatives.
+    Advised executives, boards, and investors on modernization strategy, operating risk,
+    architecture, AI adoption, and technology investment decisions.
+    Applied structured analytical workflows to improve evidence completeness, traceability,
+    review consistency, and auditability across digital, financial, healthcare, and infrastructure
+    matters.
+    Integrated accessibility-first design principles to support low-vision users and assistive
+    technologies in documentation and reporting workflows.
+    Integrated accessibility-first design principles, ensuring AI-assisted documentation and
+    reporting workflows remain usable for low-vision and assistive technology users.
+    Advised executives, boards, and investors, on modernization strategy, architecture
+    governance, AI adoption, technology due diligence, and operational risk.
+
+Ren                                                           January 2020 - January 2025
+Director of Engineering, Senior Architect
+     Cut operational expenses by over $500,000 annually by consolidating vendors and
+     optimizing infrastructure through architectural redesign
+    Reduced time-to-market from 6 weeks to 2 days by overhauling the software delivery
+    pipeline, release strategy, and prioritization process
+    Improved roadmap predictability to within 10% variance by aligning product planning
+    with development execution and metrics-driven forecasting
+    Increased developer productivity by 40% in the DFX division by reworking development
+    workflows and instituting technical coaching
+    Redesigned branching strategy and CI/CD processes, stabilizing deployments and
+    reducing hotfix incidents by over 75%
+    Restructured an acquired engineering team, reducing onboarding time and accelerating
+    product integration by 90%
+    Secured $50,000+ in free distributed systems training, investing in staff growth without
+    impacting the training budget
+    Served on Enterprise Architecture and Security Compliance Boards, guiding cross-
+    functional decisions on scalability, risk, and regulatory alignment
+
+T2 Systems                                                          October 2018 - January 2020
+Senior Developer
+    Stabilized deployment across 300+ production environments, aligning database and
+    application updates to reduce support incidents and operational costs
+    Reduced infrastructure and maintenance expenses by developing diagnostic tools and
+    automating reporting for exception tracking and system health
+    Improved team velocity and cross-functional collaboration by initiating Agile process
+    reforms through a cross-team software development restructuring initiative
+    Designed and implemented a .NET CLR Profiler enabling detailed exception monitoring
+    and real-time diagnostics across enterprise applications
+    Developed and executed a multi-system user migration strategy consolidating
+    fragmented data sources into a unified microservices architecture
+    Implemented training and knowledge-sharing programs including internal Lunch &
+    Learns and onboarding initiatives to accelerate adoption of new technologies
+    Optimized build and release processes via Azure DevOps, reducing CI/CD cycle times
+    and improving team autonomy
+
+TCC Software Solutions                                                 April 2015 - September 2018
+Development Manager, Senior Architect
+    Reduced annual software licensing costs by $250,000 by reconfiguring TCC's Microsoft
+    Gold Partner program and optimizing license usage across projects
+    Launched and scaled an internship program improving recruiting efficiency and reducing
+    hiring costs by building a direct pipeline from local universities
+    Architected major platform rewrite for Indiana DNR (Unity project) replacing legacy
+    systems for statewide water resource management with modern, scalable infrastructure
+    Improved internal collaboration and communication by standardizing development
+    practices and aligning delivery across multiple project teams
+    Established community-based training programs and public meetups increasing
+    company visibility and creating a low-cost, high-impact employee development path
+    Led architectural decisions across client engagements, ensuring scalability,
+    maintainability, and alignment with strategic business goals
+
+Previous Roles                                                                       2000 - 2014
+
+
+Entrepreneurial Ventures
+The Candy Dish                                                        June 1996 - March 2020
+Vice President
+     Expanded into B2B gifting and wholesale, diversifying revenue streams and improving
+     distribution efficiency
+     Reduced production costs by over 20% by reevaluating sourcing strategies and
+     introducing alternative packaging and ingredients
+     Boosted sales performance by 25% through reorganizing sales staff responsibilities to
+     better match individual strengths and customer segments
+     Positioned company for acquisition, overseeing operational streamlining and strategic
+     growth during final years of ownership
+
+Full Out Solutions                                                   October 2016 - March 2019
+Co-Founder
+     Prototyped an e-commerce platform enabling cheer teams to sell branded
+     merchandise supporting team fundraising and self-sustainability
+     Developed a performance-tracking mobile app allowing athletes to showcase highlight
+     videos and individual stats to recruiters
+     Initiated a beat analysis engine, classifying music by rhythm and tempo to automate
+     choreography matching for routines
+
+Devatoria                                                         February 2018 - March 2019
+Co-Founder
+    Identified legal and compliance risks by analyzing organizations potentially operating
+    outside state regulations
+    Helped individuals and businesses navigate back-tax liabilities, researching exposure
+    and remediation strategies
+    Investigated financial misconduct in bankruptcy cases, uncovering patterns related to
+    money laundering and regulatory violations to support consumer protection efforts
+
+Projects
+
+Volunteering
+IPS 55
+Teaching Programming and Computer Science                                                2016 - 2020
+
+Specializations
+Accessibility & Adaptive Technologies, Vision Impairment Solutions, Human-Centered Design
+
+Technologies
+Programming Languages          Cloud Platforms and DevOps   Web and Frontend
+C#                             AWS                          Technologies
+F#                             Azure                        ASP.NET
+JavaScript                     Azure DevOps                 Node.js
+Python                         Docker                       React
+SQL                            Kubernetes                   Vue.js
+TypeScript                                                  Web Components
+
+Databases                      AI, ML, and Cognitive        Software Development and
+MSSQL Server                   Technologies                 Architecture
+Oracle                         Anthropic Claude             Distributed Systems
+PostgreSQL                     Azure OpenAI Service         Microservices Architecture
+Redis                          Google Gemini                Secure Software
+                               LangChain                    Development Lifecycle
+                               OpenAI GPT                   (SSDLC)
+                                                            Technical Roadmapping
+                                                            and Prioritization
+
+Agile and Project Management   Test Automation
+Tools
+Azure DevOps Boards
+Jira
+
+Education
+Kalamazoo College
+B.A. Psychology (Cognition and Learning), Coursework in Economics              1996 - 2000
+Academic Scholarship
+Award for Excellence in Education
+
+Awards and Distinctions
+Microsoft - Most Valuable Professional, Developer Technologies, 2016
+CompleteLife - Juried Exhibition, Visual Chronicles Art Show, 2024
+Indiana State Fair - Culinary Arts, Second Place, 2025
+Indiana State Fair - Culinary Arts, Honorable Mention (x2), 2023
+No Starch Press - Technical Reviewer, Book of F#, 2014
+
+Selected Speaking Topics
+C# & .NET: LINQ, Dependency Injection, Code Contracts, Obfuscation
+JavaScript & Functional Programming: Currying, Pipelining, Dynamic Languages
+Security & Hacking: SQL Injection, Social Engineering, Hacking .NET
+Agile & Culture: Agile Using TFS, Cultural Requirements of Agile
+General Topics: Git Strategy, Time Management, Regular Expressions
+

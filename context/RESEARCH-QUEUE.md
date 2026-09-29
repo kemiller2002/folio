@@ -17,3 +17,5 @@
 | 13 | What geometric PDF invariants can be tested without brittle pixel equality? | Test architecture | Prototype page-box/text/overlap assertions | open |
 | 14 | What is the smallest public primitive set that covers reports/proposals/manuals without replacing HTML? | API scope | Build 3-5 representative documents and measure escape hatches | open |
 | 15 | What tagged-PDF/PDF-UA path is required if downstream customers need formally accessible PDFs? | Future renderer | Renderer comparison against accessibility requirements | open |
+| 16 | Do Firefox and WebKit paginate `.ef-row` headers and `.ef-category-grid` groups with the same keep behavior as Chromium when printed to PDF? | Recipe capability tier beyond P0 layout | Paginated PDF output from non-Chromium engines for RESUME-01/PROFILE-03 | open |
+| 17 | Should recipes also ship as a separate stylesheet export so consumers can adopt them without the element CSS? | Package exports | Consumer migration experience (kemiller2002/resume#1) | open |

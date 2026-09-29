@@ -8,6 +8,8 @@ on:
       - "src/styles/print.css"
       - "site/**"
       - "tools/build-site.mjs"
+      - "tools/recipe-metadata.mjs"
+      - "tests/fixtures/profiles/**"
       - "tools/core-component-metadata.mjs"
       - "tests/fixtures/reports/**"
       - "tests/site-build.test.mjs"

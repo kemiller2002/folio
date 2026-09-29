@@ -69,5 +69,28 @@
     "title": "Adopt native columns, tables, and named landscape pages while keeping grid sidebar provisional",
     "type": "decision-record",
     "updated": "2026-09-22"
+  },
+  {
+    "created": "2026-09-29",
+    "id": "DF-PRINT-2026-0004",
+    "path": "research/decisions/DF-PRINT-2026-0004--adopt-stylesheet-recipes-for-professional-profile-layout.md",
+    "related_documents": [
+      "research/evidence/EV-PRINT-2026-0006--resume-reference-reproduction-evidence.md",
+      "research/hypotheses/HY-PRINT-2026-0008--semantic-html-plus-stylesheet-recipes-reproduce-dense-professional-profiles.md",
+      "docs/recipes/PROFESSIONAL-PROFILE.md"
+    ],
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [],
+    "tags": [
+      "architecture",
+      "recipes",
+      "resume",
+      "professional-profile",
+      "public-api"
+    ],
+    "title": "Adopt stylesheet recipes, not domain elements, for professional-profile layout",
+    "type": "decision-record",
+    "updated": "2026-09-29"
   }
 ]

@@ -112,6 +112,18 @@ Current mobile posture:
 - browser validation audits every registered component page and a standalone demo for every registered component at 320px, 390px, and 430px in Chromium, Firefox, and WebKit.
 
 
+## Professional profile document family
+
+Tracked work item GH-17 (`kemiller2002/folio#17`) adds the Resume / Professional Profile family.
+
+Current posture:
+
+- canonical requirements `FOLIO-RES-001`..`099` in `docs/requirements/PRINT-COMPONENTS-REQUIREMENTS.md` §27;
+- `DF-PRINT-2026-0004`: stylesheet recipes in a public `ef-print-recipes` layer, no resume/job/education elements;
+- fixtures `RESUME-01` and `RESUME-02` reproduce kemiller2002/resume `index.html` and `developer.html` (ba786e4); `PROFILE-03` is a fictional profile on Letter with a different visual system;
+- `npm run test:profiles` checks word parity with committed reference snapshots (five declared reference defects), geometry, keeps, Letter/A4 adaptation, no-JavaScript output, and phone widths 320/390/430 across engines;
+- Chromium 141 local evidence recorded in `EV-PRINT-2026-0006`; Firefox/WebKit legs of the suite run in CI.
+
 ## Folio 0.2.0 core primitive expansion
 
 Tracked work item GH-11 closes the original architecture-only gap for header, footer, page-number, artwork layer, callout, figure, table, code, TOC, and note primitives.
