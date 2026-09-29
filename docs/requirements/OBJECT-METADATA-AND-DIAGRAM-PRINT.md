@@ -260,3 +260,33 @@ Workflow/diagram objects MAY carry authored color, and Folio MUST preserve it wh
 - **EPC-META-BULK-003 MUST** distinguish authored, derived, source-bound, unknown, and unavailable values when those distinctions are included by the consumer.
 - **EPC-META-BULK-004 MAY** include a machine-readable sidecar manifest for metadata/provenance under deterministic export, provided visibility/sensitivity rules are enforced.
 - **EPC-META-BULK-005 MUST** keep sidecar metadata out of the PDF/visible document unless explicitly requested.
+
+
+## 23. Studio-to-Folio diagram projection handoff
+
+- **EPC-DIAG-HANDOFF-001 MUST** accept a versioned consumer/Studio diagram projection without requiring Folio to own the canonical graph editor model.
+- **EPC-DIAG-HANDOFF-002 SHOULD** accept vector/semantic content plus a structured manifest containing source project/diagram/revision identity, deterministic content bounds, stable object/reference IDs needed for indexes, selected rendered metadata, accessibility/relationship summary, Forma/style provenance, and requested output options.
+- **EPC-DIAG-HANDOFF-003 MUST** reject or explicitly identify a stale projection when the caller requires a different source revision.
+- **EPC-DIAG-HANDOFF-004 MUST** exclude editor-only selection, hover, guides, handles, minimap, transient routing previews, and source-only metadata from ordinary projection input/output.
+- **EPC-DIAG-HANDOFF-005 MUST** treat the projection as immutable source content for fitting/tiling; Folio MUST NOT rewrite graph node/edge geometry to make it fit.
+- **EPC-DIAG-HANDOFF-006 MUST** fail strict export when required projection content or required public presentation capability is unavailable rather than inventing replacement graph semantics.
+- **EPC-DIAG-HANDOFF-007 MAY** expose a diagnostic projection mode separately from ordinary document export.
+- **EPC-DIAG-HANDOFF-008 MUST** preserve enough stable reference identity for metadata indexes, captions, cross-references, and provenance without leaking source-only metadata.
+
+## 24. Fit-scale legibility and stroke safety
+
+- **EPC-DIAG-SCALE-001 MUST** evaluate final effective text size after fit-to-page scaling and MUST NOT silently shrink meaningful labels below the document's minimum readable-text contract.
+- **EPC-DIAG-SCALE-002 MUST** evaluate connector/border stroke widths after scaling so required boundaries/relationships do not disappear in print.
+- **EPC-DIAG-SCALE-003 SHOULD** warn or block strict export when fitting would make required labels, icons, markers, or strokes detectably unreadable.
+- **EPC-DIAG-SCALE-004 SHOULD** offer tiling, landscape/wider page profile, or explicit larger paper/output size before extreme down-scaling.
+- **EPC-DIAG-SCALE-005 MUST** keep the selected scale factor in export provenance when non-1:1 scaling is applied.
+- **EPC-DIAG-SCALE-006 MUST** distinguish physical actual-size output from arbitrary visual fit scaling.
+- **EPC-DIAG-SCALE-007 MUST** require an explicit logical-to-physical unit conversion before claiming actual-size diagram output.
+
+## 25. Advanced paint fallback boundary
+
+- **EPC-DIAG-PAINT-001 MUST** support solid color diagram fills/strokes/accents as the baseline interoperable paint model.
+- **EPC-DIAG-PAINT-002 MAY** preserve transparency/alpha when the selected renderer/output capability has been tested and the resulting contrast/overlap remains acceptable.
+- **EPC-DIAG-PAINT-003 MUST** define a fallback for unsupported transparency, gradients, patterns, filters, or other advanced paint supplied by a future Forma/Studio contract.
+- **EPC-DIAG-PAINT-004 MUST NOT** silently flatten advanced paint in a way that removes required non-color distinctions or labels.
+- **EPC-DIAG-PAINT-005** Gradients/blend modes are not required for the first workflow/diagram print milestone.
