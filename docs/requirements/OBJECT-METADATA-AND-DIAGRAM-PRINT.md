@@ -290,3 +290,12 @@ Workflow/diagram objects MAY carry authored color, and Folio MUST preserve it wh
 - **EPC-DIAG-PAINT-003 MUST** define a fallback for unsupported transparency, gradients, patterns, filters, or other advanced paint supplied by a future Forma/Studio contract.
 - **EPC-DIAG-PAINT-004 MUST NOT** silently flatten advanced paint in a way that removes required non-color distinctions or labels.
 - **EPC-DIAG-PAINT-005** Gradients/blend modes are not required for the first workflow/diagram print milestone.
+
+
+## 26. Metadata-derived print disclosure
+
+- **EPC-META-DISCLOSE-001 MUST** treat visible color/style/icon/badge/legend/index/category output derived from metadata as disclosure even when the raw metadata value is omitted.
+- **EPC-META-DISCLOSE-002 MUST NOT** derive printable presentation from source-only/sensitive metadata unless the consumer projection explicitly authorizes that derived output.
+- **EPC-META-DISCLOSE-003 MUST** assume Studio/consumer is the authority for disclosure policy and MUST NOT independently evaluate hidden metadata into visible categories.
+- **EPC-META-DISCLOSE-004 MUST** keep source-only metadata out of projection manifests when only the already-authorized resolved appearance is needed.
+- **EPC-META-DISCLOSE-005 MUST** preserve non-secret provenance sufficient to identify an authorized mapping/style source without embedding the protected source value.
