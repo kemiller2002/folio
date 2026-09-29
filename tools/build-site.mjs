@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { coreComponentMetadata } from "./core-component-metadata.mjs";
+import { recipeMetadata, profileFamily } from "./recipe-metadata.mjs";
 
 const root = process.cwd();
 const output = path.join(root, "site-dist");
@@ -490,6 +491,7 @@ function header(rootPath) {
       <a href="${rootPath}">Overview</a>
       <a href="${rootPath}#components">Components</a>
       <a href="${rootPath}reports/signal-results/">Report example</a>
+      <a href="${rootPath}profiles/">Profiles</a>
       <a href="${rootPath}capabilities/">Capabilities</a>
       <a class="pill-link" href="${rootPath}agents/">Agent use</a>
     </nav>
@@ -607,6 +609,123 @@ function componentPage(component) {
       </div>
     </main>
   </div>`);
+}
+
+const recipes = Object.entries(recipeMetadata).map(([name, recipe]) => ({ name, ...recipe, demoSlug: `recipe-${recipe.slug}` }));
+
+function recipeNav(active) {
+  return `<nav class="component-nav" aria-label="Folio recipe catalog"><div class="component-nav-inner">
+    <h2>Recipes</h2>
+    <ul>${recipes.map(item => `<li><a href="../${item.slug}/"${item.slug === active ? ' aria-current="page"' : ""}>${escapeHtml(item.title)}</a></li>`).join("")}</ul>
+  </div></nav>`;
+}
+
+function recipePage(recipe) {
+  const rootPath = "../../";
+  const asDemo = { ...recipe, slug: recipe.demoSlug };
+  return page(recipe.title, rootPath, `<div class="docs-shell">
+    ${recipeNav(recipe.slug)}
+    <main class="component-main" id="main">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../">Folio</a><span>/</span><a href="../../profiles/">Profiles</a><span>/</span><span>${escapeHtml(recipe.title)}</span></nav>
+      <header class="component-header">
+        <span class="component-kicker">${escapeHtml(recipe.category)}</span>
+        <h1>${escapeHtml(recipe.title)}</h1>
+        <p class="lead">${escapeHtml(recipe.summary)}</p>
+        <div class="contract-grid">
+          <div class="contract-item"><span class="metric-label">Recipe</span><strong>${escapeHtml(recipe.selector)}</strong></div>
+          <div class="contract-item"><span class="metric-label">Capability</span><strong>${escapeHtml(recipe.capability)}</strong></div>
+          <div class="contract-item"><span class="metric-label">Maturity</span><strong>${escapeHtml(recipe.maturity)}</strong></div>
+          <div class="contract-item"><span class="metric-label">Pagination owner</span><strong>Browser / selected renderer</strong></div>
+        </div>
+      </header>
+      <div class="warning"><p><strong>Contract note.</strong> ${escapeHtml(recipe.caution)}</p></div>
+      <div class="examples">
+        ${recipe.examples.map((example, index) => exampleBlock(asDemo, example, index)).join("")}
+      </div>
+    </main>
+  </div>`);
+}
+
+function profileFamilyPage() {
+  const rootPath = "../";
+  return page("Resume and professional profile", rootPath, `<main id="main" class="capability-page">
+    <span class="eyebrow">Document family</span>
+    <h1>Resume and professional profile</h1>
+    <p class="lead">Resumes, CVs, speaker sheets, staff biographies, credentials sheets, capability statements, and publication lists built from semantic HTML plus Folio recipes. The application owns the content, its selection, and its order; Folio owns reusable layout contracts; the renderer owns pages.</p>
+
+    <div class="contract-grid">
+      <div class="contract-item"><span class="metric-label">New elements</span><strong>None</strong></div>
+      <div class="contract-item"><span class="metric-label">Recipes</span><strong>${recipes.length} in the ef-print-recipes layer</strong></div>
+      <div class="contract-item"><span class="metric-label">Decision</span><strong>DF-PRINT-2026-0004</strong></div>
+      <div class="contract-item"><span class="metric-label">Reference</span><strong>kemiller2002/resume @ ba786e4</strong></div>
+    </div>
+
+    <h2>Examples</h2>
+    <div class="component-grid">
+      ${profileFamily.map(item => `<article class="component-card">
+        <span class="category-label">${escapeHtml(item.id)} · ${escapeHtml(item.page)}</span>
+        <a href="${item.slug}/"><h3>${escapeHtml(item.title)}</h3></a>
+        <p>${escapeHtml(item.summary)}</p>
+        <span class="status" data-status="current">${escapeHtml(item.capability)}</span>
+      </article>`).join("")}
+    </div>
+
+    <h2>Recipes</h2>
+    <div class="component-grid">
+      ${recipes.map(item => `<article class="component-card">
+        <span class="category-label">${escapeHtml(item.selector)}</span>
+        <a href="../recipes/${item.slug}/"><h3>${escapeHtml(item.title)}</h3></a>
+        <p>${escapeHtml(item.summary)}</p>
+        <span class="status" data-status="current">${escapeHtml(item.capability)} · ${escapeHtml(item.maturity)}</span>
+      </article>`).join("")}
+    </div>
+
+    <h2>Why recipes instead of elements?</h2>
+    <p>Each pattern needs a different native host depending on meaning: an entry header is a <code>header</code>, a publication is an <code>li</code>, a focus-area line is a <code>dl</code>. A class contract carries the layout without replacing those semantics. Folio adds no <code>ef-print-resume</code>, <code>ef-print-job</code>, or <code>ef-print-education</code> element.</p>
+
+    <h2>What remains application-owned?</h2>
+    <p>The data schema, data binding, which entries and technologies appear, sort order, date formatting and the word “Present”, executive versus developer variants, page size choice, and visual identity.</p>
+  </main>`);
+}
+
+function profilePage(item) {
+  const rootPath = "../../";
+  const source = fs.readFileSync(path.join(root, item.fixture), "utf8");
+  return page(`${item.id} ${item.title}`, rootPath, `<main id="main" class="capability-page">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../">Folio</a><span>/</span><a href="../">Profiles</a><span>/</span><span>${escapeHtml(item.id)}</span></nav>
+    <span class="eyebrow">${escapeHtml(item.id)}</span>
+    <h1>${escapeHtml(item.title)}</h1>
+    <p class="lead">${escapeHtml(item.summary)}</p>
+
+    <div class="contract-grid">
+      <div class="contract-item"><span class="metric-label">Page</span><strong>${escapeHtml(item.page)}</strong></div>
+      <div class="contract-item"><span class="metric-label">Chromium pages</span><strong>${escapeHtml(item.pages)}</strong></div>
+      <div class="contract-item"><span class="metric-label">Capability</span><strong>${escapeHtml(item.capability)}</strong></div>
+      <div class="contract-item"><span class="metric-label">Canonical fixture</span><strong>${escapeHtml(item.fixture)}</strong></div>
+    </div>
+
+    <div class="print-preview report-preview">
+      <iframe src="./preview.html" title="${escapeHtml(item.id)} ${escapeHtml(item.title)} preview"></iframe>
+    </div>
+    <div class="example-actions">
+      <a href="./preview.html" target="_blank" rel="noopener">Open standalone preview</a>
+      <p class="preview-note">${escapeHtml(item.mobile)}</p>
+    </div>
+
+    <h2>Folio primitives and recipes used</h2>
+    <p>Elements: ${item.primitives.map(name => `<code>${escapeHtml(name)}</code>`).join(", ")}. Recipes: ${item.recipes.map(name => `<code>${escapeHtml(name)}</code>`).join(", ")}. Everything else is native HTML and consumer CSS.</p>
+
+    <h2>Renderer limitations</h2>
+    <div class="warning"><p><strong>Capability note.</strong> ${escapeHtml(item.limitations)}</p></div>
+
+    <h2>Mobile preview behavior</h2>
+    <p>${escapeHtml(item.mobile)}</p>
+
+    <details>
+      <summary>View semantic source</summary>
+      <pre><code>${escapeHtml(source)}</code></pre>
+    </details>
+  </main>`);
 }
 
 function capabilitiesPage() {
@@ -767,6 +886,8 @@ fs.mkdirSync(path.join(output, "demos"), { recursive: true });
 fs.mkdirSync(path.join(output, "agents"), { recursive: true });
 fs.mkdirSync(path.join(output, "capabilities"), { recursive: true });
 fs.mkdirSync(path.join(output, "reports", "signal-results"), { recursive: true });
+fs.mkdirSync(path.join(output, "recipes"), { recursive: true });
+fs.mkdirSync(path.join(output, "profiles"), { recursive: true });
 
 const registeredSet = new Set(uniqueRegistered);
 const metadataSet = new Set(Object.keys(components));
@@ -802,6 +923,40 @@ const signalReportPreview = fs.readFileSync(path.join(root, "tests/fixtures/repo
   .replace(/\s*<script type="module" src="\.\.\/\.\.\/\.\.\/src\/components\/register\.js"><\/script>/, "");
 fs.writeFileSync(path.join(output, "reports", "signal-results", "preview.html"), signalReportPreview);
 fs.writeFileSync(path.join(output, ".nojekyll"), "");
+
+for (const recipe of recipes) {
+  if (recipe.examples.length < 3) {
+    throw new Error(`${recipe.selector} recipe requires at least three documentation examples.`);
+  }
+  const recipeDir = path.join(output, "recipes", recipe.slug);
+  const demoDir = path.join(output, "demos", recipe.demoSlug);
+  fs.mkdirSync(recipeDir, { recursive: true });
+  fs.mkdirSync(demoDir, { recursive: true });
+  fs.writeFileSync(path.join(recipeDir, "index.html"), recipePage(recipe));
+  recipe.examples.forEach((example, index) => {
+    fs.writeFileSync(path.join(demoDir, `${index + 1}.html`), demoPage(recipe, example));
+  });
+}
+
+for (const stylesheet of new Set(profileFamily.map(item => item.stylesheet))) {
+  fs.copyFileSync(path.join(root, stylesheet), path.join(output, "assets", `profile-${path.basename(stylesheet)}`));
+}
+
+for (const item of profileFamily) {
+  const profileDir = path.join(output, "profiles", item.slug);
+  fs.mkdirSync(profileDir, { recursive: true });
+  const stylesheetName = path.basename(item.stylesheet);
+  const preview = fs.readFileSync(path.join(root, item.fixture), "utf8")
+    .replace('<link rel="stylesheet" href="../../../src/styles/print.css">', '<link rel="stylesheet" href="../../assets/folio-print.css">')
+    .replace(`<link rel="stylesheet" href="./${stylesheetName}">`, `<link rel="stylesheet" href="../../assets/profile-${stylesheetName}">`)
+    .replace(/\s*<script type="module" src="\.\.\/\.\.\/\.\.\/src\/components\/register\.js"><\/script>/, "");
+  if (preview.includes("../../../src/") || /<script\b/i.test(preview)) {
+    throw new Error(`${item.id} preview still references repository sources or scripts.`);
+  }
+  fs.writeFileSync(path.join(profileDir, "preview.html"), preview);
+  fs.writeFileSync(path.join(profileDir, "index.html"), profilePage(item));
+}
+fs.writeFileSync(path.join(output, "profiles", "index.html"), profileFamilyPage());
 
 const ordered = uniqueRegistered.map(name => ({ name, ...components[name] }));
 const indexBody = `<main id="main">
@@ -846,6 +1001,21 @@ const indexBody = `<main id="main">
   </div>
 </section>
 
+<section class="content-section" id="recipes">
+  <div class="section-heading">
+    <div><span class="eyebrow">Recipes and document families</span><h2>Layout contracts without new tags.</h2></div>
+    <a class="button-link" href="profiles/">Resume and professional profile</a>
+  </div>
+  <div class="component-grid">
+    ${recipes.map(item => `<article class="component-card">
+      <span class="category-label">${escapeHtml(item.selector)}</span>
+      <a href="recipes/${item.slug}/"><h3>${escapeHtml(item.title)}</h3></a>
+      <p>${escapeHtml(item.summary)}</p>
+      <span class="status" data-status="current">${escapeHtml(item.capability)} · ${escapeHtml(item.maturity)}</span>
+    </article>`).join("")}
+  </div>
+</section>
+
 <section class="content-section">
   <div class="section-heading">
     <div><span class="eyebrow">Renderer profiles</span><h2>Portable does not mean identical.</h2></div>
@@ -879,6 +1049,10 @@ const manifest = {
   registeredElements: uniqueRegistered,
   runtime: "static-documentation-no-browser-script",
   reportExamples: ["signal-results"],
+  recipeCount: recipes.length,
+  recipeExampleCount: recipes.reduce((total, item) => total + item.examples.length, 0),
+  recipes: recipes.map(item => ({ selector: item.selector, slug: item.slug, demoSlug: item.demoSlug, title: item.title, capability: item.capability, maturity: item.maturity, examples: item.examples.length })),
+  profileExamples: profileFamily.map(item => ({ id: item.id, slug: item.slug, fixture: item.fixture, page: item.page })),
   components: ordered.map(item => ({
     element: item.name,
     slug: item.slug,
