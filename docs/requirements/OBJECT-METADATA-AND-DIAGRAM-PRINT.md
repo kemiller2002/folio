@@ -206,3 +206,57 @@ Workflow/diagram objects MAY carry authored color, and Folio MUST preserve it wh
 - **EPC-DIAG-M1-005 MUST** prove fit-to-page for Letter and A4.
 - **EPC-DIAG-M1-006 MUST** leave graph storage/routing/workflow legality entirely outside Folio.
 - **EPC-DIAG-M1-007 MUST** use test evidence before deciding whether `ef-print-diagram` is necessary.
+
+
+## 17. Metadata schema and rendered-value distinctions
+
+- **EPC-META-SCHEMA-001 MUST** preserve stable metadata field keys independently from localized/rendered labels when the consumer supplies both.
+- **EPC-META-SCHEMA-002 MUST** preserve stable enum/token value IDs independently from localized display text when the consumer supplies both.
+- **EPC-META-SCHEMA-003 MUST** distinguish explicit, defaulted, derived, source-bound, unknown, unavailable, and invalid metadata values when the consumer/export contract requires those distinctions.
+- **EPC-META-SCHEMA-004 MUST** NOT render a defaulted or derived value as if it were explicitly authored when that distinction is material to the document.
+- **EPC-META-SCHEMA-005 SHOULD** support rendering consumer-supplied field descriptions/help/provenance in methodology, appendix, or metadata-index compositions.
+- **EPC-META-SCHEMA-006 MUST** preserve set-like versus ordered repeated metadata semantics in generated indexes/tables where ordering matters.
+- **EPC-META-SCHEMA-007 MUST** keep schema validation authority outside Folio; Folio may render supplied validation/quality findings but does not invent domain constraints.
+
+## 18. Named style and appearance provenance
+
+- **EPC-DIAG-STYLE-001 MUST** allow an export caller to preserve the source appearance identity for a diagram object, including Forma token, palette slot, named Studio style ID/version, literal override, or explicit mapping rule ID where supplied.
+- **EPC-DIAG-STYLE-002 MUST** distinguish source style identity from resolved print appearance.
+- **EPC-DIAG-STYLE-003 MUST** record enough non-secret provenance to explain why a later export may render differently after a Forma/style/palette upgrade.
+- **EPC-DIAG-STYLE-004 MUST** NOT expand one named-style change into misleading semantic differences for every rendered object in provenance/diff reporting when the source model identifies the shared style.
+- **EPC-DIAG-STYLE-005 MUST** preserve per-object explicit overrides over the supplied resolved style when the consumer has already resolved precedence.
+- **EPC-DIAG-STYLE-006 MUST** NOT become the authority for style inheritance or override resolution; the consumer/Studio supplies the effective presentation.
+
+## 19. Shape, icon, line, and pattern projection
+
+- **EPC-DIAG-APPEAR-001 MUST** preserve supported Forma shape/presentation variants without treating shape as graph semantic identity.
+- **EPC-DIAG-APPEAR-002 MUST** preserve supported icons/symbols plus their textual/accessibility equivalents.
+- **EPC-DIAG-APPEAR-003 MUST** preserve connector line/dash style and marker/arrowhead presentation where the renderer path supports them.
+- **EPC-DIAG-APPEAR-004 SHOULD** preserve pattern/hatch fills when supplied for grayscale/non-color differentiation.
+- **EPC-DIAG-APPEAR-005 MUST** provide a documented fallback when a renderer cannot preserve an appearance property.
+- **EPC-DIAG-APPEAR-006 MUST** ensure the fallback does not erase labels, relationship identity, or object boundaries.
+- **EPC-DIAG-APPEAR-007 MUST** keep appearance fallback distinct from semantic transformation.
+
+## 20. Diagram hyperlinks and object references
+
+- **EPC-DIAG-LINK-001 MAY** preserve safe consumer-supplied hyperlinks from diagram objects in output formats/renderers that support links.
+- **EPC-DIAG-LINK-002 MUST** preserve visible/reference text when a renderer drops hyperlink interactivity.
+- **EPC-DIAG-LINK-003 MUST** validate/sanitize URL schemes at the applicable consumer/export boundary and MUST NOT emit `javascript:` or equivalent dangerous links.
+- **EPC-DIAG-LINK-004 MUST** distinguish an external link from an internal object/reference identifier in source/export data.
+- **EPC-DIAG-LINK-005 SHOULD** allow printed object indexes/appendices to expose stable reference IDs even when interactive deep links are unavailable.
+
+## 21. Vector-input security
+
+- **EPC-DIAG-SEC-001 MUST** treat consumer-provided SVG/vector content as untrusted unless it came from a separately trusted/generated pipeline.
+- **EPC-DIAG-SEC-002 MUST** reject or neutralize executable script, event handlers, unsafe foreign/external resource loading, and dangerous URL schemes before embedding untrusted SVG/vector content in deterministic export.
+- **EPC-DIAG-SEC-003 MUST** prevent source-only metadata/secrets from being reintroduced through SVG metadata, title/desc fields, comments, external references, or generated diagnostics.
+- **EPC-DIAG-SEC-004 SHOULD** prefer consumer-generated sanitized SVG from the canonical diagram model over arbitrary imported SVG when provenance is known.
+- **EPC-DIAG-SEC-005 MUST** fail strict export rather than silently embedding vector content that violates the selected security/capability policy.
+
+## 22. Bulk metadata/index export
+
+- **EPC-META-BULK-001 SHOULD** support a generated metadata/object index or table when the consumer supplies a metadata-rich diagram/document.
+- **EPC-META-BULK-002 MUST** key index rows to stable object/reference IDs rather than visible labels alone.
+- **EPC-META-BULK-003 MUST** distinguish authored, derived, source-bound, unknown, and unavailable values when those distinctions are included by the consumer.
+- **EPC-META-BULK-004 MAY** include a machine-readable sidecar manifest for metadata/provenance under deterministic export, provided visibility/sensitivity rules are enforced.
+- **EPC-META-BULK-005 MUST** keep sidecar metadata out of the PDF/visible document unless explicitly requested.
