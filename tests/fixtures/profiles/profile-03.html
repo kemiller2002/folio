@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PROFILE-03 · Generalized professional profile</title>
+  <link rel="stylesheet" href="../../../src/styles/print.css">
+  <link rel="stylesheet" href="./profile-03.css">
+  <script type="module" src="../../../src/components/register.js"></script>
+</head>
+<!--
+  PROFILE-03: a fictional professional profile (CV / speaker sheet / capability
+  statement hybrid). Content is illustrative and does not describe a real
+  person. It exercises the same Folio recipes as RESUME-01/02 with different
+  sections, a different page size, long headings, publication rows, and
+  labeled inline collections.
+-->
+<body>
+<ef-print-document class="ef-dense profile" data-fixture="PROFILE-03">
+  <header class="ef-identity" data-contact="inline">
+    <div>
+      <h1>Dr. Adaeze Marguerite Okonkwo-Lindqvist</h1>
+      <p>Clinical informatics researcher, standards editor, and program advisor</p>
+    </div>
+    <address>
+      <span>Rotterdam, Netherlands</span>
+      <a href="mailto:a.okonkwo-lindqvist@example.org">a.okonkwo-lindqvist@example.org</a>
+      <span>+31 10 555 0142</span>
+      <a href="https://example.org/profiles/okonkwo-lindqvist">example.org/profiles/okonkwo-lindqvist</a>
+    </address>
+  </header>
+
+  <section aria-labelledby="profile-summary">
+    <h2 id="profile-summary">Profile</h2>
+    <p>Researcher and program advisor working where clinical evidence, data standards, and public-sector delivery meet. Leads multi-country interoperability programs, edits open specifications, and teaches evidence appraisal to clinical and engineering teams.</p>
+  </section>
+
+  <section aria-labelledby="profile-appointments">
+    <h2 id="profile-appointments">Appointments</h2>
+    <article class="ef-entry">
+      <header class="ef-row">
+        <h3>Commonwealth Advisory Council on Digital Health Infrastructure and Cross-Border Clinical Data Exchange</h3>
+        <p class="profile-role">Principal Scientific Advisor, Interoperability Working Group Chair</p>
+        <p data-row-end><time datetime="2021-09">September 2021</time> - Present</p>
+      </header>
+      <ul class="ef-lead-list">
+        <li><strong>Chaired a 14-member working group</strong> that consolidated three incompatible referral-message profiles into one published specification.</li>
+        <li><strong>Designed an evidence register</strong> linking every normative requirement to its source study, pilot finding, or regulatory citation.</li>
+        <li><strong>Negotiated pilot terms with six regional health authorities,</strong> including data-protection impact assessments and exit criteria.</li>
+      </ul>
+      <dl class="ef-labeled">
+        <dt>Focus areas:</dt>
+        <dd><ul class="ef-inline-list"><li>Referral messaging</li><li>Terminology binding</li><li>Consent provenance</li><li>Evidence traceability</li><li>Public-sector procurement</li></ul></dd>
+      </dl>
+    </article>
+    <article class="ef-entry">
+      <header class="ef-row">
+        <h3>Erasmus Institute for Health Systems Research</h3>
+        <p class="profile-role">Senior Research Fellow</p>
+        <p data-row-end><time datetime="2016-01">2016</time> - <time datetime="2021-08">2021</time></p>
+      </header>
+      <ul class="ef-lead-list">
+        <li><strong>Led a five-year cohort study</strong> of discharge-summary completeness across 41 hospitals.</li>
+        <li><strong>Built the open appraisal toolkit</strong> now used in two national guideline programs.</li>
+      </ul>
+    </article>
+    <article class="ef-entry">
+      <header class="ef-row">
+        <h3>Earlier appointments</h3>
+        <p data-row-end><time datetime="2008">2008</time> - <time datetime="2015">2015</time></p>
+      </header>
+    </article>
+  </section>
+
+  <section aria-labelledby="profile-publications">
+    <h2 id="profile-publications">Selected publications</h2>
+    <ol class="profile-bibliography" reversed>
+      <li class="ef-row">
+        <p>Okonkwo-Lindqvist A, Brandt J, Mensah K. <cite>Traceable requirements for cross-border referral messaging: a mixed-methods evaluation of three regional pilots</cite>. Journal of Clinical Informatics Practice.</p>
+        <p data-row-end><time datetime="2025">2025</time></p>
+      </li>
+      <li class="ef-row">
+        <p>Okonkwo-Lindqvist A, de Vries H. <cite>Discharge-summary completeness in 41 hospitals</cite>. Health Systems Evidence Review.</p>
+        <p data-row-end><time datetime="2022">2022</time></p>
+      </li>
+      <li class="ef-row">
+        <p>Mensah K, Okonkwo-Lindqvist A. <cite>Appraising evidence for data standards</cite>. Open Standards Quarterly.</p>
+        <p data-row-end><time datetime="2019">2019</time></p>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="profile-credentials">
+    <h2 id="profile-credentials">Education and credentials</h2>
+    <ul class="profile-bibliography">
+      <li>
+        <h3>Karolinska Institutet</h3>
+        <div class="ef-row">
+          <div>PhD, Medical Informatics - <ul class="ef-inline-list"><li>Clinical terminologies</li><li>Decision support evaluation</li></ul></div>
+          <p data-row-end><time datetime="2008">2008</time></p>
+        </div>
+      </li>
+      <li>
+        <div class="ef-row">
+          <p><strong>Certified Health Data Standards Editor</strong> - International Standards Consortium</p>
+          <p data-row-end><time datetime="2017">2017</time> - Present</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <ef-print-keep>
+    <section aria-labelledby="profile-speaking">
+      <h2 id="profile-speaking">Speaking</h2>
+      <ul class="ef-lead-list" data-marker="none">
+        <li><strong>Evidence you can audit:</strong> designing specifications whose every requirement has a traceable source.</li>
+        <li><strong>Consent as data:</strong> provenance patterns for cross-border care.</li>
+        <li><strong>Pilots that can fail safely:</strong> exit criteria for public-sector interoperability programs.</li>
+      </ul>
+    </section>
+  </ef-print-keep>
+
+  <section aria-labelledby="profile-capabilities">
+    <h2 id="profile-capabilities">Capabilities</h2>
+    <ul class="ef-category-grid">
+      <li>
+        <h3>Standards and specifications</h3>
+        <ul><li>HL7 FHIR profiling</li><li>SNOMED CT and LOINC binding</li><li>IHE integration profiles</li></ul>
+      </li>
+      <li>
+        <h3>Research methods</h3>
+        <ul><li>Mixed-methods evaluation</li><li>Cohort study design</li><li>Systematic evidence appraisal</li></ul>
+      </li>
+      <li>
+        <h3>Program leadership</h3>
+        <ul><li>Multi-country pilots</li><li>Procurement and exit criteria</li></ul>
+      </li>
+      <li>
+        <h3>Supercalifragilistic interoperability-governance-and-assurance frameworks</h3>
+        <ul><li>Data-protection impact assessment</li><li>Clinical safety case authoring (DCB0129/DCB0160 equivalents)</li></ul>
+      </li>
+    </ul>
+  </section>
+</ef-print-document>
+</body>
+</html>

@@ -1,4 +1,4 @@
-@layer ef-print-foundation, ef-print-components;
+@layer ef-print-foundation, ef-print-components, ef-print-recipes;
 
 @layer ef-print-foundation {
   :root {
@@ -556,6 +556,247 @@
 
     ef-print-code {
       max-inline-size: 100%;
+    }
+  }
+}
+
+
+/*
+ * Professional-profile recipes (DF-PRINT-2026-0004, FOLIO-RES-007).
+ *
+ * Recipes are documented class contracts applied to ordinary semantic HTML.
+ * They carry reusable layout intent for dense professional documents such as
+ * resumes, CVs, speaker sheets, staff biographies, credentials sheets, project
+ * histories, and publication lists. They carry no domain meaning: the consuming
+ * application owns content, selection, ordering, and formatting.
+ *
+ * The layer sits after ef-print-components so unlayered consumer CSS always wins.
+ */
+@layer ef-print-recipes {
+  :root {
+    --ef-print-identity-align: center;
+    --ef-print-identity-gap: 1em;
+    --ef-print-identity-contact-gap: 0.25em;
+    --ef-print-row-gap: 0.75em;
+    --ef-print-row-end-min: auto;
+    --ef-print-entry-gap: 1em;
+    --ef-print-lead-list-indent: 1.25em;
+    --ef-print-lead-list-marker: square;
+    --ef-print-lead-list-item-gap: 0;
+    --ef-print-lead-weight: 700;
+    --ef-print-inline-list-separator: ",";
+    --ef-print-labeled-gap: 0.25em;
+    --ef-print-category-min: 12.5em;
+    --ef-print-category-max: 1fr;
+    --ef-print-category-gap: 0.625em;
+    --ef-print-category-item-gap: 0.25em;
+    --ef-print-dense-heading-space: 0.83em;
+    --ef-print-dense-block-space: 0.5em;
+  }
+
+  /* Identity/contact composition: dominant name region plus stacked contact region. */
+  .ef-identity {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--ef-print-identity-gap);
+    align-items: center;
+  }
+
+  .ef-identity > :first-child {
+    min-inline-size: 0;
+    margin: 0;
+    text-align: var(--ef-print-identity-align);
+  }
+
+  .ef-identity > :not(:first-child) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ef-print-identity-contact-gap);
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    list-style: none;
+    overflow-wrap: anywhere;
+  }
+
+  .ef-identity[data-contact="inline"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ef-identity[data-contact="inline"] > :not(:first-child) {
+    flex-flow: row wrap;
+    justify-content: var(--ef-print-identity-align);
+    column-gap: 1em;
+  }
+
+  /*
+   * Aligned metadata row: primary regions grow and wrap on the start side; the
+   * [data-row-end] region (dates, years, amounts) stays on one line at the end of
+   * the first row. No fixed coordinates, no measurement.
+   */
+  .ef-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(var(--ef-print-row-end-min), auto);
+    column-gap: var(--ef-print-row-gap);
+    align-items: baseline;
+  }
+
+  .ef-row > * {
+    grid-column: 1;
+    min-inline-size: 0;
+    margin: 0;
+  }
+
+  .ef-row > [data-row-end] {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: end;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Repeated logical entry: its header stays with the first line of entry content. */
+  .ef-entry {
+    margin-block: 0 var(--ef-print-entry-gap);
+  }
+
+  .ef-entry > :first-child:not(:last-child) {
+    break-after: avoid;
+  }
+
+  .ef-entry[data-keep] {
+    break-inside: avoid;
+  }
+
+  /* Compact accomplishment list: native list, emphasized lead phrase, tight rhythm. */
+  .ef-lead-list {
+    margin: 0;
+    padding-inline-start: var(--ef-print-lead-list-indent);
+    list-style-type: var(--ef-print-lead-list-marker);
+  }
+
+  .ef-lead-list > li {
+    margin-block: 0 var(--ef-print-lead-list-item-gap);
+    break-inside: avoid;
+  }
+
+  .ef-lead-list > li > :is(strong, b):first-child {
+    font-weight: var(--ef-print-lead-weight);
+  }
+
+  .ef-lead-list[data-marker="none"] {
+    padding-inline-start: 0;
+    list-style: none;
+  }
+
+  /*
+   * Compact inline collection: list semantics stay in the source; the separator
+   * is presentation between items. Generated spaces collapse with authored
+   * whitespace, so templates may emit either.
+   */
+  .ef-inline-list {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ef-inline-list > li {
+    display: inline;
+  }
+
+  .ef-inline-list > li:not(:last-child)::after {
+    content: var(--ef-print-inline-list-separator) " ";
+  }
+
+  /* Inline label/value composition, e.g. <dl class="ef-labeled"><dt>Focus areas:</dt><dd>…</dd></dl>. */
+  .ef-labeled {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--ef-print-labeled-gap);
+    margin: 0;
+  }
+
+  .ef-labeled > :first-child {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .ef-labeled > :not(:first-child) {
+    flex: 1 1 0;
+    min-inline-size: min(12em, 100%);
+    margin: 0;
+  }
+
+  /* Categorized dense grid: variable groups, each kept together where it fits. */
+  .ef-category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--ef-print-category-min), 100%), var(--ef-print-category-max)));
+    gap: var(--ef-print-category-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ef-category-grid > * {
+    min-inline-size: 0;
+    overflow-wrap: break-word;
+    break-inside: avoid;
+  }
+
+  .ef-category-grid > * > :first-child {
+    margin: 0;
+    break-after: avoid;
+  }
+
+  .ef-category-grid > * > :is(ul, ol) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ef-print-category-item-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Dense professional rhythm: compact block spacing and heading keep-with-next intent. */
+  .ef-dense :is(h1, h2, h3, h4, h5, h6) {
+    break-after: avoid;
+  }
+
+  .ef-dense :is(h2, h3, h4, h5, h6) {
+    margin-block: var(--ef-print-dense-heading-space) 0;
+  }
+
+  .ef-dense :is(p, ul, ol, dl) {
+    margin-block: 0 var(--ef-print-dense-block-space);
+  }
+
+  .ef-dense :is(li, dd) > :is(ul, ol) {
+    margin-block-end: 0;
+  }
+
+  /* Screen-only reflow. Print media keeps the authored rows, grid, and header. */
+  @media screen and (max-width: 48rem) {
+    .ef-identity {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 30rem) {
+    .ef-category-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ef-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ef-row > [data-row-end] {
+      grid-column: 1;
+      grid-row: auto;
+      text-align: start;
+      white-space: normal;
     }
   }
 }
