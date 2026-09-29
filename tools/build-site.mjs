@@ -1007,7 +1007,7 @@ const indexBody = `<main id="main">
     <a class="button-link" href="profiles/">Resume and professional profile</a>
   </div>
   <div class="component-grid">
-    ${recipes.map(item => `<article class="component-card">
+    ${recipes.map(item => `<article class="component-card" data-kind="recipe">
       <span class="category-label">${escapeHtml(item.selector)}</span>
       <a href="recipes/${item.slug}/"><h3>${escapeHtml(item.title)}</h3></a>
       <p>${escapeHtml(item.summary)}</p>

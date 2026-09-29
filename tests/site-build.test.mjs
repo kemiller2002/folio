@@ -58,6 +58,45 @@ test("Folio site publishes the canonical Signal results report", async () => {
   await fs.access(path.join(site, "assets", "signal-results.css"));
 });
 
+test("Folio site publishes every recipe with three standalone examples", async () => {
+  const manifest = JSON.parse(await fs.readFile(path.join(site, "site-manifest.json"), "utf8"));
+  const printCss = await fs.readFile(path.join(site, "assets", "folio-print.css"), "utf8");
+
+  assert.ok(manifest.recipeCount >= 8);
+  assert.equal(manifest.recipeExampleCount, manifest.recipeCount * 3);
+  for (const recipe of manifest.recipes) {
+    const page = await fs.readFile(path.join(site, "recipes", recipe.slug, "index.html"), "utf8");
+    assert.equal((page.match(/data-example/g) ?? []).length, 3, recipe.slug);
+    assert.ok(page.includes(recipe.selector), `${recipe.slug} names its selector`);
+    assert.ok(new RegExp(`\\${recipe.selector}[\\s>{\\[]`).test(printCss), `${recipe.selector} exists in the public stylesheet`);
+    for (let index = 1; index <= 3; index += 1) {
+      await fs.access(path.join(site, "demos", recipe.demoSlug, `${index}.html`));
+    }
+  }
+  assert.match(printCss, /@layer ef-print-foundation, ef-print-components, ef-print-recipes;/);
+});
+
+test("Folio site publishes the resume and professional-profile family", async () => {
+  const manifest = JSON.parse(await fs.readFile(path.join(site, "site-manifest.json"), "utf8"));
+  const family = await fs.readFile(path.join(site, "profiles", "index.html"), "utf8");
+
+  assert.deepEqual(manifest.profileExamples.map(item => item.id), ["RESUME-01", "RESUME-02", "PROFILE-03"]);
+  assert.match(family, /Resume and professional profile/);
+  assert.match(family, /DF-PRINT-2026-0004/);
+  assert.doesNotMatch(family, /<ef-print-resume|<ef-print-job|<ef-print-education/);
+  for (const item of manifest.profileExamples) {
+    const page = await fs.readFile(path.join(site, "profiles", item.slug, "index.html"), "utf8");
+    const preview = await fs.readFile(path.join(site, "profiles", item.slug, "preview.html"), "utf8");
+    for (const label of ["Folio primitives and recipes used", "Renderer limitations", "Mobile preview behavior", "View semantic source", "Capability", "Page"]) {
+      assert.ok(page.includes(label), `${item.id} page shows ${label}`);
+    }
+    assert.match(preview, new RegExp(`data-fixture="${item.id}"`));
+    assert.match(preview, /class="ef-row"/);
+    assert.match(preview, /\.\.\/\.\.\/assets\/folio-print\.css/);
+    assert.doesNotMatch(preview, /src\/styles|<script\b/i);
+  }
+});
+
 test("generated Folio documentation contains no browser scripts", async () => {
   const files = await walk(site);
   for (const file of files.filter(file => file.endsWith(".html"))) {
