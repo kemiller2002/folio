@@ -98,3 +98,13 @@ The fixture proves a substantial results document using existing Folio primitive
 ## Professional profile / resume family
 
 Folio reproduces a real two-variant resume and a generalized professional profile from semantic HTML plus stylesheet recipes in the public `ef-print-recipes` layer: `.ef-identity`, `.ef-row` with `[data-row-end]`, `.ef-entry`, `.ef-lead-list`, `.ef-inline-list`, `.ef-labeled`, `.ef-category-grid`, and `.ef-dense`. No resume-specific elements exist. Fixtures live in `tests/fixtures/profiles/`; the generated site shows them under `profiles/`. See `docs/recipes/PROFESSIONAL-PROFILE.md`.
+
+## Object metadata and diagram/workflow printing
+
+Folio's architecture now explicitly supports consumer-supplied descriptive object metadata and print/PDF projection of workflow/diagram content.
+
+Metadata is not hidden application state inside Folio. Consumers decide which fields are source-only, visible, export/provenance, or accessibility metadata.
+
+Workflow/diagram objects may preserve authored colors, but printed meaning must survive grayscale and backgrounds-disabled output. Folio owns page fitting, tiling, fragmentation, and renderer capability behavior; graph semantics/routing remain with the consuming application/Studio.
+
+See `docs/requirements/OBJECT-METADATA-AND-DIAGRAM-PRINT.md`.

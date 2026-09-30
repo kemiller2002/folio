@@ -2,9 +2,9 @@
   "schemaVersion": "1.0.0",
   "protocolVersion": "1.0.0",
   "repository": "echelon-print-components",
-  "actor": "ros-bootstrap",
+  "actor": "agent:claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-09-29T10:25:16.000Z",
+  "updatedAt": "2026-09-30T20:45:28.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -395,6 +395,43 @@
         "EXE-20260929T092121704Z-fff98c53"
       ],
       "completedAt": "2026-09-29T10:25:16.000Z"
+    },
+    {
+      "id": "FOLIO-GH-25",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "tools/diagram-projection.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-diagram-projection-tests.mjs"
+        },
+        {
+          "type": "research-record",
+          "path": "research/evidence/EV-PRINT-2026-D1A7--studio-diagram-projection-print-evidence.md"
+        }
+      ],
+      "updatedAt": "2026-09-30T19:19:22.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260930T181323783Z-0ef98734"
+      ],
+      "completedAt": "2026-09-30T19:19:22.000Z"
+    },
+    {
+      "id": "FOLIO-GH-21",
+      "type": "mechanical",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [],
+      "updatedAt": "2026-09-30T20:45:28.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260930T204527857Z-e67e876c"
+      ],
+      "completedAt": "2026-09-30T20:45:28.000Z"
     }
   ]
 }

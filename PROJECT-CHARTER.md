@@ -47,6 +47,8 @@ while retaining all meaningful content in the portable-browser fallback.
 - Multi-column layouts and in-flow side panels.
 - Page art/background/watermark patterns.
 - Print-safe tables, figures, code, callouts, notes, and TOC structure.
+- Descriptive object metadata presentation/export boundaries with explicit source-only/rendered/provenance/accessibility handling.
+- Workflow/diagram paged-media projection, authored color preservation, grayscale/backgrounds-disabled fallbacks, and fit/tiling contracts.
 - Deterministic Chromium PDF export as a separate adapter/tool boundary.
 - Browser/renderer conformance research and tests.
 - Accessibility constraints for source HTML and preview UI.
@@ -62,6 +64,7 @@ while retaining all meaningful content in the portable-browser fallback.
 - A guarantee that browser-generated PDFs are PDF/UA tagged without a separately
   validated renderer.
 - Business/domain logic inside presentation components.
+- Graph/workflow routing, execution, topology ownership, or diagram editor behavior.
 - A bundled charting system.
 
 ## Success criteria
