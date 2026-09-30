@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "agent:claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-09-30T18:13:23.000Z",
+  "updatedAt": "2026-09-30T19:19:22.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -399,13 +399,27 @@
     {
       "id": "FOLIO-GH-25",
       "type": "task",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-09-30T18:13:23.000Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "tools/diagram-projection.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-diagram-projection-tests.mjs"
+        },
+        {
+          "type": "research-record",
+          "path": "research/evidence/EV-PRINT-2026-D1A7--studio-diagram-projection-print-evidence.md"
+        }
+      ],
+      "updatedAt": "2026-09-30T19:19:22.000Z",
       "telemetryExecutionIds": [
         "EXE-20260930T181323783Z-0ef98734"
-      ]
+      ],
+      "completedAt": "2026-09-30T19:19:22.000Z"
     }
   ]
 }
