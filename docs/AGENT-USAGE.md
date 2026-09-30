@@ -30,6 +30,7 @@ Before creating or changing printable document UI:
 9. Run print experiments and Folio site validation before claiming completion.
 10. Preserve consumer-supplied object metadata only through an explicit visibility/transport policy; do not leak source-only metadata into print/PDF.
 11. When printing workflows/diagrams, preserve authored color where supported but ensure the same meaning survives grayscale and backgrounds-disabled output.
+12. Print Forma Studio diagrams through `tools/diagram-projection.mjs`. Call `inspectProjection` first, since the projection is untrusted input. Then call `planFit`, which never shrinks text below 7pt, and `composeDocument`, which embeds the markup verbatim inside `ef-print-figure`. Do not rewrite projection geometry or re-derive appearance from metadata.
 
 ## Current public component surface
 

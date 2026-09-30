@@ -155,5 +155,33 @@
       "fragmentation"
     ],
     "title": "RESUME-01/RESUME-02/PROFILE-03 reference reproduction evidence"
+  },
+  {
+    "confidence": "medium",
+    "contradicts": [],
+    "created_by_agent": "claude-code",
+    "evidence_type": "primary",
+    "id": "EV-PRINT-2026-D1A7",
+    "path": "research/evidence/EV-PRINT-2026-D1A7--studio-diagram-projection-print-evidence.md",
+    "related_theories": [],
+    "research_area": "print-components",
+    "retrieved": "2026-09-30",
+    "source_author": "folio test suite",
+    "source_date": "2026-09-30",
+    "source_title": "tests/run-diagram-projection-tests.mjs (local execution, Chromium 141.0.7390.37, Ghostscript 10.02.1, poppler)",
+    "source_uri": "tests/run-diagram-projection-tests.mjs",
+    "supports": [],
+    "tags": [
+      "print",
+      "diagram",
+      "workflow",
+      "metadata",
+      "privacy",
+      "grayscale",
+      "backgrounds-off",
+      "forma-studio"
+    ],
+    "title": "Forma Studio workflow projection printed with existing Folio primitives",
+    "work_item": "FOLIO-GH-25"
   }
 ]

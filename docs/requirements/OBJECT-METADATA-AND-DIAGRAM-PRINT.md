@@ -199,6 +199,8 @@ Workflow/diagram objects MAY carry authored color, and Folio MUST preserve it wh
 
 ## 16. Initial implementation slice
 
+Status: implemented for #25. `tools/diagram-projection.mjs` inspects a Forma Studio projection, plans page fitting with a 7pt text floor, and composes it with existing primitives. `tests/run-diagram-projection-tests.mjs` produces color, backgrounds-off and grayscale PDFs for Letter and A4 and checks text, fills, boundaries, clipping, legibility and metadata leakage. Evidence: `research/evidence/EV-PRINT-2026-D1A7--studio-diagram-projection-print-evidence.md`. No `ef-print-diagram` element was needed. Tiling and Firefox/WebKit runs remain open.
+
 - **EPC-DIAG-M1-001 MUST** first prove one Forma-styled workflow/diagram embedded in a Folio document through existing figure/layout primitives where possible.
 - **EPC-DIAG-M1-002 MUST** preserve authored object colors in deterministic color PDF.
 - **EPC-DIAG-M1-003 MUST** produce a useful grayscale and backgrounds-disabled version of the same workflow.
