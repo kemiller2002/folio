@@ -79,6 +79,16 @@ consumer CSS:
    `position: static; isolation: auto` on a back page without a layer.
    Follow-up: backlog item WI-0001.
 
+CI confirmation (GitHub Actions print-experiments, commit f7f5609, Playwright
+1.63: Chromium 153.0.8010.12, Firefox 155.0, WebKit 26.6): the journal suite
+passed in all three engines. Chromium 153 produced the same pagination as the
+authoring run — JOURNAL-ARTICLE-01 8 pages (page 8 landscape, Table 2 header on
+pages 4-5), JOURNAL-ISSUE-01 18 pages (A4: 17) — and all seven authored TOC
+values equalled the physical opening pages (recorded, not enforced, because the
+TOC names Chromium 141). Two words hyphenated across a column or page boundary
+("apparently", "occupants") were accepted by the hyphen-split rule and are
+listed in the run summary.
+
 ## Interpretation
 
 The journal family needs no new elements. Multicolumn fragmentation, spans,
@@ -92,8 +102,8 @@ cannot be suppressed on an article's opening page.
 - PDF evidence is Chromium only and was produced with Chromium 141 while the
   repository pins Playwright 1.63 (Chromium 153); CI is authoritative. The
   authored TOC check is enforced only on the renderer recorded in the TOC.
-- Firefox and WebKit legs (print-media computed contract and phone widths) run
-  in CI; they were not available in the authoring container.
+- Firefox and WebKit legs cover the print-media computed contract and phone
+  widths (CI), not paginated PDF output.
 - Content conservation compares letters and four-letter words, so it detects
   lost or duplicated fragments, not visual clipping of extracted glyphs.
 - The PDF is untagged; accessibility of PDF output is not claimed.
