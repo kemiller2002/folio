@@ -138,7 +138,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          npm publish --access public --provenance "${{ steps.stable.outputs.archive }}"
+          npm publish --access public --provenance "./${{ steps.stable.outputs.archive }}"
           echo "Published ${{ steps.stable.outputs.package }}@${{ steps.stable.outputs.version }} with the latest dist-tag."
 
       - name: Publish immutable stable GitHub release
