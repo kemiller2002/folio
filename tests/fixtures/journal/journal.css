@@ -9,7 +9,7 @@
  */
 
 :root {
-  --ef-print-font-family: Charter, "Bitstream Charter", Georgia, "Liberation Serif", "DejaVu Serif", serif;
+  --ef-print-font-family: "Liberation Serif", Charter, "Bitstream Charter", Georgia, "DejaVu Serif", serif;
   --ef-print-font-size: 9.6pt;
   --ef-print-line-height: 1.38;
   --ef-print-text: #141414;
@@ -29,7 +29,7 @@
 
   @top-left {
     content: "Fenwick Journal of Field Science";
-    font: italic 8pt Charter, "Bitstream Charter", Georgia, "Liberation Serif", serif;
+    font: italic 8pt "Liberation Serif", Georgia, serif;
     color: #4f5660;
   }
 
