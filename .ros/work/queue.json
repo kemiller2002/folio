@@ -164,6 +164,22 @@
       "createdBy": "unknown",
       "source": "manual",
       "sourceReference": null
+    },
+    {
+      "id": "FOLIO-GH-28",
+      "title": "Attribute GH-28 journal family changes on PR #32 relative to main",
+      "description": null,
+      "tags": [
+        "folio,gh-28,attribution"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-01T13:20:07.596Z",
+      "updatedAt": "2026-10-01T13:20:08.000Z",
+      "createdBy": "unknown",
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/28"
     }
   ]
 }
