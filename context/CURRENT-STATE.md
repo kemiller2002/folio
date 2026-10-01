@@ -124,6 +124,19 @@ Current posture:
 - `npm run test:profiles` checks word parity with committed reference snapshots (five declared reference defects), geometry, keeps, Letter/A4 adaptation, no-JavaScript output, and phone widths 320/390/430 across engines;
 - Chromium 141 local evidence recorded in `EV-PRINT-2026-0006`; Firefox/WebKit legs of the suite run in CI.
 
+## Journal and scholarly publication family
+
+Tracked work item GH-28 (`kemiller2002/folio#28`) adds standalone scholarly articles and complete journal issues.
+
+Current posture:
+
+- canonical requirements `FOLIO-JRN-001`..`260` in `docs/requirements/PRINT-COMPONENTS-REQUIREMENTS.md` §29;
+- `DF-PRINT-2026-0005`: thirteen generic publication recipes in `ef-print-recipes`, no journal elements, authored numbering, citation/math/conversion upstream, renderer-owned pagination;
+- fixtures `JOURNAL-ARTICLE-01` (8 pages, two columns, landscape appendix) and `JOURNAL-ISSUE-01` (18 pages: cover, masthead, contents, editorial, divisions, four article types, back matter, sponsor page, back cover); `npm run test:journal`;
+- Chromium 141 evidence in `EV-PRINT-2026-0007`, including three Chromium defects with consumer workarounds and follow-up `WI-0001`;
+- `JOURNAL-ENHANCED-01` P3 comparison with Vivliostyle 2.45.1 (out of tree) in `EX-PRINT-2026-0008`/`EV-PRINT-2026-0008`: footnotes, target pages, running strings, recto/blank pages, and bleed/marks observed; page floats unsafe; nothing promoted;
+- consumer guide `docs/recipes/JOURNAL-PUBLICATION.md`; site family at `/journals/`.
+
 ## Folio 0.2.0 core primitive expansion
 
 Tracked work item GH-11 closes the original architecture-only gap for header, footer, page-number, artwork layer, callout, figure, table, code, TOC, and note primitives.

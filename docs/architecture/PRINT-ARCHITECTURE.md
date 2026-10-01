@@ -226,6 +226,8 @@ This does not collapse renderer tiers. In particular, repeated page-margin heade
 
 Recipes follow the same public-API obligations as elements: capability/maturity metadata, three documented examples, fixture evidence, and screen-only responsive rules that never change the print contract. Prefer a recipe over a new element when the layout contract does not also need an element boundary; prefer native HTML over both when no reusable layout contract exists.
 
+`DF-PRINT-2026-0005` adds the second family, generic publication recipes used by journals, proceedings, books, reports, and manuals: `.ef-longform`, `.ef-article`, `.ef-article-header`, `.ef-authors`, `.ef-affiliations`, `.ef-meta-list`, `.ef-abstract`, `.ef-caption`, `.ef-equation`, `.ef-column-span`, `.ef-reference-list`, `.ef-endnotes`, and `.ef-declarations` (see `docs/recipes/JOURNAL-PUBLICATION.md`). Scholarly numbering, citations, identifiers, and mathematics stay consumer-authored. A journal issue is a composition of existing elements, one named page per article for P1 running heads, and renderer-owned continuous page counters; running strings, first-page suppression within named-page groups, target-page references, footnotes, recto starts, and bleed/marks are P3 (`EV-PRINT-2026-0007`, `EV-PRINT-2026-0008`).
+
 ## 4. Public component philosophy
 
 Do not create custom replacements for ordinary semantic HTML.

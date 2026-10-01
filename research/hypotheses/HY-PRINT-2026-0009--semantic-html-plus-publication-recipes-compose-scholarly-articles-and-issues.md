@@ -2,11 +2,12 @@
 id: HY-PRINT-2026-0009
 title: Semantic HTML plus generic publication recipes compose scholarly articles and multi-article issues without journal elements
 research_area: print-components
-status: proposed
+status: supported
 confidence: medium
 created: 2026-10-01
 author_agent: claude-code
-supporting_evidence: []
+supporting_evidence:
+  - EV-PRINT-2026-0007
 contradicting_evidence: []
 related_theories: []
 supersedes: []
