@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { coreComponentMetadata } from "./core-component-metadata.mjs";
 import { recipeMetadata, profileFamily } from "./recipe-metadata.mjs";
+import { journalRecipeMetadata, journalFamily } from "./journal-recipe-metadata.mjs";
 
 const root = process.cwd();
 const output = path.join(root, "site-dist");
@@ -492,6 +493,7 @@ function header(rootPath) {
       <a href="${rootPath}#components">Components</a>
       <a href="${rootPath}reports/signal-results/">Report example</a>
       <a href="${rootPath}profiles/">Profiles</a>
+      <a href="${rootPath}journals/">Journals</a>
       <a href="${rootPath}capabilities/">Capabilities</a>
       <a class="pill-link" href="${rootPath}agents/">Agent use</a>
     </nav>
@@ -611,13 +613,31 @@ function componentPage(component) {
   </div>`);
 }
 
-const recipes = Object.entries(recipeMetadata).map(([name, recipe]) => ({ name, ...recipe, demoSlug: `recipe-${recipe.slug}` }));
+const recipeFamilies = {
+  profiles: {label: "Profiles", heading: "Profile recipes", href: "profiles/"},
+  journals: {label: "Journals", heading: "Publication recipes", href: "journals/"}
+};
+const recipes = Object.entries({...recipeMetadata, ...journalRecipeMetadata})
+  .map(([name, recipe]) => ({ name, family: "profiles", ...recipe, demoSlug: `recipe-${recipe.slug}` }));
+const profileRecipes = recipes.filter(item => item.family === "profiles");
+const journalRecipes = recipes.filter(item => item.family === "journals");
 
 function recipeNav(active) {
   return `<nav class="component-nav" aria-label="Folio recipe catalog"><div class="component-nav-inner">
-    <h2>Recipes</h2>
-    <ul>${recipes.map(item => `<li><a href="../${item.slug}/"${item.slug === active ? ' aria-current="page"' : ""}>${escapeHtml(item.title)}</a></li>`).join("")}</ul>
+    ${Object.entries(recipeFamilies).map(([key, family]) => `<h2>${escapeHtml(family.heading)}</h2>
+    <ul>${recipes.filter(item => item.family === key).map(item => `<li><a href="../${item.slug}/"${item.slug === active ? ' aria-current="page"' : ""}>${escapeHtml(item.title)}</a></li>`).join("")}</ul>`).join("\n    ")}
   </div></nav>`;
+}
+
+function recipeCards(list, prefix) {
+  return `<div class="component-grid">
+      ${list.map(item => `<article class="component-card">
+        <span class="category-label">${escapeHtml(item.selector)}</span>
+        <a href="${prefix}${item.slug}/"><h3>${escapeHtml(item.title)}</h3></a>
+        <p>${escapeHtml(item.summary)}</p>
+        <span class="status" data-status="current">${escapeHtml(item.capability)} · ${escapeHtml(item.maturity)}</span>
+      </article>`).join("")}
+    </div>`;
 }
 
 function recipePage(recipe) {
@@ -626,7 +646,7 @@ function recipePage(recipe) {
   return page(recipe.title, rootPath, `<div class="docs-shell">
     ${recipeNav(recipe.slug)}
     <main class="component-main" id="main">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../">Folio</a><span>/</span><a href="../../profiles/">Profiles</a><span>/</span><span>${escapeHtml(recipe.title)}</span></nav>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../">Folio</a><span>/</span><a href="../../${recipeFamilies[recipe.family].href}">${recipeFamilies[recipe.family].label}</a><span>/</span><span>${escapeHtml(recipe.title)}</span></nav>
       <header class="component-header">
         <span class="component-kicker">${escapeHtml(recipe.category)}</span>
         <h1>${escapeHtml(recipe.title)}</h1>
@@ -655,7 +675,7 @@ function profileFamilyPage() {
 
     <div class="contract-grid">
       <div class="contract-item"><span class="metric-label">New elements</span><strong>None</strong></div>
-      <div class="contract-item"><span class="metric-label">Recipes</span><strong>${recipes.length} in the ef-print-recipes layer</strong></div>
+      <div class="contract-item"><span class="metric-label">Recipes</span><strong>${profileRecipes.length} in the ef-print-recipes layer</strong></div>
       <div class="contract-item"><span class="metric-label">Decision</span><strong>DF-PRINT-2026-0004</strong></div>
       <div class="contract-item"><span class="metric-label">Reference</span><strong>kemiller2002/resume @ ba786e4</strong></div>
     </div>
@@ -671,14 +691,7 @@ function profileFamilyPage() {
     </div>
 
     <h2>Recipes</h2>
-    <div class="component-grid">
-      ${recipes.map(item => `<article class="component-card">
-        <span class="category-label">${escapeHtml(item.selector)}</span>
-        <a href="../recipes/${item.slug}/"><h3>${escapeHtml(item.title)}</h3></a>
-        <p>${escapeHtml(item.summary)}</p>
-        <span class="status" data-status="current">${escapeHtml(item.capability)} · ${escapeHtml(item.maturity)}</span>
-      </article>`).join("")}
-    </div>
+    ${recipeCards(profileRecipes, "../recipes/")}
 
     <h2>Why recipes instead of elements?</h2>
     <p>Each pattern needs a different native host depending on meaning: an entry header is a <code>header</code>, a publication is an <code>li</code>, a focus-area line is a <code>dl</code>. A class contract carries the layout without replacing those semantics. Folio adds no <code>ef-print-resume</code>, <code>ef-print-job</code>, or <code>ef-print-education</code> element.</p>
@@ -703,6 +716,121 @@ function profilePage(item) {
       <div class="contract-item"><span class="metric-label">Capability</span><strong>${escapeHtml(item.capability)}</strong></div>
       <div class="contract-item"><span class="metric-label">Canonical fixture</span><strong>${escapeHtml(item.fixture)}</strong></div>
     </div>
+
+    <div class="print-preview report-preview">
+      <iframe src="./preview.html" title="${escapeHtml(item.id)} ${escapeHtml(item.title)} preview"></iframe>
+    </div>
+    <div class="example-actions">
+      <a href="./preview.html" target="_blank" rel="noopener">Open standalone preview</a>
+      <p class="preview-note">${escapeHtml(item.mobile)}</p>
+    </div>
+
+    <h2>Folio primitives and recipes used</h2>
+    <p>Elements: ${item.primitives.map(name => `<code>${escapeHtml(name)}</code>`).join(", ")}. Recipes: ${item.recipes.map(name => `<code>${escapeHtml(name)}</code>`).join(", ")}. Everything else is native HTML and consumer CSS.</p>
+
+    <h2>Renderer limitations</h2>
+    <div class="warning"><p><strong>Capability note.</strong> ${escapeHtml(item.limitations)}</p></div>
+
+    <h2>Mobile preview behavior</h2>
+    <p>${escapeHtml(item.mobile)}</p>
+
+    <details>
+      <summary>View semantic source</summary>
+      <pre><code>${escapeHtml(source)}</code></pre>
+    </details>
+  </main>`);
+}
+
+function journalFamilyPage() {
+  const rootPath = "../";
+  return page("Journal and scholarly publication", rootPath, `<main id="main" class="capability-page">
+    <span class="eyebrow">Document family</span>
+    <h1>Journal and scholarly publication</h1>
+    <p class="lead">Standalone scholarly articles and complete multi-article journal issues built from ordinary semantic HTML, existing Folio elements, and generic publication recipes. The consumer owns scholarly content, citations, numbering, identifiers, and editorial decisions; Folio owns reusable publication layout; the renderer owns pages.</p>
+
+    <div class="contract-grid">
+      <div class="contract-item"><span class="metric-label">New elements</span><strong>None</strong></div>
+      <div class="contract-item"><span class="metric-label">Publication recipes</span><strong>${journalRecipes.length} in the ef-print-recipes layer</strong></div>
+      <div class="contract-item"><span class="metric-label">Decision</span><strong>DF-PRINT-2026-0005</strong></div>
+      <div class="contract-item"><span class="metric-label">Requirements</span><strong>FOLIO-JRN-001 to 260</strong></div>
+    </div>
+
+    <h2>Examples</h2>
+    <div class="component-grid">
+      ${journalFamily.map(item => `<article class="component-card">
+        <span class="category-label">${escapeHtml(item.id)} · ${escapeHtml(item.page)}</span>
+        <a href="${item.slug}/"><h3>${escapeHtml(item.title)}</h3></a>
+        <p>${escapeHtml(item.summary)}</p>
+        <span class="status" data-status="current">${escapeHtml(item.capability)}</span>
+      </article>`).join("")}
+    </div>
+
+    <h2>What each part demonstrates</h2>
+    <div class="table-scroll" role="region" aria-label="Journal demonstration map" tabindex="0">
+    <table>
+      <thead><tr><th>Concern</th><th>Where to look</th><th>Contract</th></tr></thead>
+      <tbody>
+        <tr><td>Article front matter</td><td>JOURNAL-ARTICLE-01 opening page</td><td><code>.ef-article-header</code>, <code>.ef-authors</code>, <code>.ef-affiliations</code>, <code>.ef-meta-list</code>, <code>ef-print-note</code></td></tr>
+        <tr><td>Abstract and keywords</td><td>Structured abstract; keywords</td><td><code>.ef-abstract</code>; <code>.ef-labeled</code> + <code>.ef-inline-list</code></td></tr>
+        <tr><td>Multi-column text</td><td>Article body and references</td><td><code>ef-print-columns</code>, <code>.ef-longform</code>, <code>.ef-column-span</code></td></tr>
+        <tr><td>Figures and tables</td><td>Figures 1–2, Tables 1–2, Table A1</td><td><code>ef-print-figure</code>, <code>ef-print-table</code>, <code>.ef-caption</code>, named landscape page</td></tr>
+        <tr><td>Equation layout</td><td>Equations (1)–(3)</td><td><code>.ef-equation</code> with consumer MathML</td></tr>
+        <tr><td>Bibliography and notes</td><td>Numeric, author-year, and note-style references</td><td><code>.ef-reference-list</code>, <code>.ef-endnotes</code></td></tr>
+        <tr><td>Issue composition</td><td>JOURNAL-ISSUE-01</td><td><code>ef-print-title-page</code>, <code>ef-print-toc</code>, <code>.ef-category-grid</code>, <code>.ef-article</code>, <code>ef-print-section</code>, <code>ef-print-back-page</code></td></tr>
+        <tr><td>Mobile and screen version</td><td>Open either preview on a phone</td><td>Columns collapse at 48rem; metadata, equations, and justification adapt at 30rem; print is unchanged</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Renderer capability distinctions</h2>
+    <div class="table-scroll" role="region" aria-label="Journal renderer capabilities" tabindex="0">
+    <table>
+      <thead><tr><th>Capability</th><th>P0 portable</th><th>P1/P2 Chromium</th><th>P3 enhanced</th></tr></thead>
+      <tbody>
+        <tr><td>Semantics, front matter, abstracts, references, endnotes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Two-column body, column spans, kept figures</td><td>Native fragmentation</td><td>Fixture evidence</td><td>Yes</td></tr>
+        <tr><td>Article running heads</td><td>In-flow opening only</td><td>Static text per named page</td><td>Running strings</td></tr>
+        <tr><td>Suppress running head on an article's first page</td><td>No</td><td>Document first page only</td><td>Experimental (JOURNAL-ENHANCED-01)</td></tr>
+        <tr><td>Continuous Page X of Y across articles</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>“See Figure 3 on page 7”</td><td>Authored text</td><td>No</td><td>Experimental target-counter()</td></tr>
+        <tr><td>Bottom-of-page footnotes</td><td>No — use endnotes</td><td>No</td><td>Experimental float: footnote</td></tr>
+        <tr><td>Recto starts, bleed, crop marks</td><td>No</td><td>No</td><td>Renderer-dependent</td></tr>
+        <tr><td>Tagged / accessible PDF</td><td>No claim</td><td>Separate evidence track</td><td>Renderer-dependent</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Publication recipes</h2>
+    ${recipeCards(journalRecipes, "../recipes/")}
+
+    <h2>Why recipes instead of journal elements?</h2>
+    <p>A title block is a <code>header</code>, an author list is an <code>ol</code>, metadata is a <code>dl</code>, an equation is a <code>figure</code> around <code>math</code>, a bibliography is a list. Class contracts carry the layout without replacing those semantics, and the same recipes serve reports, proceedings, books, and manuals. Folio adds no <code>ef-print-journal</code>, <code>ef-print-article</code>, or <code>ef-print-citation</code> element. Keywords reuse <code>.ef-labeled</code> and <code>.ef-inline-list</code>; editorial boards reuse <code>.ef-category-grid</code>; the issue contents reuse <code>ef-print-toc</code>.</p>
+
+    <h2>Authored values versus physical pages</h2>
+    <p>Section, figure, table, equation, and reference numbers, article page ranges, and contents page values are consumer-authored text. Physical page numbers come from the renderer's page counter. JOURNAL-ISSUE-01 records the renderer its contents values were set from, and its tests enforce them only on that renderer.</p>
+
+    <h2>What remains upstream?</h2>
+    <p>Citation processing (for example CSL), JATS or Markdown conversion, bibliographic validation, DOI registration, peer review, editorial workflow, and mathematics typesetting. See <code>docs/recipes/JOURNAL-PUBLICATION.md</code> for the canonical HTML structure and mapping guidance.</p>
+  </main>`);
+}
+
+function journalPage(item) {
+  const rootPath = "../../";
+  const source = fs.readFileSync(path.join(root, item.fixture), "utf8");
+  return page(`${item.id} ${item.title}`, rootPath, `<main id="main" class="capability-page">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../">Folio</a><span>/</span><a href="../">Journals</a><span>/</span><span>${escapeHtml(item.id)}</span></nav>
+    <span class="eyebrow">${escapeHtml(item.id)}</span>
+    <h1>${escapeHtml(item.title)}</h1>
+    <p class="lead">${escapeHtml(item.summary)}</p>
+
+    <div class="contract-grid">
+      <div class="contract-item"><span class="metric-label">Page</span><strong>${escapeHtml(item.page)}</strong></div>
+      <div class="contract-item"><span class="metric-label">Chromium pages</span><strong>${escapeHtml(item.pages)}</strong></div>
+      <div class="contract-item"><span class="metric-label">Capability</span><strong>${escapeHtml(item.capability)}</strong></div>
+      <div class="contract-item"><span class="metric-label">Canonical fixture</span><strong>${escapeHtml(item.fixture)}</strong></div>
+    </div>
+
+    <div class="warning"><p><strong>Fixture boundary.</strong> The journal, people, data, identifiers, and references are fictional. DOIs use the Crossref test prefix 10.5555 and do not resolve.</p></div>
 
     <div class="print-preview report-preview">
       <iframe src="./preview.html" title="${escapeHtml(item.id)} ${escapeHtml(item.title)} preview"></iframe>
@@ -755,6 +883,8 @@ function capabilitiesPage() {
         <tr><td>Artwork layer</td><td>Accepted element-layer pattern</td><td>ART-01 validates that essential foreground content survives when page artwork is suppressed.</td></tr>
         <tr><td>Table primitive</td><td>Accepted wrapper contract</td><td>TABLE-01 validates long-table header repetition, row behavior, and named landscape output in controlled Chromium.</td></tr>
         <tr><td>Callout, figure, code, TOC, note</td><td>P0 core shipped</td><td>Cross-browser primitive contract plus generated mobile examples validate passive light-DOM/CSS behavior; enhanced placement remains capability-bound.</td></tr>
+        <tr><td>Publication recipes (journals, proceedings, books)</td><td>P0 recipes; running heads P1/P2</td><td>JOURNAL-ARTICLE-01 and JOURNAL-ISSUE-01 validate fragmentation, spans, landscape pages, and continuous counters in controlled Chromium; recipe contracts run in Chromium, Firefox, and WebKit.</td></tr>
+        <tr><td>Running strings, first-page suppression in named-page groups, target-page references, footnotes, recto starts</td><td>P3 experiment only</td><td>Chromium 141 does not implement them (EV-PRINT-2026-0007); JOURNAL-ENHANCED-01 compares an optional engine (EV-PRINT-2026-0008).</td></tr>
         <tr><td>Tagged/PDF-UA quality</td><td>Separate validation track</td><td>Semantic HTML is necessary but browser PDF tagging is not assumed.</td></tr>
       </tbody>
     </table>
@@ -888,6 +1018,7 @@ fs.mkdirSync(path.join(output, "capabilities"), { recursive: true });
 fs.mkdirSync(path.join(output, "reports", "signal-results"), { recursive: true });
 fs.mkdirSync(path.join(output, "recipes"), { recursive: true });
 fs.mkdirSync(path.join(output, "profiles"), { recursive: true });
+fs.mkdirSync(path.join(output, "journals"), { recursive: true });
 
 const registeredSet = new Set(uniqueRegistered);
 const metadataSet = new Set(Object.keys(components));
@@ -958,6 +1089,26 @@ for (const item of profileFamily) {
 }
 fs.writeFileSync(path.join(output, "profiles", "index.html"), profileFamilyPage());
 
+for (const stylesheet of new Set(journalFamily.map(item => item.stylesheet))) {
+  fs.copyFileSync(path.join(root, stylesheet), path.join(output, "assets", `journal-${path.basename(stylesheet)}`));
+}
+
+for (const item of journalFamily) {
+  const journalDir = path.join(output, "journals", item.slug);
+  fs.mkdirSync(journalDir, { recursive: true });
+  const stylesheetName = path.basename(item.stylesheet);
+  const preview = fs.readFileSync(path.join(root, item.fixture), "utf8")
+    .replace('<link rel="stylesheet" href="../../../src/styles/print.css">', '<link rel="stylesheet" href="../../assets/folio-print.css">')
+    .replace(`<link rel="stylesheet" href="./${stylesheetName}">`, `<link rel="stylesheet" href="../../assets/journal-${stylesheetName}">`)
+    .replace(/\s*<script type="module" src="\.\.\/\.\.\/\.\.\/src\/components\/register\.js"><\/script>/, "");
+  if (preview.includes("../../../src/") || /<script\b/i.test(preview)) {
+    throw new Error(`${item.id} preview still references repository sources or scripts.`);
+  }
+  fs.writeFileSync(path.join(journalDir, "preview.html"), preview);
+  fs.writeFileSync(path.join(journalDir, "index.html"), journalPage(item));
+}
+fs.writeFileSync(path.join(output, "journals", "index.html"), journalFamilyPage());
+
 const ordered = uniqueRegistered.map(name => ({ name, ...components[name] }));
 const indexBody = `<main id="main">
 <section class="hero">
@@ -1004,7 +1155,7 @@ const indexBody = `<main id="main">
 <section class="content-section" id="recipes">
   <div class="section-heading">
     <div><span class="eyebrow">Recipes and document families</span><h2>Layout contracts without new tags.</h2></div>
-    <a class="button-link" href="profiles/">Resume and professional profile</a>
+    <div class="button-row"><a class="button-link" href="profiles/">Resume and professional profile</a> <a class="button-link" href="journals/">Journal and scholarly publication</a></div>
   </div>
   <div class="component-grid">
     ${recipes.map(item => `<article class="component-card" data-kind="recipe">
@@ -1053,6 +1204,8 @@ const manifest = {
   recipeExampleCount: recipes.reduce((total, item) => total + item.examples.length, 0),
   recipes: recipes.map(item => ({ selector: item.selector, slug: item.slug, demoSlug: item.demoSlug, title: item.title, capability: item.capability, maturity: item.maturity, examples: item.examples.length })),
   profileExamples: profileFamily.map(item => ({ id: item.id, slug: item.slug, fixture: item.fixture, page: item.page })),
+  journalExamples: journalFamily.map(item => ({ id: item.id, slug: item.slug, fixture: item.fixture, page: item.page })),
+  recipeFamilies: Object.fromEntries(Object.keys(recipeFamilies).map(key => [key, recipes.filter(item => item.family === key).map(item => item.selector)])),
   components: ordered.map(item => ({
     element: item.name,
     slug: item.slug,

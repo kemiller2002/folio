@@ -87,6 +87,8 @@ const mobileRoutes = [
   ...siteManifest.components.map(component => `/demos/${component.slug}/1.html`),
   "/profiles/",
   ...siteManifest.profileExamples.flatMap(profile => [`/profiles/${profile.slug}/`, `/profiles/${profile.slug}/preview.html`]),
+  "/journals/",
+  ...siteManifest.journalExamples.flatMap(journal => [`/journals/${journal.slug}/`, `/journals/${journal.slug}/preview.html`]),
   ...siteManifest.recipes.flatMap(recipe => [`/recipes/${recipe.slug}/`, `/demos/${recipe.demoSlug}/1.html`, `/demos/${recipe.demoSlug}/2.html`, `/demos/${recipe.demoSlug}/3.html`])
 ];
 
