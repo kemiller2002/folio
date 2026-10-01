@@ -1042,6 +1042,10 @@
     display: inline;
   }
 
+  .ef-meta-list[data-layout="inline"] dt::after {
+    content: " ";
+  }
+
   /* Abstract; data-variant="structured" runs labeled parts in (FOLIO-JRN-024). */
   .ef-abstract {
     margin-block: var(--ef-print-space);
@@ -1079,7 +1083,7 @@
   }
 
   :is(.ef-abstract[data-variant="structured"], .ef-declarations) > section > :is(h3, h4):first-child::after {
-    content: var(--ef-print-run-in-suffix);
+    content: var(--ef-print-run-in-suffix) " ";
   }
 
   :is(.ef-abstract[data-variant="structured"], .ef-declarations) > section > :is(h3, h4):first-child + p {

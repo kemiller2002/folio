@@ -11,9 +11,11 @@
 | GH-18 | GH-18 | complete |  |  |
 | GH-19 | GH-19 | complete |  |  |
 | GH-24 | Adopt Echelon release contract for Conditor distribution | complete | distribution, registry, conditor | high |
+| GH-28 | GH-28 | active |  |  |
 | GH-3 | Attribute and complete ART-01 / ACCESS-PDF-01 work | complete | print,governance,experiments | high |
 | GH-4 | Build Folio component documentation site | complete | folio,print,documentation | high |
 | GH-6 | Harden Folio documentation site for mobile | complete | folio,mobile,documentation | high |
 | GH-8 | Finalize Folio mobile governance cleanup | complete | folio,governance,cleanup | high |
 | GH-9 | Make Folio instructions and remaining components mobile-friendly | complete | folio,mobile,components,documentation | high |
 | ROS-INSTALL-3-1-4 | ROS-INSTALL-3-1-4 | complete |  |  |
+| WI-0001 | Folio core: scope ef-print-title-page/section/back-page position:relative+isolation to pages containing ef-print-layer (:has) after reducing the Chromium 141 duplicated-border paint seen in JOURNAL-ISSUE-01 back cover; needs ART-01 regression evidence (GH-28 follow-up) | captured | folio,print,chromium,gh-28 | medium |

@@ -192,10 +192,14 @@ ef-print-figure svg {
   margin-block-end: 0.12in;
 }
 
+/*
+ * Named-page boxes stay block-level: in this fixture Chromium 141 drew the
+ * leading border of a display:grid named-page box at the foot of the previous
+ * page (EV-PRINT-2026-0007). Centering uses padding instead of grid alignment.
+ */
 .jrn-division {
-  display: grid;
-  place-content: center;
   min-block-size: 9.4in;
+  padding-block-start: 3.6in;
   text-align: center;
 }
 
@@ -211,11 +215,20 @@ ef-print-figure svg {
   color: var(--ef-print-muted);
 }
 
+/*
+ * In this fixture Chromium 141 painted the back cover's leading border at the
+ * foot of the previous page as well as on its own page while the back page was
+ * positioned or a stacking context (Folio gives ef-print-back-page
+ * position: relative and isolation: isolate for artwork layers). This back
+ * cover has no ef-print-layer, so it opts out. Observed, not reduced to a
+ * minimal case; see EV-PRINT-2026-0007 and the follow-up backlog item.
+ */
 .jrn-back-cover {
-  display: grid;
-  align-content: end;
-  min-block-size: 9.6in;
-  padding: 0.35in;
+  position: static;
+  isolation: auto;
+  break-before: page;
+  min-block-size: 9.4in;
+  padding: 7.4in 0.35in 0.35in;
   border-block-start: 6pt solid var(--ef-print-accent);
 }
 
@@ -248,9 +261,8 @@ ef-print-toc a {
 }
 
 .jrn-sponsor {
-  display: grid;
-  place-content: center;
   min-block-size: 9.4in;
+  padding: 3.8in 0.5in 0;
   border: 1pt dashed var(--ef-print-rule);
   text-align: center;
 }
@@ -269,7 +281,7 @@ ef-print-toc a {
   .jrn-sponsor {
     min-block-size: auto;
     margin-block-end: 2rem;
-    padding-block: 2rem;
+    padding: 2rem 1rem;
   }
 }
 
