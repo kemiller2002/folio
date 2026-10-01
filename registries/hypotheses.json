@@ -130,5 +130,20 @@
       "EV-PRINT-2026-0006"
     ],
     "title": "Semantic HTML plus stylesheet recipes reproduce dense professional profiles without domain-specific elements"
+  },
+  {
+    "author_agent": "claude-code",
+    "confidence": "medium",
+    "contradicting_evidence": [],
+    "created": "2026-10-01",
+    "id": "HY-PRINT-2026-0009",
+    "path": "research/hypotheses/HY-PRINT-2026-0009--semantic-html-plus-publication-recipes-compose-scholarly-articles-and-issues.md",
+    "related_theories": [],
+    "research_area": "print-components",
+    "status": "proposed",
+    "superseded_by": [],
+    "supersedes": [],
+    "supporting_evidence": [],
+    "title": "Semantic HTML plus generic publication recipes compose scholarly articles and multi-article issues without journal elements"
   }
 ]

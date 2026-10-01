@@ -92,5 +92,31 @@
     "title": "Adopt stylesheet recipes, not domain elements, for professional-profile layout",
     "type": "decision-record",
     "updated": "2026-09-29"
+  },
+  {
+    "created": "2026-10-01",
+    "id": "DF-PRINT-2026-0005",
+    "path": "research/decisions/DF-PRINT-2026-0005--adopt-generic-publication-recipes-for-journal-and-scholarly-documents.md",
+    "related_documents": [
+      "research/decisions/DF-PRINT-2026-0004--adopt-stylesheet-recipes-for-professional-profile-layout.md",
+      "research/hypotheses/HY-PRINT-2026-0009--semantic-html-plus-publication-recipes-compose-scholarly-articles-and-issues.md",
+      "research/evidence/EV-PRINT-2026-0007--journal-fixture-portable-and-chromium-evidence.md",
+      "research/evidence/EV-PRINT-2026-0008--journal-enhanced-01-vivliostyle-comparison.md",
+      "docs/recipes/JOURNAL-PUBLICATION.md"
+    ],
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [],
+    "tags": [
+      "architecture",
+      "recipes",
+      "journal",
+      "scholarly",
+      "public-api",
+      "renderer-capability"
+    ],
+    "title": "Adopt generic publication recipes, not journal elements, for scholarly articles and issues",
+    "type": "decision-record",
+    "updated": "2026-10-01"
   }
 ]

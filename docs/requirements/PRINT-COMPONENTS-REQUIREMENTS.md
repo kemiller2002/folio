@@ -868,3 +868,158 @@ The detailed cross-cutting contract is defined in `docs/requirements/OBJECT-META
 - **EPC-OBJMETA-064 MUST** test Letter, A4, color, grayscale, backgrounds-disabled, and deterministic Chromium output before promoting a diagram print contract.
 
 
+
+## 29. Journal and scholarly publication document family
+
+Work item: `kemiller2002/folio#28` (local work item `GH-28`). Decision: `DF-PRINT-2026-0005`. Hypothesis: `HY-PRINT-2026-0009`. Evidence: `EV-PRINT-2026-0007` (portable/P1/P2) and `EV-PRINT-2026-0008` (JOURNAL-ENHANCED-01 P3 comparison). Recipe guide: `docs/recipes/JOURNAL-PUBLICATION.md`.
+
+Folio must let a consumer produce a standalone scholarly article and a complete multi-article journal issue from ordinary semantic HTML plus existing Folio primitives and public recipes. Folio does not become a citation processor, a math typesetter, an editorial-workflow system, a DOI registrar, or a pagination engine. The IDs `FOLIO-JRN-001`..`249` preserve the intent recorded in issue #28; `FOLIO-JRN-250` onward add obligations discovered while implementing and probing renderers.
+
+### 29.1 Publication and issue model
+
+- **FOLIO-JRN-001 MUST** support a standalone scholarly/journal article.
+- **FOLIO-JRN-002 MUST** support a complete journal issue containing multiple articles.
+- **FOLIO-JRN-003 MUST** support issue-level metadata including journal title, subtitle, volume, issue number, publication date, ISSN/eISSN, publisher, edition/status, and optional issue DOI/identifier.
+- **FOLIO-JRN-004 MUST** support issue front matter including cover, masthead, editorial board, publisher/legal information, issue TOC, and optional introductory/editorial material.
+- **FOLIO-JRN-005 MUST** permit each article to start on a new page and SHOULD support recto-start intent as an enhanced capability.
+- **FOLIO-JRN-006 MUST** support article-local page and section styling without losing issue-level identity.
+- **FOLIO-JRN-007 MUST** support continuous issue pagination and SHOULD permit consumer-authored article page ranges.
+- **FOLIO-JRN-008 MUST** support special issues, supplements, proceedings-like issues, and themed collections without changing the core model.
+
+### 29.2 Article front matter
+
+- **FOLIO-JRN-020 MUST** support article type/category, title, subtitle, short/running title, authors, affiliations, correspondence information, author identifiers such as ORCID, and arbitrary consumer-defined metadata.
+- **FOLIO-JRN-021 MUST** support author-to-affiliation mapping without relying on visual order alone.
+- **FOLIO-JRN-022 MUST** support received/revised/accepted/published dates when supplied.
+- **FOLIO-JRN-023 MUST** support DOI, canonical URL, article identifier, citation string, copyright/license notice, and access/status labels.
+- **FOLIO-JRN-024 MUST** support abstract and structured abstract layouts.
+- **FOLIO-JRN-025 MUST** support keywords/key phrases.
+- **FOLIO-JRN-026 SHOULD** support graphical-abstract and highlights regions using existing figure/callout primitives.
+- **FOLIO-JRN-027 MUST** keep all front-matter data useful and readable when CSS or custom-element upgrade is unavailable.
+
+### 29.3 Scholarly body structure
+
+- **FOLIO-JRN-040 MUST** support conventional numbered and unnumbered article sections and subsections.
+- **FOLIO-JRN-041 MUST** support single-column and multi-column article bodies, including full-width material spanning columns where renderer evidence allows.
+- **FOLIO-JRN-042 MUST** support pull quotes, side notes, boxed methods/details, definitions, and supplementary callouts without changing source reading order.
+- **FOLIO-JRN-043 MUST** support quotations, lists, code, algorithms/pseudocode, mathematical content supplied by the consumer, and preformatted text.
+- **FOLIO-JRN-044 MUST** support acknowledgments, funding statements, conflict-of-interest declarations, ethics statements, data/code availability statements, author-contribution statements, appendices, and supplementary-material references.
+- **FOLIO-JRN-045 MUST NOT** invent or infer scholarly declarations from document content.
+
+### 29.4 Figures, tables, equations, and cross references
+
+- **FOLIO-JRN-060 MUST** support numbered figures and tables with captions, labels, attribution/source text, and optional notes.
+- **FOLIO-JRN-061 MUST** support wide figures/tables that span article columns.
+- **FOLIO-JRN-062 MUST** support landscape pages or sections for genuinely wide material rather than shrinking text below readable limits.
+- **FOLIO-JRN-063 MUST** support continued multi-page tables and repeated table headers according to renderer capability.
+- **FOLIO-JRN-064 MUST** support numbered equations/formula blocks supplied as semantic/math markup or consumer-rendered content.
+- **FOLIO-JRN-065 MUST** support stable IDs/anchors for sections, figures, tables, equations, notes, and references.
+- **FOLIO-JRN-066 MUST** support ordinary HTML cross-links between these targets.
+- **FOLIO-JRN-067 MAY** show target page numbers only under a validated renderer that supports them; Folio MUST NOT estimate them with JavaScript layout measurement.
+
+### 29.5 Citations and references
+
+- **FOLIO-JRN-080 MUST** support inline numeric citations, author-year citations, note-style citations, and consumer-defined citation markup without hard-coding one citation style.
+- **FOLIO-JRN-081 MUST** support ordered and unordered reference/bibliography presentation.
+- **FOLIO-JRN-082 MUST** support hanging-indent bibliography layouts and long URLs/DOIs without overflow.
+- **FOLIO-JRN-083 MUST** support DOI/URL links that remain meaningful in screen/PDF output.
+- **FOLIO-JRN-084 MUST NOT** generate or validate bibliographic data in core. Citation processors such as CSL-based systems remain consumer responsibilities.
+- **FOLIO-JRN-085 SHOULD** provide style recipes for common visual bibliography patterns without claiming APA/Chicago/IEEE semantic correctness.
+
+### 29.6 Notes
+
+- **FOLIO-JRN-100 MUST** support authored in-flow notes/endnotes portably.
+- **FOLIO-JRN-101 MAY** support true bottom-of-page footnotes only at a capability level where the selected renderer provides validated behavior.
+- **FOLIO-JRN-102 MUST** preserve note backlinks/relationships in semantic screen HTML where supplied by the consumer.
+- **FOLIO-JRN-103 MUST NOT** simulate physical footnotes by DOM measuring and repagination.
+
+### 29.7 Running publication furniture
+
+- **FOLIO-JRN-120 MUST** support issue-level and article-level running header/footer intent.
+- **FOLIO-JRN-121 SHOULD** support journal name, volume/issue/date, short article title, author short form, article identifier, and page number as configurable running metadata.
+- **FOLIO-JRN-122 MUST** keep renderer-specific running strings or margin-box behavior explicitly capability-bound.
+- **FOLIO-JRN-123 MUST** support first-page article headers that differ from subsequent running pages.
+- **FOLIO-JRN-124 MUST** support suppression of running matter on covers, advertisements, separator pages, and other named profiles.
+
+### 29.8 Typography and journal style
+
+- **FOLIO-JRN-140 MUST** provide publication recipes/tokens suitable for dense long-form scholarly reading.
+- **FOLIO-JRN-141 MUST** support serif, sans-serif, and mixed typography through consumer-configurable tokens.
+- **FOLIO-JRN-142 MUST** provide robust styles for title hierarchy, author blocks, affiliations, abstract, keywords, captions, metadata, references, equations, and foot/endnotes.
+- **FOLIO-JRN-143 SHOULD** support drop caps, small caps, lead paragraphs, column rules, and other house-style features as optional presentation recipes.
+- **FOLIO-JRN-144 MUST** work with self-hosted/application-supplied fonts and robust fallbacks.
+- **FOLIO-JRN-145 MUST** remain usable in grayscale and with print backgrounds disabled.
+
+### 29.9 Accessibility and semantics
+
+- **FOLIO-JRN-160 MUST** preserve logical source/reading order regardless of column layout.
+- **FOLIO-JRN-161 MUST** preserve heading hierarchy and article landmarks.
+- **FOLIO-JRN-162 MUST** require captions/labels to remain associated with figures and tables.
+- **FOLIO-JRN-163 MUST** support meaningful link text for DOI/URL/cross-reference navigation.
+- **FOLIO-JRN-164 MUST** preserve language and direction metadata.
+- **FOLIO-JRN-165 MUST** treat tagged/accessible PDF output as a renderer capability that requires independent evidence, not as an automatic consequence of semantic HTML.
+
+### 29.10 Interchange and source format
+
+- **FOLIO-JRN-180 MUST** accept ordinary semantic HTML as the publication source.
+- **FOLIO-JRN-181 MUST NOT** require a proprietary Folio journal file format.
+- **FOLIO-JRN-182 SHOULD** document a canonical semantic HTML structure for issue and article composition so other systems can generate Folio-ready publications.
+- **FOLIO-JRN-183 SHOULD** document mapping guidance from structured scholarly sources such as JATS XML, Markdown plus metadata, or application domain models while keeping conversion outside Folio core.
+- **FOLIO-JRN-184 MUST** allow the resulting HTML document to be embedded directly into a normal web project and remain useful on screen.
+
+### 29.11 Screen/mobile preview
+
+- **FOLIO-JRN-200 MUST** provide a readable responsive screen representation of journal articles.
+- **FOLIO-JRN-201 MUST** collapse multi-column journal layouts appropriately on narrow screens without changing print layout.
+- **FOLIO-JRN-202 MUST** keep tables, equations, long references, identifiers, and code from causing page-level horizontal overflow at established Folio phone widths.
+- **FOLIO-JRN-203 MUST** preserve article navigation and cross-links in screen output.
+
+### 29.12 Full-issue composition
+
+- **FOLIO-JRN-220 MUST** support cover, inside cover/masthead, issue TOC, editorial/front matter, multiple articles, back matter, and back cover within one document.
+- **FOLIO-JRN-221 MUST** support per-article metadata and stable article boundaries inside a single issue.
+- **FOLIO-JRN-222 SHOULD** support section/division pages such as Research Articles, Reviews, Letters, Case Reports, or Proceedings sections.
+- **FOLIO-JRN-223 SHOULD** support advertisements or sponsor pages as ordinary consumer-authored named-page sections without giving Folio advertising/business semantics.
+- **FOLIO-JRN-224 MUST** permit issue-level branding/theme plus article-level layout variants.
+
+### 29.13 Validation and evidence
+
+- **FOLIO-JRN-240 MUST** add at least one substantial journal-article fixture and one full multi-article issue fixture.
+- **FOLIO-JRN-241 MUST** test Letter and A4 output.
+- **FOLIO-JRN-242 MUST** test long multi-page multi-column flow.
+- **FOLIO-JRN-243 MUST** test figures/tables/references that cross page and column boundaries.
+- **FOLIO-JRN-244 MUST** test first-page versus running-page furniture.
+- **FOLIO-JRN-245 MUST** test grayscale/background-disabled output.
+- **FOLIO-JRN-246 MUST** test 320px, 390px, and 430px screen widths.
+- **FOLIO-JRN-247 MUST** run Chromium/Firefox/WebKit portable checks and deterministic Chromium PDF evidence.
+- **FOLIO-JRN-248 SHOULD** include an enhanced-renderer experiment for true footnotes, running strings, target-page cross references, and scholarly float behavior before any P3 promises are made.
+- **FOLIO-JRN-249 MUST** add documentation-site examples for every new public recipe/component according to the normal Folio rules.
+
+### 29.14 Implementation obligations and capability boundary
+
+These obligations were added during implementation (`DF-PRINT-2026-0005`, Chromium 141 probe recorded in `EV-PRINT-2026-0007`).
+
+- **FOLIO-JRN-250 MUST** express the journal family as public recipes in the `ef-print-recipes` layer plus existing elements; it MUST NOT add `ef-print-journal`, `ef-print-article`, `ef-print-author`, `ef-print-abstract`, `ef-print-citation`, or any other element whose meaning is a scholarly domain concept.
+- **FOLIO-JRN-251 MUST** design publication recipes generically (article/chapter units, contributor lists, metadata lists, captions, equations, reference lists, endnotes, declaration groups, column spans) so reports, proceedings, books, manuals, and white papers can use them; recipe names MUST NOT require the word "journal".
+- **FOLIO-JRN-252 MUST** reuse existing recipes where they already express the contract: keywords use `.ef-labeled` plus `.ef-inline-list`; editorial boards use `.ef-category-grid`; first-page/in-flow running lines use `ef-print-header`/`ef-print-footer`; author notes use `ef-print-note`; TOCs use `ef-print-toc`.
+- **FOLIO-JRN-253 MUST** treat consumer-authored numbers (section, figure, table, equation, reference, and page-range labels) as authoritative text. Folio MUST NOT generate scholarly numbering with CSS counters in core, because generated numbers can disagree with authored cross-reference text.
+- **FOLIO-JRN-254 MUST** distinguish authored page metadata (TOC page values, article page ranges, citation strings) from physical renderer page counters in documentation and tests. Physical numbering is a renderer output; authored values are consumer data that the consumer regenerates after rendering.
+- **FOLIO-JRN-255 MUST** document that, in Chromium (P1/P2), per-article running heads are expressed by giving each article its own named page with authored static margin-box content, that continuous `counter(page)`/`counter(pages)` spans all named pages, and that this forces a page break at every article boundary.
+- **FOLIO-JRN-256 MUST** record that Chromium does not match `@page name:first` for the first page of a named-page group, does not implement `string-set`/`string()`, `target-counter()`, `float: footnote`, recto/verso page breaks, or `bleed`/`marks`; first-page *suppression* of article running heads, running strings, target-page references, true footnotes, recto starts, and bleed/crop marks are therefore P3-only. P1 first-page treatment is additive in-flow opening furniture.
+- **FOLIO-JRN-257 MUST** keep elements with a named `page` (for example landscape tables) outside multicolumn containers, because named pages inside a multicolumn formatting context are not honored.
+- **FOLIO-JRN-258 MUST** keep enhanced-renderer packages (for example Vivliostyle) out of Folio's runtime and devDependency graph until an accepted decision justifies an adapter; P3 experiments install them out of tree.
+- **FOLIO-JRN-259 MUST** keep equation numbers and figure/table labels in text, not only in generated content or images, so they survive copy, search, assistive technology, and PDF text extraction.
+- **FOLIO-JRN-260 MUST** provide canonical fixtures `JOURNAL-ARTICLE-01`, `JOURNAL-ISSUE-01`, and `JOURNAL-ENHANCED-01`; the `JOURNAL-PORTABLE-01` intent from issue #28 is satisfied by running the article and issue fixtures without JavaScript, without CSS, and under portable engines rather than by a separate copy of the source.
+
+| Capability | P0 portable | P1 Chromium margin boxes | P2 deterministic Chromium | P3 enhanced (experiment only) |
+| --- | --- | --- | --- | --- |
+| Article/issue semantics, front matter, abstracts, references, endnotes | yes | yes | yes | yes |
+| Multicolumn body, column spans, kept figures | native fragmentation | same | evidence-backed | same |
+| Named landscape pages | browser-dependent | yes | evidence-backed | yes |
+| Issue/article running heads | in-flow only | static per named page | evidence-backed | running strings |
+| First-page suppression of running heads | in-flow opening only | document first page only | same as P1 | `:nth()`/`first-except` |
+| Page X of Y, continuous across articles | no | yes | evidence-backed | yes |
+| Target-page cross references | authored text only | no | no | `target-counter()` |
+| True bottom-of-page footnotes | no (endnotes) | no | no | `float: footnote` |
+| Recto article starts, bleed, crop marks | no | no | no | renderer-dependent |
+| Tagged PDF | no claim | no claim | separate evidence (`EX-PRINT-2026-0007`) | renderer-dependent |
