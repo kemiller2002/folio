@@ -2,9 +2,15 @@
 
 | ID | Work | Status | Tags | Priority |
 |---|---|---|---|---|
+| FOLIO-GH-21 | FOLIO-GH-21 | complete |  |  |
+| FOLIO-GH-25 | FOLIO-GH-25 | complete |  |  |
 | GH-11 | Implement the remaining Folio core print primitives | complete | folio,print,components | high |
 | GH-13 | Implement canonical Signal results report fixture | complete | folio,print,reports,signal | high |
 | GH-14 | Keep canonical report documentation deployment in sync | complete | folio,documentation,deployment,reports | medium |
+| GH-17 | GH-17 | complete |  |  |
+| GH-18 | GH-18 | complete |  |  |
+| GH-19 | GH-19 | complete |  |  |
+| GH-24 | Adopt Echelon release contract for Conditor distribution | complete | distribution, registry, conditor | high |
 | GH-3 | Attribute and complete ART-01 / ACCESS-PDF-01 work | complete | print,governance,experiments | high |
 | GH-4 | Build Folio component documentation site | complete | folio,print,documentation | high |
 | GH-6 | Harden Folio documentation site for mobile | complete | folio,mobile,documentation | high |
