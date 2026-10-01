@@ -92,12 +92,24 @@ function domText() {
   return parts.join(" ");
 }
 
+// A word hyphenated across a column or page boundary ("appar-" ... "ently") is not
+// adjacent in extracted reading order. Such a word counts as present only when
+// the PDF holds a hyphen-terminated prefix and a token starting with the rest.
+function hyphenSplitPresent(word, rawTokens) {
+  const prefixes = new Set(rawTokens.filter(token => /[-\u2010\u00ad]$/.test(token)).map(token => normalize(token)));
+  const starts = rawTokens.map(token => normalize(token));
+  return Array.from({length: word.length - 2}, (_, index) => index + 2)
+    .some(cut => [...prefixes].some(prefix => prefix.endsWith(word.slice(0, cut))) && starts.some(token => token.startsWith(word.slice(cut))));
+}
+
 function conservation(label, dom, pdfPath, pages) {
   const domStream = normalize(dom);
-  const pdfStream = normalize(pdfText(pdfPath));
+  const raw = pdfText(pdfPath);
+  const pdfStream = normalize(raw);
+  const rawTokens = raw.split(/\s+/).filter(Boolean);
   const words = new Map();
   for (const word of alphaWords(dom)) words.set(word, (words.get(word) ?? 0) + 1);
-  const missing = [...words].filter(([word, count]) => countIn(pdfStream, word) < Math.min(count, countIn(domStream, word))).map(([word]) => word);
+  const missing = [...words].filter(([word, count]) => countIn(pdfStream, word) < Math.min(count, countIn(domStream, word))).map(([word]) => word).filter(word => !hyphenSplitPresent(word, rawTokens));
   assert.deepEqual(missing, [], `${label}: no authored words are lost`);
   // Enhanced renderers add footnote calls/markers and target-page text; allow them with the furniture.
   const allowance = pages * 160 + domStream.length * 0.02;

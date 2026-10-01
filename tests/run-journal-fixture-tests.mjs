@@ -352,10 +352,24 @@ function pagesContaining(path, pages, phrase) {
 // Content conservation: every DOM word of four or more letters occurs in the PDF
 // at least as often as in the DOM, and the PDF adds no more letters than its
 // running matter, list markers, and page numbers account for.
+// A word hyphenated across a column or page boundary ("appar-" ... "ently") is not
+// adjacent in extracted reading order. Such a word counts as present only when
+// the PDF holds a hyphen-terminated prefix and a token starting with the rest.
+function hyphenSplitPresent(word, rawTokens) {
+  const prefixes = new Set(rawTokens.filter(token => /[-\u2010\u00ad]$/.test(token)).map(token => normalize(token)));
+  const starts = rawTokens.map(token => normalize(token));
+  return Array.from({length: word.length - 2}, (_, index) => index + 2)
+    .some(cut => [...prefixes].some(prefix => prefix.endsWith(word.slice(0, cut))) && starts.some(token => token.startsWith(word.slice(cut))));
+}
+
 function conservation(label, domStream, domWords, pdfPath, pages) {
-  const pdfStream = normalize(pdfText(pdfPath));
-  const missing = [...tally(domWords)].filter(([word, count]) => countIn(pdfStream, word) < Math.min(count, countIn(domStream, word))).map(([word]) => word);
+  const raw = pdfText(pdfPath);
+  const pdfStream = normalize(raw);
+  const rawTokens = raw.split(/\s+/).filter(Boolean);
+  const short = [...tally(domWords)].filter(([word, count]) => countIn(pdfStream, word) < Math.min(count, countIn(domStream, word))).map(([word]) => word);
+  const missing = short.filter(word => !hyphenSplitPresent(word, rawTokens));
   assert.deepEqual(missing, [], `${label}: no authored words are lost across page and column fragmentation`);
+  if (short.length) summary.hyphenSplitsAcrossFragments = [...new Set([...(summary.hyphenSplitsAcrossFragments ?? []), ...short.map(word => `${label}: ${word}`)])];
   const allowance = pages * 140 + domStream.length * 0.01;
   assert.ok(pdfStream.length <= domStream.length + allowance, `${label}: no duplicated content (${pdfStream.length} PDF letters vs ${domStream.length} DOM letters + ${Math.round(allowance)} furniture allowance)`);
   assert.ok(pdfStream.length >= domStream.length * 0.99, `${label}: PDF carries at least 99% of DOM letters (${pdfStream.length} vs ${domStream.length})`);
