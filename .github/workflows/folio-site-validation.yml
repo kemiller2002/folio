@@ -10,6 +10,8 @@ on:
       - "tools/build-site.mjs"
       - "tools/recipe-metadata.mjs"
       - "tests/fixtures/profiles/**"
+      - "tests/fixtures/journal/**"
+      - "tools/journal-recipe-metadata.mjs"
       - "tests/site-build.test.mjs"
       - "tests/run-site-browser-tests.mjs"
       - "docs/AGENT-USAGE.md"

@@ -1,0 +1,118 @@
+/*
+ * JOURNAL-ENHANCED-01 enhanced paged-media stylesheet (P3 experiment only).
+ *
+ * Every rule below either is ignored by mainstream browsers (unknown property or
+ * value, so the declaration is dropped) or is scoped by @supports so that the
+ * portable fallback keeps all content in flow. Nothing here is a Folio promise;
+ * see EX-PRINT-2026-0008 and EV-PRINT-2026-0008.
+ */
+
+/* Bleed and crop marks (CSS Paged Media). Mainstream browsers drop both descriptors. */
+@page {
+  bleed: 3mm;
+  marks: crop cross;
+}
+
+/*
+ * Running strings: author short form and short title of the current article.
+ * first-except leaves the string empty on the page where it is set, which is
+ * each article's opening page.
+ */
+.ef-article {
+  string-set: jrn-running-head attr(data-author-short) " · " attr(data-short-title);
+}
+
+@page {
+  @top-right {
+    content: string(jrn-running-head, first-except);
+    font: 8pt "Liberation Sans", Arial, sans-serif;
+    color: #4f5660;
+  }
+}
+
+/* Blank pages inserted before recto starts carry no running matter. */
+@page :blank {
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-right { content: none; }
+}
+
+/* Suppress the running head on the first page of each article (named page group). */
+@page jrn-article:nth(1) {
+  @top-right { content: none; }
+  @top-left { content: none; }
+}
+
+.ef-article {
+  page: jrn-article;
+}
+
+.ef-article.jrn-article-alt {
+  page: jrn-article-alt;
+}
+
+@page jrn-article-alt:nth(1) {
+  @top-right { content: none; }
+  @top-left { content: none; }
+}
+
+/* Recto starts: each article opens on a right-hand page. */
+.ef-article[data-start="recto"] {
+  break-before: recto;
+}
+
+/* True footnotes. Portable fallback keeps the note in flow, set off as a parenthetical. */
+@supports (float: footnote) {
+  .jrn-fn {
+    float: footnote;
+    font-size: 0.82em;
+    line-height: 1.3;
+  }
+
+  .jrn-fn::footnote-call {
+    content: counter(footnote);
+    vertical-align: super;
+    font-size: 0.75em;
+  }
+
+  .jrn-fn::footnote-marker {
+    content: counter(footnote) ". ";
+  }
+
+  @page {
+    @footnote {
+      border-block-start: 0.5pt solid #9a9a9a;
+      padding-block-start: 0.06in;
+    }
+  }
+}
+
+@supports not (float: footnote) {
+  .jrn-fn::before {
+    content: " (Note: ";
+  }
+
+  .jrn-fn::after {
+    content: ")";
+  }
+
+  .jrn-fn {
+    color: #4f5660;
+    font-size: 0.9em;
+  }
+}
+
+/* Target-page cross references: "Figure 2 (p. 3)". Browsers drop the whole declaration. */
+a.jrn-xref[href^="#"]::after {
+  content: " (p. " target-counter(attr(href url), page) ")";
+}
+
+/*
+ * Page floats: move the wide figure to the top of a page instead of leaving a gap.
+ * In Vivliostyle 2.45.1 this placed the figure above the article title on the
+ * opening page, and float-defer did not move it (EV-PRINT-2026-0008).
+ */
+.jrn-page-float {
+  float: top;
+  float-reference: page;
+}

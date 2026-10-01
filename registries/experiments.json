@@ -143,5 +143,29 @@
       "HY-PRINT-2026-0007"
     ],
     "title": "ACCESS-PDF-01 tagged Chromium PDF"
+  },
+  {
+    "author_agent": "claude-code",
+    "created": "2026-10-01",
+    "id": "EX-PRINT-2026-0008",
+    "inputs": [
+      "tests/fixtures/journal/enhanced-01.html",
+      "tests/fixtures/journal/enhanced.css",
+      "tests/fixtures/journal/article-01.html",
+      "tests/fixtures/journal/issue-01.html"
+    ],
+    "outputs": [
+      "test-results/journal-enhanced/results.json",
+      "test-results/journal-enhanced/chromium-enhanced-01.pdf",
+      "test-results/journal-enhanced/vivliostyle-enhanced-01.pdf"
+    ],
+    "path": "research/experiments/EX-PRINT-2026-0008--journal-enhanced-01-scholarly-paged-media-comparison.md",
+    "related_theories": [],
+    "research_area": "print-components",
+    "status": "completed",
+    "tests_hypotheses": [
+      "HY-PRINT-2026-0010"
+    ],
+    "title": "JOURNAL-ENHANCED-01 scholarly paged-media comparison"
   }
 ]

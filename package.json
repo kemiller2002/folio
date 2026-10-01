@@ -21,7 +21,7 @@
     "./src/styles/print.css"
   ],
   "scripts": {
-    "test": "node tests/run-primitive-component-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs",
+    "test": "node tests/run-primitive-component-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-journal-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs",
     "test:print": "node tests/run-print-experiments.mjs",
     "site:build": "node tools/build-site.mjs",
     "site:test": "node --test tests/site-build.test.mjs",
@@ -31,7 +31,9 @@
     "test:report": "node tests/run-report-fixture-tests.mjs",
     "test:tutela": "node tests/run-tutela-security-record-tests.mjs",
     "test:profiles": "node tests/run-profile-fixture-tests.mjs",
-    "test:diagram": "node tests/run-diagram-projection-tests.mjs"
+    "test:diagram": "node tests/run-diagram-projection-tests.mjs",
+    "test:journal": "node tests/run-journal-fixture-tests.mjs",
+    "experiment:journal-enhanced": "node tests/run-journal-enhanced-experiment.mjs"
   },
   "devDependencies": {
     "playwright": "1.63.0"

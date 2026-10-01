@@ -482,9 +482,18 @@
   }
 
   ef-print-toc [data-page] {
+    grid-column: 2;
+    grid-row: 1;
     min-inline-size: 2ch;
     text-align: end;
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Optional secondary line beneath a TOC title: authors, article type, section. */
+  ef-print-toc li > [data-detail] {
+    grid-column: 1;
+    color: var(--ef-print-muted);
+    font-size: 0.88em;
   }
 
   ef-print-note {
@@ -797,6 +806,461 @@
       grid-row: auto;
       text-align: start;
       white-space: normal;
+    }
+  }
+}
+
+/*
+ * Publication recipes (DF-PRINT-2026-0005, FOLIO-JRN-250..253).
+ *
+ * Generic long-form publication contracts applied to native semantic HTML:
+ * scholarly articles and journal issues, and equally proceedings, book
+ * chapters, technical reports, manuals, and white papers. Folio styles
+ * consumer-authored labels and numbers; it never generates scholarly numbering,
+ * resolves citations, or typesets mathematics. The renderer owns pages.
+ */
+@layer ef-print-recipes {
+  :root {
+    --ef-print-longform-align: justify;
+    --ef-print-longform-hyphens: auto;
+    --ef-print-longform-indent: 1.2em;
+    --ef-print-longform-paragraph-space: 0;
+    --ef-print-longform-heading-space: 1.1em;
+    --ef-print-longform-lines: 2;
+    --ef-print-article-title-size: 1.9em;
+    --ef-print-article-h2-size: 1.12em;
+    --ef-print-article-h3-size: 1em;
+    --ef-print-article-kicker-color: var(--ef-print-accent);
+    --ef-print-front-font-size: 0.88em;
+    --ef-print-authors-separator: ",";
+    --ef-print-meta-font-size: 0.84em;
+    --ef-print-meta-gap: 0.8em;
+    --ef-print-abstract-rule: var(--ef-print-accent);
+    --ef-print-abstract-surface: transparent;
+    --ef-print-abstract-padding: 0.1in 0;
+    --ef-print-run-in-suffix: ".";
+    --ef-print-caption-font-size: 0.86em;
+    --ef-print-caption-color: var(--ef-print-text);
+    --ef-print-equation-number-width: 3.2em;
+    --ef-print-reference-font-size: 0.86em;
+    --ef-print-reference-indent: 1.6em;
+    --ef-print-reference-marker-width: 2.2em;
+    --ef-print-reference-gap: 0.28em;
+    --ef-print-endnotes-font-size: 0.84em;
+    --ef-print-declarations-font-size: 0.86em;
+  }
+
+  /* Long-form reading rhythm: justified, hyphenated, indented paragraphs. */
+  .ef-longform {
+    hyphens: var(--ef-print-longform-hyphens);
+    orphans: var(--ef-print-longform-lines);
+    widows: var(--ef-print-longform-lines);
+  }
+
+  .ef-longform :where(p) {
+    margin-block: 0 var(--ef-print-longform-paragraph-space);
+    text-align: var(--ef-print-longform-align);
+  }
+
+  .ef-longform :where(section, article, ef-print-columns, ef-print-section) > :where(p + p) {
+    text-indent: var(--ef-print-longform-indent);
+  }
+
+  .ef-longform :where(h1, h2, h3, h4, h5, h6) {
+    break-after: avoid;
+    break-inside: avoid;
+    hyphens: manual;
+    text-align: start;
+  }
+
+  .ef-longform :where(h2, h3, h4, h5, h6) {
+    margin-block: var(--ef-print-longform-heading-space) 0.35em;
+    line-height: 1.25;
+  }
+
+  .ef-longform p[data-lead]::first-line {
+    font-variant-caps: small-caps;
+    letter-spacing: 0.02em;
+  }
+
+  .ef-longform p[data-dropcap]::first-letter {
+    float: inline-start;
+    margin-block-start: 0.04em;
+    margin-inline-end: 0.08em;
+    font-size: 3.1em;
+    font-weight: 700;
+    line-height: 0.82;
+  }
+
+  /*
+   * Article/chapter unit inside a document or issue. data-start requests a new
+   * page; "recto" is enhanced intent that portable renderers treat as a page break.
+   */
+  .ef-article {
+    display: block;
+  }
+
+  .ef-article[data-start="page"],
+  .ef-article[data-start="recto"] {
+    break-before: page;
+  }
+
+  .ef-article[data-start="recto"] {
+    break-before: recto;
+  }
+
+  .ef-article h2 {
+    font-size: var(--ef-print-article-h2-size);
+  }
+
+  .ef-article h3 {
+    font-size: var(--ef-print-article-h3-size);
+    font-style: italic;
+  }
+
+  /* Opening front matter: kicker, title, subtitle, contributors, metadata. */
+  .ef-article-header {
+    margin-block: 0 var(--ef-print-space);
+    column-span: all;
+    break-after: avoid;
+  }
+
+  .ef-article-header [data-kicker] {
+    margin: 0 0 0.45em;
+    color: var(--ef-print-article-kicker-color);
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .ef-article-header h1 {
+    margin: 0 0 0.3em;
+    font-size: var(--ef-print-article-title-size);
+    line-height: 1.15;
+    hyphens: manual;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+    break-after: avoid;
+  }
+
+  .ef-article-header [data-subtitle] {
+    margin: 0 0 0.6em;
+    color: var(--ef-print-muted);
+    font-size: 1.12em;
+    line-height: 1.3;
+  }
+
+  /* Contributor list; affiliation markers link to affiliation IDs (FOLIO-JRN-021). */
+  .ef-authors {
+    margin: 0.4em 0 0.25em;
+    padding: 0;
+    list-style: none;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .ef-authors > li {
+    display: inline;
+  }
+
+  .ef-authors > li:not(:last-child)::after {
+    content: var(--ef-print-authors-separator) " ";
+    font-weight: 400;
+  }
+
+  .ef-authors :is(sup, [data-orcid], [data-corresponding]) {
+    font-weight: 400;
+  }
+
+  .ef-authors sup a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ef-authors [data-orcid] {
+    margin-inline-start: 0.2em;
+    font-size: 0.78em;
+    white-space: nowrap;
+  }
+
+  .ef-affiliations {
+    margin: 0.2em 0 0.4em;
+    padding: 0;
+    list-style: none;
+    color: var(--ef-print-muted);
+    font-size: var(--ef-print-front-font-size);
+    line-height: 1.35;
+  }
+
+  .ef-affiliations > li {
+    padding-inline-start: 1em;
+    text-indent: -1em;
+  }
+
+  .ef-affiliations > li > sup:first-child {
+    display: inline-block;
+    min-inline-size: 1em;
+    text-indent: 0;
+  }
+
+  /* Generic label/value metadata list (FOLIO-JRN-022/023, EPC-OBJMETA-007). */
+  .ef-meta-list {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 0.12em var(--ef-print-meta-gap);
+    margin: 0.5em 0;
+    font-size: var(--ef-print-meta-font-size);
+    line-height: 1.35;
+  }
+
+  .ef-meta-list > div {
+    display: contents;
+  }
+
+  .ef-meta-list dt {
+    color: var(--ef-print-muted);
+    font-weight: 700;
+  }
+
+  .ef-meta-list dd {
+    min-inline-size: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ef-meta-list[data-layout="inline"] {
+    display: block;
+  }
+
+  .ef-meta-list[data-layout="inline"] > div {
+    display: inline;
+    margin-inline-end: var(--ef-print-meta-gap);
+  }
+
+  .ef-meta-list[data-layout="inline"] :is(dt, dd) {
+    display: inline;
+  }
+
+  .ef-meta-list[data-layout="inline"] dt::after {
+    content: " ";
+  }
+
+  /* Abstract; data-variant="structured" runs labeled parts in (FOLIO-JRN-024). */
+  .ef-abstract {
+    margin-block: var(--ef-print-space);
+    padding: var(--ef-print-abstract-padding);
+    border-block-start: 2px solid var(--ef-print-abstract-rule);
+    border-block-end: 1px solid var(--ef-print-rule);
+    background: var(--ef-print-abstract-surface);
+  }
+
+  .ef-abstract > :is(h2, h3):first-child {
+    margin: 0 0 0.35em;
+    color: var(--ef-print-abstract-rule);
+    font-size: 0.8em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    break-after: avoid;
+  }
+
+  .ef-abstract p {
+    margin-block: 0 0.4em;
+    text-indent: 0;
+  }
+
+  .ef-abstract > section {
+    margin-block: 0 0.35em;
+  }
+
+  /* Run-in labeled parts shared by structured abstracts and declaration groups. */
+  :is(.ef-abstract[data-variant="structured"], .ef-declarations) > section > :is(h3, h4):first-child {
+    display: inline;
+    margin: 0;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  :is(.ef-abstract[data-variant="structured"], .ef-declarations) > section > :is(h3, h4):first-child::after {
+    content: var(--ef-print-run-in-suffix) " ";
+  }
+
+  :is(.ef-abstract[data-variant="structured"], .ef-declarations) > section > :is(h3, h4):first-child + p {
+    display: inline;
+  }
+
+  /* Caption with authored label, notes, and source (FOLIO-JRN-060, -259). */
+  .ef-caption {
+    color: var(--ef-print-caption-color);
+    font-size: var(--ef-print-caption-font-size);
+    font-weight: 400;
+    line-height: 1.35;
+    text-align: start;
+    text-indent: 0;
+    hyphens: manual;
+  }
+
+  .ef-caption [data-label] {
+    font-weight: 700;
+  }
+
+  .ef-caption :is([data-note], [data-source]) {
+    display: block;
+    margin-block-start: 0.25em;
+    color: var(--ef-print-muted);
+    font-size: 0.94em;
+  }
+
+  /* Display equation: consumer math centered, authored number at the end. */
+  .ef-equation {
+    display: grid;
+    grid-template-columns: var(--ef-print-equation-number-width) minmax(0, 1fr) var(--ef-print-equation-number-width);
+    align-items: center;
+    margin: 0.6em 0;
+    text-indent: 0;
+    break-inside: avoid;
+  }
+
+  .ef-equation > :not(figcaption) {
+    grid-column: 2;
+    justify-self: center;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    margin: 0;
+  }
+
+  .ef-equation > figcaption {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .ef-equation[data-align="start"] {
+    grid-template-columns: 0 minmax(0, 1fr) var(--ef-print-equation-number-width);
+  }
+
+  .ef-equation[data-align="start"] > :not(figcaption) {
+    justify-self: start;
+  }
+
+  /* Full-width material inside multicolumn flow (FOLIO-JRN-041, -061). */
+  .ef-column-span {
+    column-span: all;
+  }
+
+  /* Bibliography: hanging indent by default, authored markers with data-style="numeric". */
+  .ef-reference-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--ef-print-reference-font-size);
+    line-height: 1.35;
+    text-align: start;
+    text-indent: 0;
+    hyphens: manual;
+  }
+
+  .ef-reference-list > li {
+    margin-block: 0 var(--ef-print-reference-gap);
+    padding-inline-start: var(--ef-print-reference-indent);
+    text-indent: calc(-1 * var(--ef-print-reference-indent));
+    overflow-wrap: break-word;
+    break-inside: avoid;
+  }
+
+  .ef-reference-list a {
+    overflow-wrap: anywhere;
+  }
+
+  .ef-reference-list[data-style="numeric"] > li {
+    padding-inline-start: var(--ef-print-reference-marker-width);
+    text-indent: 0;
+  }
+
+  .ef-reference-list[data-style="numeric"] > li > [data-marker]:first-child {
+    display: inline-block;
+    inline-size: var(--ef-print-reference-marker-width);
+    margin-inline-start: calc(-1 * var(--ef-print-reference-marker-width));
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Endnotes: native ordered list with optional backlinks to the reference point. */
+  .ef-endnotes {
+    margin: 0;
+    padding-inline-start: 1.6em;
+    font-size: var(--ef-print-endnotes-font-size);
+    line-height: 1.35;
+    text-align: start;
+  }
+
+  .ef-endnotes > li {
+    margin-block: 0 0.25em;
+    break-inside: avoid;
+  }
+
+  .ef-endnotes p {
+    display: inline;
+    text-indent: 0;
+  }
+
+  .ef-endnotes [data-backlink] {
+    margin-inline-start: 0.3em;
+    text-decoration: none;
+  }
+
+  /* Back-matter statement group: funding, interests, contributions, data. */
+  .ef-declarations {
+    margin-block: var(--ef-print-space);
+    font-size: var(--ef-print-declarations-font-size);
+    line-height: 1.35;
+  }
+
+  .ef-declarations > section {
+    margin-block: 0 0.45em;
+    break-inside: avoid;
+  }
+
+  .ef-declarations p {
+    margin-block: 0 0.3em;
+    text-align: start;
+    text-indent: 0;
+  }
+
+  @media screen {
+    .ef-equation > :not(figcaption) {
+      overflow-x: auto;
+    }
+  }
+
+  /* Screen-only reflow. Print keeps the authored grid, justification, and equation layout. */
+  @media screen and (max-width: 30rem) {
+    .ef-longform :where(p) {
+      text-align: start;
+    }
+
+    .ef-meta-list:not([data-layout="inline"]) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ef-meta-list:not([data-layout="inline"]) dd + dt {
+      margin-block-start: 0.3em;
+    }
+
+    .ef-equation,
+    .ef-equation[data-align="start"] {
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: 0.5em;
+    }
+
+    .ef-equation > :not(figcaption) {
+      grid-column: 1;
+    }
+
+    .ef-equation > figcaption {
+      grid-column: 2;
     }
   }
 }

@@ -1,0 +1,296 @@
+/*
+ * Fenwick Journal of Field Science house style (fictional consumer stylesheet).
+ *
+ * Everything in this file is consumer-owned: journal identity, type families,
+ * page size, page margins, running-head text, cover design, and named pages.
+ * Folio supplies the recipes and elements; the renderer supplies pages.
+ * Margin-box content is P1/P2 Chromium behavior; other renderers ignore it and
+ * keep the in-flow opening furniture.
+ */
+
+:root {
+  --ef-print-font-family: "Liberation Serif", Charter, "Bitstream Charter", Georgia, "DejaVu Serif", serif;
+  --ef-print-font-size: 9.6pt;
+  --ef-print-line-height: 1.38;
+  --ef-print-text: #141414;
+  --ef-print-muted: #4f5660;
+  --ef-print-rule: #9a9a9a;
+  --ef-print-accent: #1d4a5a;
+  --ef-print-surface: #eef2f3;
+  --ef-print-space: 0.14in;
+  --ef-print-column-gap: 0.24in;
+  --ef-print-column-rule: 0.5pt solid #c4c4c4;
+  --jrn-sans: "Liberation Sans", Arial, Helvetica, "DejaVu Sans", sans-serif;
+}
+
+@page {
+  size: Letter;
+  margin: 0.82in 0.7in 0.78in;
+
+  @top-left {
+    content: "Fenwick Journal of Field Science";
+    font: italic 8pt "Liberation Serif", Georgia, serif;
+    color: #4f5660;
+  }
+
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
+    font: 8pt "Liberation Sans", Arial, sans-serif;
+    color: #4f5660;
+  }
+}
+
+/* Covers, division pages, and sponsor pages suppress running matter (FOLIO-JRN-124). */
+@page bare {
+  margin: 0.6in;
+
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-right { content: none; }
+}
+
+/* Landscape page for genuinely wide tables (FOLIO-JRN-062). */
+@page wide {
+  size: Letter landscape;
+  margin: 0.7in 0.75in;
+
+  @top-right {
+    content: "Wide table · landscape page";
+    font: 8pt "Liberation Sans", Arial, sans-serif;
+    color: #4f5660;
+  }
+}
+
+h1, h2, h3, h4,
+.ef-article-header [data-kicker],
+.ef-meta-list,
+.ef-caption [data-label],
+ef-print-header,
+ef-print-footer,
+ef-print-toc,
+th {
+  font-family: var(--jrn-sans);
+}
+
+h2 {
+  font-size: 1.12em;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: #8a9aa2;
+  text-decoration-thickness: 0.5pt;
+  text-underline-offset: 0.12em;
+}
+
+ef-print-header.jrn-opening {
+  margin-block-end: 0.16in;
+  padding-block-end: 0.06in;
+  border-block-end: 1.5pt solid var(--ef-print-accent);
+  color: var(--ef-print-text);
+  font-size: 0.8em;
+}
+
+ef-print-header.jrn-opening strong {
+  color: var(--ef-print-accent);
+  letter-spacing: 0.02em;
+}
+
+.jrn-keywords {
+  margin-block: 0.5em 0.9em;
+  font-size: 0.86em;
+}
+
+ef-print-table > table {
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+ef-print-table thead th {
+  border-block-start: 1pt solid var(--ef-print-text);
+  border-block-end: 0.75pt solid var(--ef-print-text);
+}
+
+ef-print-table tbody tr:last-child > * {
+  border-block-end: 1pt solid var(--ef-print-text);
+}
+
+ef-print-table tbody th {
+  font-weight: 400;
+}
+
+ef-print-figure svg {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+.jrn-box {
+  font-size: 0.92em;
+}
+
+.jrn-box > h3 {
+  margin-block-start: 0;
+}
+
+.jrn-landscape {
+  page: wide;
+  break-before: page;
+}
+
+.jrn-fixture-notice {
+  margin-block-start: 0.2in;
+  font-size: 0.8em;
+}
+
+/* Issue composition. */
+.jrn-bare {
+  page: bare;
+}
+
+.jrn-cover {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-block-size: 9.6in;
+  padding: 0.35in;
+  border: 2pt solid var(--ef-print-accent);
+}
+
+.jrn-cover h1 {
+  margin: 0;
+  color: var(--ef-print-accent);
+  font-size: 34pt;
+  line-height: 1.05;
+}
+
+.jrn-cover [data-cover-issue] {
+  margin: 0.1in 0 0;
+  font-family: var(--jrn-sans);
+  font-size: 12pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.jrn-cover-feature {
+  align-self: center;
+  max-inline-size: 5.4in;
+}
+
+.jrn-cover-feature h2 {
+  margin: 0 0 0.08in;
+  font-size: 15pt;
+}
+
+.jrn-cover-feature ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 11pt;
+}
+
+.jrn-cover-feature li {
+  margin-block-end: 0.12in;
+}
+
+/*
+ * Named-page boxes stay block-level: in this fixture Chromium 141 drew the
+ * leading border of a display:grid named-page box at the foot of the previous
+ * page (EV-PRINT-2026-0007). Centering uses padding instead of grid alignment.
+ */
+.jrn-division {
+  min-block-size: 9.4in;
+  padding-block-start: 3.6in;
+  text-align: center;
+}
+
+.jrn-division h2 {
+  margin: 0;
+  color: var(--ef-print-accent);
+  font-size: 28pt;
+}
+
+.jrn-division p {
+  max-inline-size: 4.2in;
+  margin: 0.15in auto 0;
+  color: var(--ef-print-muted);
+}
+
+/*
+ * In this fixture Chromium 141 painted the back cover's leading border at the
+ * foot of the previous page as well as on its own page while the back page was
+ * positioned or a stacking context (Folio gives ef-print-back-page
+ * position: relative and isolation: isolate for artwork layers). This back
+ * cover has no ef-print-layer, so it opts out. Observed, not reduced to a
+ * minimal case; see EV-PRINT-2026-0007 and the follow-up backlog item.
+ */
+.jrn-back-cover {
+  position: static;
+  isolation: auto;
+  break-before: page;
+  min-block-size: 9.4in;
+  padding: 7.4in 0.35in 0.35in;
+  border-block-start: 6pt solid var(--ef-print-accent);
+}
+
+.jrn-masthead h2 {
+  margin-block: 0.2in 0.06in;
+  color: var(--ef-print-accent);
+  font-size: 0.95em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.jrn-masthead .ef-category-grid h3 {
+  font-size: 0.86em;
+}
+
+.jrn-masthead .ef-category-grid li {
+  font-size: 0.9em;
+}
+
+ef-print-toc h3 {
+  margin-block: 0.18in 0.04in;
+  color: var(--ef-print-accent);
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+ef-print-toc a {
+  font-weight: 700;
+}
+
+.jrn-sponsor {
+  min-block-size: 9.4in;
+  padding: 3.8in 0.5in 0;
+  border: 1pt dashed var(--ef-print-rule);
+  text-align: center;
+}
+
+@media screen {
+  body {
+    max-inline-size: 52rem;
+    margin-inline: auto;
+    padding: 1rem;
+    background: #fff;
+  }
+
+  .jrn-cover,
+  .jrn-division,
+  .jrn-back-cover,
+  .jrn-sponsor {
+    min-block-size: auto;
+    margin-block-end: 2rem;
+    padding: 2rem 1rem;
+  }
+}
+
+@media screen and (max-width: 30rem) {
+  .jrn-cover h1 {
+    font-size: 24pt;
+  }
+
+  .jrn-division h2 {
+    font-size: 20pt;
+  }
+}

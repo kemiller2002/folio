@@ -97,6 +97,36 @@ test("Folio site publishes the resume and professional-profile family", async ()
   }
 });
 
+test("Folio site publishes the journal and scholarly publication family", async () => {
+  const manifest = JSON.parse(await fs.readFile(path.join(site, "site-manifest.json"), "utf8"));
+  const family = await fs.readFile(path.join(site, "journals", "index.html"), "utf8");
+
+  assert.deepEqual(manifest.journalExamples.map(item => item.id), ["JOURNAL-ARTICLE-01", "JOURNAL-ISSUE-01"]);
+  assert.match(family, /Journal and scholarly publication/);
+  assert.match(family, /DF-PRINT-2026-0005/);
+  for (const concern of ["Article front matter", "Multi-column text", "Figures and tables", "Equation layout", "Bibliography and notes", "Issue composition", "Mobile and screen version", "Renderer capability distinctions"]) {
+    assert.ok(family.includes(concern), `journal family page covers ${concern}`);
+  }
+  assert.doesNotMatch(family, /<ef-print-journal|<ef-print-article|<ef-print-citation/);
+  assert.ok(manifest.recipeFamilies.journals.length >= 13, "publication recipes are published");
+  for (const selector of manifest.recipeFamilies.journals) {
+    assert.ok(family.includes(selector), `journal family page lists ${selector}`);
+  }
+  for (const item of manifest.journalExamples) {
+    const page = await fs.readFile(path.join(site, "journals", item.slug, "index.html"), "utf8");
+    const preview = await fs.readFile(path.join(site, "journals", item.slug, "preview.html"), "utf8");
+    for (const label of ["Folio primitives and recipes used", "Renderer limitations", "Mobile preview behavior", "View semantic source", "Fixture boundary"]) {
+      assert.ok(page.includes(label), `${item.id} page shows ${label}`);
+    }
+    assert.match(preview, new RegExp(`data-fixture="${item.id}"`));
+    assert.match(preview, /class="ef-article"/);
+    assert.match(preview, /\.\.\/\.\.\/assets\/folio-print\.css/);
+    assert.match(preview, /\.\.\/\.\.\/assets\/journal-journal\.css/);
+    assert.doesNotMatch(preview, /src\/styles|<script\b/i);
+  }
+  await fs.access(path.join(site, "assets", "journal-journal.css"));
+});
+
 test("generated Folio documentation contains no browser scripts", async () => {
   const files = await walk(site);
   for (const file of files.filter(file => file.endsWith(".html"))) {

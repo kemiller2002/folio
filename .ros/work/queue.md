@@ -4,6 +4,7 @@
 |---|---|---|---|---|
 | FOLIO-GH-21 | FOLIO-GH-21 | complete |  |  |
 | FOLIO-GH-25 | FOLIO-GH-25 | complete |  |  |
+| FOLIO-GH-28 | Attribute GH-28 journal family changes on PR #32 relative to main | complete | folio,gh-28,attribution | high |
 | GH-11 | Implement the remaining Folio core print primitives | complete | folio,print,components | high |
 | GH-13 | Implement canonical Signal results report fixture | complete | folio,print,reports,signal | high |
 | GH-14 | Keep canonical report documentation deployment in sync | complete | folio,documentation,deployment,reports | medium |
@@ -11,9 +12,11 @@
 | GH-18 | GH-18 | complete |  |  |
 | GH-19 | GH-19 | complete |  |  |
 | GH-24 | Adopt Echelon release contract for Conditor distribution | complete | distribution, registry, conditor | high |
+| GH-28 | GH-28 | complete |  |  |
 | GH-3 | Attribute and complete ART-01 / ACCESS-PDF-01 work | complete | print,governance,experiments | high |
 | GH-4 | Build Folio component documentation site | complete | folio,print,documentation | high |
 | GH-6 | Harden Folio documentation site for mobile | complete | folio,mobile,documentation | high |
 | GH-8 | Finalize Folio mobile governance cleanup | complete | folio,governance,cleanup | high |
 | GH-9 | Make Folio instructions and remaining components mobile-friendly | complete | folio,mobile,components,documentation | high |
 | ROS-INSTALL-3-1-4 | ROS-INSTALL-3-1-4 | complete |  |  |
+| WI-0001 | Folio core: scope ef-print-title-page/section/back-page position:relative+isolation to pages containing ef-print-layer (:has) after reducing the Chromium 141 duplicated-border paint seen in JOURNAL-ISSUE-01 back cover; needs ART-01 regression evidence (GH-28 follow-up) | captured | folio,print,chromium,gh-28 | medium |

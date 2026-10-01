@@ -69,6 +69,23 @@ Recipes are public class contracts in the `ef-print-recipes` layer of `print.css
 
 Rules: never put an `.ef-inline-list` inside `<p>`; author meaningful punctuation as text; keep list labels before lists in source; keep page size, page frame, type scale, and content selection in consumer CSS/application code. Do not add resume/job/education elements. See `docs/recipes/PROFESSIONAL-PROFILE.md`.
 
+The publication recipes (`DF-PRINT-2026-0005`) serve journal articles and issues, proceedings, book chapters, reports, and manuals:
+
+- `.ef-longform` — document-root long-form rhythm (justified, hyphenated, indented; `p[data-lead]`, `p[data-dropcap]`);
+- `.ef-article` — article/chapter unit; `data-start="page"` or `"recto"` (recto is P3; browsers break to a new page);
+- `.ef-article-header` — opening front matter with `[data-kicker]`, `h1`, `[data-subtitle]`; spans columns;
+- `.ef-authors` / `.ef-affiliations` — contributor list with linked affiliation markers and `[data-orcid]`; affiliations with authored markers and IDs;
+- `.ef-meta-list` — `dl` of `div` groups for DOI, dates, licence, citation, ISSN (`data-layout="inline"` for compact lines);
+- `.ef-abstract` — plain or `data-variant="structured"` (run-in part headings);
+- `.ef-caption` — `[data-label]`, `[data-note]`, `[data-source]` for figures, tables, listings;
+- `.ef-equation` — `figure` around consumer MathML/SVG/HTML with an authored `(n)` figcaption;
+- `.ef-column-span` — full-width block inside multicolumn flow;
+- `.ef-reference-list` — hanging (author-year) or `data-style="numeric"` with authored `[data-marker]`;
+- `.ef-endnotes` — authored notes with `[data-backlink]`;
+- `.ef-declarations` — run-in funding/interests/contributions/data/ethics statements.
+
+Rules: write every number (sections, figures, tables, equations, references, page ranges, contents pages) as text; never generate scholarly numbering with CSS counters; never format, sort, or validate citations (CSL and conversion run upstream); never simulate footnotes or target-page numbers with JavaScript; reuse `.ef-labeled` + `.ef-inline-list` for keywords, `.ef-category-grid` for editorial boards, `ef-print-toc` (`[data-detail]` lines) for contents, and `ef-print-note` for author notes; keep named pages (landscape, per-article running heads) outside multicolumn containers. Do not add `ef-print-journal`, `ef-print-article`, `ef-print-author`, or other scholarly elements. See `docs/recipes/JOURNAL-PUBLICATION.md`.
+
 The Folio documentation generator fails if a newly registered public element lacks site metadata and three examples. Documentation examples must also remain usable at phone widths without changing the component's print-media contract.
 
 ## Capability tiers
@@ -182,7 +199,11 @@ Keep native table semantics. Wide print output needs an authored strategy such a
 
 ### ef-print-toc / ef-print-note
 
-Authored TOC page values and in-flow notes are portable. Automatic target-page counters, footnotes, bottom-of-page placement, and true sidenotes remain enhanced-renderer capabilities.
+Authored TOC page values and in-flow notes are portable. Automatic target-page counters, footnotes, bottom-of-page placement, and true sidenotes remain enhanced-renderer capabilities. Authored TOC page values are consumer data: regenerate them from a deterministic render and record which renderer produced them.
+
+### Journal running matter (Chromium P1/P2)
+
+Per-article running heads are static margin-box text on one named page per article; that forces a page break at each article boundary, and Chromium cannot suppress the head on an article's opening page (`@page name:first` is not matched). `counter(page)`/`counter(pages)` continue across named pages. In Chromium 141, `@page` specificity is not applied across stylesheets, and a captioned header-repeating table on a named page strands its caption; see `EV-PRINT-2026-0007` for workarounds.
 
 ## Adding a Folio component
 
@@ -198,7 +219,7 @@ When adding a registered public component:
 8. verify the documentation examples at narrow mobile widths as well as print media;
 9. run ROS attribution and validation.
 
-Adding or changing a public recipe carries the same obligations: capability/maturity metadata and three examples in the site generator, fixture evidence (`npm run test:profiles` for the profile recipes), and narrow-screen verification.
+Adding or changing a public recipe carries the same obligations: capability/maturity metadata and three examples in the site generator (`tools/recipe-metadata.mjs`, `tools/journal-recipe-metadata.mjs`), fixture evidence (`npm run test:profiles` for the profile recipes, `npm run test:journal` for the publication recipes), and narrow-screen verification.
 
 ## Documentation site
 

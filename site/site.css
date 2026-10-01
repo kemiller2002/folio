@@ -314,6 +314,12 @@
 
   .button-link:hover { background: var(--ef-stone); }
 
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+  }
+
   .docs-shell {
     inline-size: min(var(--site-max), 100%);
     max-inline-size: 100%;

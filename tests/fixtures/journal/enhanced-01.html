@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en-GB" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JOURNAL-ENHANCED-01 · Enhanced scholarly paged-media experiment</title>
+  <meta name="description" content="Fictional two-article sample that exercises P3 paged-media features with portable fallbacks.">
+  <link rel="stylesheet" href="../../../src/styles/print.css">
+  <link rel="stylesheet" href="./journal.css">
+  <link rel="stylesheet" href="./enhanced.css">
+  <script type="module" src="../../../src/components/register.js"></script>
+</head>
+<body>
+<ef-print-document class="ef-longform" data-fixture="JOURNAL-ENHANCED-01">
+
+  <article class="ef-article" id="x-article-1" data-start="recto" data-short-title="Night cooling in courtyards" data-author-short="Whitcombe &amp; Laine" aria-labelledby="x1-title">
+    <header class="ef-article-header">
+      <p data-kicker>Research Article · Enhanced rendering experiment</p>
+      <h1 id="x1-title">Night cooling in enclosed residential courtyards</h1>
+      <ol class="ef-authors" aria-label="Authors">
+        <li><span>Siobhan Whitcombe</span><sup><a href="#x1-aff-1" aria-label="Affiliation 1">1</a></sup></li>
+        <li><span>Rosalind Laine</span><sup><a href="#x1-aff-1" aria-label="Affiliation 1">1</a></sup></li>
+      </ol>
+      <ol class="ef-affiliations" aria-label="Affiliations">
+        <li id="x1-aff-1"><sup>1</sup> Port Amsel University, Port Amsel, Northmere</li>
+      </ol>
+      <dl class="ef-meta-list" data-layout="inline" aria-label="Article information">
+        <div><dt>DOI</dt><dd><a href="https://doi.org/10.5555/fjfs.2026.x001">10.5555/fjfs.2026.x001</a></dd></div>
+        <div><dt>Running title</dt><dd>Night cooling in courtyards</dd></div>
+      </dl>
+    </header>
+
+    <section class="ef-abstract" role="doc-abstract" aria-labelledby="x1-abstract">
+      <h2 id="x1-abstract">Abstract</h2>
+      <p>Enclosed courtyards cool more slowly at night than open streets. We compared twelve courtyards with adjacent streets over forty clear nights and found that courtyards cooled 31% more slowly, with the gap largest in courtyards whose sky view factor was below 0.4.</p>
+    </section>
+
+    <ef-print-columns>
+      <section aria-labelledby="x1-s1">
+        <h2 id="x1-s1">1 Introduction</h2>
+        <p>Courtyard housing is common in older districts of Northmere's port cities.<span class="jrn-fn" id="x1-fn-1">The 1911 building code required light wells in every block deeper than twenty metres.</span> Courtyards provide shade by day, but their walls obstruct the night sky and may slow radiative cooling. Earlier work on residential streets found that dense, enclosed canopy can retain heat; courtyards are an extreme case of enclosure.</p>
+        <p>We ask whether courtyards cool more slowly than the streets beside them, and whether the difference depends on how much sky each courtyard can see. The study design is shown in <a class="jrn-xref" href="#x1-fig-1">Figure 1</a> and the main result in <a class="jrn-xref" href="#x1-fig-2">Figure 2</a>.</p>
+      </section>
+      <section aria-labelledby="x1-s2">
+        <h2 id="x1-s2">2 Methods</h2>
+        <p>We installed paired surface loggers in twelve courtyards and on the street outside each one. Sky view factor was measured from hemispherical photographs taken at each courtyard sensor.<span class="jrn-fn" id="x1-fn-2">Photographs were processed with the same threshold for every courtyard; see the supplementary protocol.</span> Nights were retained when cloud stayed below three oktas and wind below 3 m s⁻¹.</p>
+        <ef-print-figure>
+          <figure id="x1-fig-1" aria-labelledby="x1-fig-1-caption">
+            <svg viewBox="0 0 240 90" role="img" aria-labelledby="x1-fig-1-title">
+              <title id="x1-fig-1-title">Paired sensor layout: one sensor in the courtyard, one on the street</title>
+              <g fill="none" stroke="#141414" stroke-width="1.2"><rect x="20" y="10" width="120" height="70"/><rect x="50" y="30" width="60" height="30"/><path d="M150 10V80"/></g>
+              <g fill="#141414" font-family="Liberation Sans, Arial, sans-serif" font-size="9"><circle cx="80" cy="45" r="4"/><rect x="176" y="41" width="8" height="8"/><text x="80" y="76" text-anchor="middle">Courtyard</text><text x="190" y="66" text-anchor="middle">Street</text></g>
+            </svg>
+            <figcaption id="x1-fig-1-caption" class="ef-caption"><span data-label>Figure 1.</span> Paired layout: a circle marks the courtyard sensor and a square the street sensor.</figcaption>
+          </figure>
+        </ef-print-figure>
+        <p>For each pair and night we computed the ratio of courtyard to street cooling rate and modelled it against sky view factor with a random intercept for courtyard.</p>
+      </section>
+      <section aria-labelledby="x1-s3">
+        <h2 id="x1-s3">3 Results</h2>
+        <p>Courtyards cooled 31% more slowly than adjacent streets (ratio 0.69; 95% CI 0.62 to 0.77). The ratio rose with sky view factor: courtyards that could see more than half of the sky cooled almost as fast as the street, as <a class="jrn-xref" href="#x1-fig-2">Figure 2</a> shows.<span class="jrn-fn" id="x1-fn-3">Two courtyards with glazed roofs were excluded before analysis.</span></p>
+        <ef-print-figure class="ef-column-span jrn-page-float">
+          <figure id="x1-fig-2" aria-labelledby="x1-fig-2-caption">
+            <svg viewBox="0 0 480 120" role="img" aria-labelledby="x1-fig-2-title">
+              <title id="x1-fig-2-title">Cooling ratio rises from 0.5 at sky view 0.2 to 0.95 at sky view 0.7</title>
+              <g font-family="Liberation Sans, Arial, sans-serif" font-size="9" fill="#141414">
+                <path d="M40 10V100H470" fill="none" stroke="#141414"/>
+                <path d="M60 85 L150 70 L240 52 L330 34 L420 22" fill="none" stroke="#141414" stroke-width="2"/>
+                <g><circle cx="60" cy="85" r="3.5"/><circle cx="150" cy="70" r="3.5"/><circle cx="240" cy="52" r="3.5"/><circle cx="330" cy="34" r="3.5"/><circle cx="420" cy="22" r="3.5"/></g>
+                <text x="255" y="116" text-anchor="middle">Courtyard sky view factor (0.2 to 0.7)</text>
+                <text x="12" y="55" text-anchor="middle" transform="rotate(-90 12 55)">Cooling ratio</text>
+              </g>
+            </svg>
+            <figcaption id="x1-fig-2-caption" class="ef-caption"><span data-label>Figure 2.</span> Ratio of courtyard to street cooling rate against courtyard sky view factor. A page float in enhanced renderers; an in-flow spanning figure elsewhere.</figcaption>
+          </figure>
+        </ef-print-figure>
+        <p>The association held after excluding the three smallest courtyards and after using air rather than surface temperature as the outcome.</p>
+      </section>
+      <section aria-labelledby="x1-s4">
+        <h2 id="x1-s4">4 Discussion</h2>
+        <p>Courtyards trade daytime shade for slower night cooling, and the trade depends on enclosure. Retrofit options that open part of the sky, such as lighter roofs over stairwells, may help. Night-time exposure in courtyard flats deserves direct indoor measurement.</p>
+      </section>
+    </ef-print-columns>
+
+    <section role="doc-bibliography" aria-labelledby="x1-refs">
+      <h2 id="x1-refs">References</h2>
+      <ol class="ef-reference-list" data-style="numeric">
+        <li id="x1-ref-1"><span data-marker>[1]</span> Okafor A, Lindgren-Reyes T, Carberry J, Hartono M-L, Quintero R. Canopy cover and nocturnal surface cooling in mid-latitude residential blocks. Fenwick J Field Sci. 2026;14(3):e0412.</li>
+        <li id="x1-ref-2"><span data-marker>[2]</span> Laine R, Arden P. Radiative cooling of pavements under clear skies. Fenwick J Field Sci. 2018;6(3):155–170.</li>
+      </ol>
+    </section>
+  </article>
+
+  <article class="ef-article" id="x-article-2" data-start="recto" data-short-title="Report the cloud screen" data-author-short="Laine" aria-labelledby="x2-title">
+    <header class="ef-article-header">
+      <p data-kicker>Letter · Enhanced rendering experiment</p>
+      <h1 id="x2-title">Report the cloud screen</h1>
+      <ol class="ef-authors" aria-label="Author"><li><span>Rosalind Laine</span></li></ol>
+    </header>
+    <p>Night-time field studies routinely exclude cloudy or windy nights, but the criteria are often unstated.<span class="jrn-fn" id="x2-fn-1">A survey of 40 recent papers found explicit thresholds in only 17.</span> A threshold of two oktas rather than four can halve the number of qualifying nights in a maritime climate. The courtyard study earlier in this sample reports its criteria in Section 2, beside <a class="jrn-xref" href="#x1-fig-1">Figure 1</a>.</p>
+    <p>Authors should state the cloud and wind thresholds, the data source used to apply them, the time window, and the number of nights excluded.</p>
+    <ef-print-note class="jrn-fixture-notice">
+      <p>Fixture notice: fictional content written for Folio's JOURNAL-ENHANCED-01 experiment. DOIs use the Crossref test prefix 10.5555 and do not resolve.</p>
+    </ef-print-note>
+  </article>
+  <!-- Distinct named page: tests per-group first-page suppression and blank-verso insertion before a recto start. -->
+  <article class="ef-article jrn-article-alt" id="x-article-3" data-start="recto" data-short-title="Erratum" data-author-short="Editors" aria-labelledby="x3-title">
+    <header class="ef-article-header">
+      <p data-kicker>Erratum · Enhanced rendering experiment</p>
+      <h1 id="x3-title">Erratum: courtyard sample size</h1>
+    </header>
+    <p>In the courtyard article in this sample, the abstract should read “twelve courtyards” throughout; an earlier draft gave fourteen. The analysis is unaffected.</p>
+  </article>
+</ef-print-document>
+</body>
+</html>

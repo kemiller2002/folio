@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en-GB" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JOURNAL-ISSUE-01 · Fenwick Journal of Field Science 14(4) · Measuring the city at night</title>
+  <meta name="description" content="Fictional complete journal issue used as a Folio journal fixture.">
+  <link rel="stylesheet" href="../../../src/styles/print.css">
+  <link rel="stylesheet" href="./journal.css">
+  <style>
+    /*
+     * Issue-level and article-level running matter (P1/P2 Chromium margin boxes).
+     * Each article has its own named page with consumer-authored static content;
+     * counter(page) continues across every named page. Chromium cannot select the
+     * first page of a named-page group, so article opening pages also carry the
+     * running head; the in-flow opening header is the first-page treatment.
+     */
+    @page {
+      @top-right {
+        content: "Vol. 14 · No. 4 · December 2026";
+        font: 8pt "Liberation Sans", Arial, sans-serif;
+        color: #4f5660;
+      }
+    }
+
+    @page :first {
+      @top-left { content: none; }
+      @top-right { content: none; }
+      @bottom-right { content: none; }
+    }
+
+    /*
+     * Chromium 141 applies @page selector specificity only within one stylesheet
+     * (EV-PRINT-2026-0007): the universal rule above would override journal.css's
+     * "bare" suppression, so the suppression is restated here, after it.
+     */
+    @page bare {
+      @top-left { content: none; }
+      @top-right { content: none; }
+      @bottom-right { content: none; }
+    }
+
+    @page art-ed { @top-right { content: "Editorial · Carberry"; font: 8pt "Liberation Sans", Arial, sans-serif; color: #4f5660; } }
+    @page art-a { @top-right { content: "Abara et al. · Lighting retrofits and insects"; font: 8pt "Liberation Sans", Arial, sans-serif; color: #4f5660; } }
+    @page art-b { @top-right { content: "Hartono & Mbeki · Night noise methods review"; font: 8pt "Liberation Sans", Arial, sans-serif; color: #4f5660; } }
+    @page art-c { @top-right { content: "Volkov · Logger batteries below freezing"; font: 8pt "Liberation Sans", Arial, sans-serif; color: #4f5660; } }
+    @page art-d { @top-right { content: "Letter · Laine"; font: 8pt "Liberation Sans", Arial, sans-serif; color: #4f5660; } }
+
+    #editorial { page: art-ed; }
+    #article-a { page: art-a; }
+    #article-b { page: art-b; }
+    #article-c { page: art-c; }
+    #article-d { page: art-d; }
+  </style>
+  <script type="module" src="../../../src/components/register.js"></script>
+</head>
+<body>
+<ef-print-document class="ef-longform" data-fixture="JOURNAL-ISSUE-01">
+
+  <!-- Cover -->
+  <ef-print-title-page class="jrn-bare jrn-cover" aria-labelledby="cover-title">
+    <header>
+      <h1 id="cover-title">Fenwick Journal of Field Science</h1>
+      <p data-cover-issue>Volume 14 · Issue 4 · December 2026</p>
+    </header>
+    <section class="jrn-cover-feature" aria-labelledby="cover-theme">
+      <h2 id="cover-theme">Special issue: Measuring the city at night</h2>
+      <ul>
+        <li>Street lighting retrofits and nocturnal insect activity</li>
+        <li>Night-time noise exposure measurement: a review of methods</li>
+        <li>Logger batteries below freezing: a brief report</li>
+        <li>Letter: reporting cloud screening criteria</li>
+      </ul>
+    </section>
+    <dl class="ef-meta-list" data-layout="inline" aria-label="Issue identifiers">
+      <div><dt>ISSN</dt><dd>0000-0019 (print, fictional)</dd></div>
+      <div><dt>eISSN</dt><dd>0000-0027 (online, fictional)</dd></div>
+      <div><dt>Issue DOI</dt><dd><a href="https://doi.org/10.5555/fjfs.2026.1404">10.5555/fjfs.2026.1404</a></dd></div>
+      <div><dt>Publisher</dt><dd>Fenwick Academic Press</dd></div>
+    </dl>
+  </ef-print-title-page>
+
+  <!-- Inside cover: masthead -->
+  <ef-print-section class="jrn-bare jrn-masthead" break-after="page" aria-labelledby="masthead-title">
+    <h2 id="masthead-title">Masthead</h2>
+    <p>The <cite>Fenwick Journal of Field Science</cite> publishes peer-reviewed research, reviews, brief reports, and correspondence on methods and findings in observational field science. It appears quarterly in print and continuously online.</p>
+
+    <h2>Editorial board</h2>
+    <div class="ef-category-grid">
+      <section>
+        <h3>Editor-in-Chief</h3>
+        <ul><li>Josiah Carberry, Fenwick Institute for Field Methods</li></ul>
+      </section>
+      <section>
+        <h3>Deputy Editor</h3>
+        <ul><li>Adaeze Okafor, University of Harrowgate</li></ul>
+      </section>
+      <section>
+        <h3>Associate Editors</h3>
+        <ul>
+          <li>Rafael Quintero, Port Amsel Climate Office</li>
+          <li>Hiroshi Tanaka, Lindqvist Bay Institute of Technology</li>
+          <li>Nadia Bexley, University of Harrowgate</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Statistical Editor</h3>
+        <ul><li>Jakub Ostrowski, Northmere Statistical Service</li></ul>
+      </section>
+      <section>
+        <h3>Editorial Board</h3>
+        <ul>
+          <li>Kemi Adeyemi</li>
+          <li>Paloma Arden</li>
+          <li>Funmilayo Oyelaran</li>
+          <li>Thandiwe Mbeki</li>
+          <li>Dorian Larkspur</li>
+          <li>Rosalind Laine</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Managing Editor</h3>
+        <ul><li>Siobhan Whitcombe</li></ul>
+      </section>
+    </div>
+
+    <h2>Publication information</h2>
+    <dl class="ef-meta-list" aria-label="Publication information">
+      <div><dt>Publisher</dt><dd>Fenwick Academic Press, 2 Quay Street, Port Amsel PA1 4RE, Northmere (fictional)</dd></div>
+      <div><dt>Frequency</dt><dd>Quarterly; articles published continuously online</dd></div>
+      <div><dt>ISSN</dt><dd>0000-0019 (print) · 0000-0027 (online) — fictional identifiers</dd></div>
+      <div><dt>Issue</dt><dd>Volume 14, Issue 4, December 2026 · Special issue: Measuring the city at night · Guest editors: Mei-Ling Hartono and Rafael Quintero</dd></div>
+      <div><dt>Issue DOI</dt><dd><a href="https://doi.org/10.5555/fjfs.2026.1404">https://doi.org/10.5555/fjfs.2026.1404</a></dd></div>
+      <div><dt>Status</dt><dd>Version of record · print edition</dd></div>
+      <div><dt>Copyright</dt><dd>© 2026 the authors of each article. Articles are published under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International licence</a> unless otherwise stated.</dd></div>
+      <div><dt>Correspondence</dt><dd><a href="mailto:editorial@example.org">editorial@example.org</a></dd></div>
+    </dl>
+    <ef-print-note>
+      <p>Fixture notice: this is a fictional journal issue written for Folio's JOURNAL-ISSUE-01 fixture. The journal, people (other than the ORCID example identity Josiah Carberry), institutions, identifiers, data, and references are invented. DOIs use the Crossref test prefix 10.5555 and do not resolve.</p>
+    </ef-print-note>
+  </ef-print-section>
+
+  <!-- Contents -->
+  <ef-print-section id="contents" break-after="page" aria-labelledby="contents-title">
+    <h2 id="contents-title">Contents</h2>
+    <p>Volume 14 · Issue 4 · December 2026. Page numbers are authored values for this print edition; they were set from the deterministic Chromium render and must be regenerated if the composition changes.</p>
+    <ef-print-toc data-pages-rendered-with="Chromium 141, Letter, P2 deterministic export">
+      <h3>Editorial</h3>
+      <ol>
+        <li><a href="#editorial">Measuring the city at night</a><span data-page>4</span><span data-detail>Josiah Carberry</span></li>
+      </ol>
+      <h3>Research Articles</h3>
+      <ol>
+        <li><a href="#article-a">Street lighting retrofits and nocturnal insect activity on residential streets: a before–after control–impact study</a><span data-page>6</span><span data-detail>Ines Abara, Tomás Lindgren-Reyes, Funmilayo Oyelaran</span></li>
+      </ol>
+      <h3>Reviews</h3>
+      <ol>
+        <li><a href="#article-b">Measuring night-time noise exposure in cities: a review of methods, 2000–2025</a><span data-page>10</span><span data-detail>Mei-Ling Hartono, Thandiwe Mbeki</span></li>
+      </ol>
+      <h3>Letters and Brief Reports</h3>
+      <ol>
+        <li><a href="#article-c">Battery life of low-cost temperature loggers on sub-zero nights: a bench test</a><span data-page>13</span><span data-detail>Brief Report · Ivan Volkov</span></li>
+        <li><a href="#article-d">Report the cloud screen: a plea for explicit observation-window criteria</a><span data-page>15</span><span data-detail>Letter · Rosalind Laine</span></li>
+      </ol>
+      <h3>Back matter</h3>
+      <ol>
+        <li><a href="#information-for-authors">Information for authors</a><span data-page>16</span></li>
+        <li><a href="#corrigendum">Corrigendum</a><span data-page>16</span></li>
+      </ol>
+    </ef-print-toc>
+  </ef-print-section>
+
+  <!-- Editorial: one-column article -->
+  <article class="ef-article" id="editorial" data-start="page" aria-labelledby="editorial-title">
+    <ef-print-header class="jrn-opening">
+      <span slot="left"><strong>Fenwick Journal of Field Science</strong></span>
+      <span slot="center">14(4) · December 2026</span>
+      <span slot="right">Editorial · e0500</span>
+    </ef-print-header>
+    <header class="ef-article-header">
+      <p data-kicker>Editorial</p>
+      <h1 id="editorial-title">Measuring the city at night</h1>
+      <ol class="ef-authors" aria-label="Author">
+        <li><span>Josiah Carberry</span> <a data-orcid href="https://orcid.org/0000-0002-1825-0097">ORCID 0000-0002-1825-0097</a></li>
+      </ol>
+      <p class="ef-affiliations">Editor-in-Chief; Fenwick Institute for Field Methods, Port Amsel, Northmere</p>
+      <dl class="ef-meta-list" data-layout="inline" aria-label="Editorial information">
+        <div><dt>DOI</dt><dd><a href="https://doi.org/10.5555/fjfs.2026.1404.e0500">10.5555/fjfs.2026.1404.e0500</a></dd></div>
+        <div><dt>Published</dt><dd><time datetime="2026-12-01">1 December 2026</time></dd></div>
+      </dl>
+    </header>
+    <p data-lead>Cities do not switch off at dusk. Streets cool, or fail to; lights come on and change what lives beneath them; traffic thins and the soundscape that remains shapes how people sleep. Yet field science has long been a daytime discipline. Our instruments, our working hours, and our satellite overpasses have all favoured the afternoon.</p>
+    <p>This special issue gathers work that takes the night seriously as a field setting. The papers share a concern with method: how to observe something faint, intermittent, or easily confounded when the observer cannot see well and the usual reference conditions do not hold.</p>
+    <p>Abara and colleagues use a before–after control–impact design to ask what happens to nocturnal insects when residential streets switch from sodium to white light-emitting diode lamps. Their design is a model of how to separate an intervention from the seasonal and weather noise that dominates insect counts. Hartono and Mbeki review a quarter-century of methods for measuring night-time noise exposure and find that the field still disagrees about what should be measured, let alone how. Volkov's brief report is a reminder that equipment fails in predictable ways in the cold, and that predictable failures should be reported. Laine's letter asks authors to state the cloud screening criteria they used to define an observation night — a small reform with a large payoff for comparability.</p>
+    <p>Three themes recur. The first is transparency about observation windows: what counts as a night, which nights were excluded, and why. The second is the relationship between what is measured outdoors and what people experience indoors, where most night-time exposure occurs. The third is equity. In each paper, the places with the least favourable night-time conditions are disproportionately the places where people with the fewest resources live.</p>
+    <p>We are grateful to the guest editors, Mei-Ling Hartono and Rafael Quintero, to the reviewers who read these papers carefully and quickly, and to the authors who responded to sometimes demanding requests for additional analyses. We hope this issue encourages more field scientists to stay out after dark.</p>
+    <section class="ef-declarations" aria-labelledby="editorial-declarations">
+      <h2 id="editorial-declarations">Declarations</h2>
+      <section>
+        <h3>Competing interests</h3>
+        <p>J.C. is a co-author of a study cited by one article in this issue and did not handle its review.</p>
+      </section>
+    </section>
+  </article>
+
+  <!-- Division page -->
+  <ef-print-section class="jrn-bare jrn-division" break-before="page" break-after="page" aria-labelledby="division-research">
+    <h2 id="division-research">Research Articles</h2>
+    <p>Original studies reporting new field observations, with full methods and data availability statements.</p>
+  </ef-print-section>
+
+  <!-- Article A: two-column research article, author-year citations -->
+  <article class="ef-article" id="article-a" data-start="page" aria-labelledby="a-title">
+    <ef-print-header class="jrn-opening">
+      <span slot="left"><strong>Fenwick Journal of Field Science</strong></span>
+      <span slot="center">14(4) · December 2026</span>
+      <span slot="right">Research Article · e0501</span>
+    </ef-print-header>
+    <header class="ef-article-header">
+      <p data-kicker>Research Article · Open Access</p>
+      <h1 id="a-title">Street lighting retrofits and nocturnal insect activity on residential streets</h1>
+      <p data-subtitle role="doc-subtitle">A before–after control–impact study</p>
+      <ol class="ef-authors" aria-label="Authors">
+        <li><span>Ines Abara</span><sup><a href="#a-aff-1" aria-label="Affiliation 1">1</a>,<a href="#a-author-notes" aria-label="Corresponding author">*</a></sup></li>
+        <li><span>Tomás Lindgren-Reyes</span><sup><a href="#a-aff-2" aria-label="Affiliation 2">2</a></sup></li>
+        <li><span>Funmilayo Oyelaran</span><sup><a href="#a-aff-1" aria-label="Affiliation 1">1</a></sup></li>
+      </ol>
+      <ol class="ef-affiliations" aria-label="Affiliations">
+        <li id="a-aff-1"><sup>1</sup> School of Biological Sciences, Lindqvist Bay Institute of Technology, Northmere</li>
+        <li id="a-aff-2"><sup>2</sup> Department of Geography, University of Harrowgate, Northmere</li>
+      </ol>
+      <ef-print-note id="a-author-notes"><p>* Corresponding author: <a href="mailto:i.abara@example.org">i.abara@example.org</a></p></ef-print-note>
+      <dl class="ef-meta-list" aria-label="Article information">
+        <div><dt>DOI</dt><dd><a href="https://doi.org/10.5555/fjfs.2026.1404.e0501">https://doi.org/10.5555/fjfs.2026.1404.e0501</a></dd></div>
+        <div><dt>History</dt><dd>Received <time datetime="2026-03-10">10 March 2026</time> · Accepted <time datetime="2026-08-21">21 August 2026</time> · Published <time datetime="2026-12-01">1 December 2026</time></dd></div>
+        <div><dt>Licence</dt><dd>CC BY 4.0</dd></div>
+      </dl>
+    </header>
+
+    <ef-print-callout class="jrn-box" aria-labelledby="a-highlights">
+      <h2 id="a-highlights">Highlights</h2>
+      <ul>
+        <li>Eighteen streets were monitored for two summers before and after a lamp retrofit.</li>
+        <li>Flying insect counts at lamps fell by about a quarter on retrofitted streets relative to controls.</li>
+        <li>The reduction was concentrated in moths; beetle and fly counts changed little.</li>
+      </ul>
+    </ef-print-callout>
+
+    <section class="ef-abstract" role="doc-abstract" aria-labelledby="a-abstract-title">
+      <h2 id="a-abstract-title">Abstract</h2>
+      <p>Municipalities are replacing sodium street lamps with white light-emitting diode (LED) lamps to save energy. Because many nocturnal insects are attracted to short-wavelength light, the retrofit could increase insect mortality at lamps. We monitored insect activity at lamps on nine retrofitted and nine control residential streets for one summer before and one summer after the retrofit. Relative to controls, counts on retrofitted streets fell by 24% (95% CI 11% to 35%), driven by moths. The lamps installed had a warm colour temperature and full cut-off optics, which may explain why attraction did not increase.</p>
+    </section>
+
+    <dl class="ef-labeled jrn-keywords">
+      <dt>Keywords</dt>
+      <dd><ul class="ef-inline-list" style="--ef-print-inline-list-separator: ';'"><li>artificial light at night</li><li>moths</li><li>street lighting</li><li>BACI design</li></ul></dd>
+    </dl>
+
+    <ef-print-columns>
+      <section aria-labelledby="a-s1">
+        <h2 id="a-s1">1 Introduction</h2>
+        <p>Artificial light at night alters the behaviour of many nocturnal insects, drawing them to lamps where they circle until exhausted or are taken by predators (<a href="#a-ref-arden-2022" role="doc-biblioref">Arden, 2022</a>; <a href="#a-ref-tanaka-2023" role="doc-biblioref">Tanaka, 2023</a>). The spectrum of the light matters: lamps that emit more short-wavelength light generally attract more insects (<a href="#a-ref-whitcombe-2021" role="doc-biblioref">Whitcombe and Laine, 2021</a>).</p>
+        <p>Across Northmere, councils are replacing low-pressure and high-pressure sodium lamps with white LED lamps. The retrofit is often presented as an environmental gain because it saves energy. Whether it is also a gain or a loss for insects is unclear, since the outcome depends on lamp colour temperature, optics, and mounting height as well as on spectrum (<a href="#a-ref-oyelaran-2024" role="doc-biblioref">Oyelaran and Abara, 2024</a>).</p>
+        <p>We took advantage of a staged retrofit in Lindqvist Bay to compare insect activity at lamps before and after replacement, using streets scheduled for later replacement as controls.</p>
+      </section>
+      <section aria-labelledby="a-s2">
+        <h2 id="a-s2">2 Methods</h2>
+        <h3>2.1 Design and sites</h3>
+        <p>The city's retrofit schedule allocated residential streets to replacement phases by maintenance district, not by ecological characteristics. We selected nine streets from the first phase (impact) and nine from the third phase (control), matched on lamp spacing, mounting height, and adjacent garden cover. Impact streets received 3000 K full cut-off LED lamps between the two survey summers; control streets kept sodium lamps throughout.</p>
+        <h3>2.2 Insect sampling</h3>
+        <p>At three lamps per street, we recorded flying insects within one metre of the lamp head with a low-light camera for ten minutes beginning one hour after sunset, on twelve nights per summer. Nights with rain, wind above 4 m s⁻¹, or air temperature below 10 °C were excluded (<a href="#a-ref-laine-2026" role="doc-biblioref">Laine, 2026</a>). Insects were classified to order from video by two observers who did not know the street's treatment.</p>
+        <h3>2.3 Analysis</h3>
+        <p>We estimated the retrofit effect as the change in log counts on impact streets minus the change on control streets, as in <a href="#a-eq-1">Equation (1)</a>, where <var>Y</var> is the mean log count:</p>
+        <figure class="ef-equation" id="a-eq-1" aria-label="Equation 1">
+          <math display="block">
+            <mrow>
+              <mi>Δ</mi><mo>=</mo>
+              <mrow><mo>(</mo><msubsup><mi>Y</mi><mtext>impact</mtext><mtext>after</mtext></msubsup><mo>−</mo><msubsup><mi>Y</mi><mtext>impact</mtext><mtext>before</mtext></msubsup><mo>)</mo></mrow>
+              <mo>−</mo>
+              <mrow><mo>(</mo><msubsup><mi>Y</mi><mtext>control</mtext><mtext>after</mtext></msubsup><mo>−</mo><msubsup><mi>Y</mi><mtext>control</mtext><mtext>before</mtext></msubsup><mo>)</mo></mrow>
+            </mrow>
+          </math>
+          <figcaption>(1)</figcaption>
+        </figure>
+        <p>We fitted negative binomial mixed models with random intercepts for street and night and report the exponentiated interaction as a ratio of ratios with a bootstrap interval (<a href="#a-ref-bexley-2021" role="doc-biblioref">Bexley, 2021</a>).</p>
+      </section>
+      <section aria-labelledby="a-s3">
+        <h2 id="a-s3">3 Results</h2>
+        <p>We analysed 1,248 ten-minute recordings and classified 18,402 insects. Moths made up 46% of insects before the retrofit, flies 31%, and beetles 12%. Counts on control streets were similar in both summers.</p>
+        <ef-print-figure>
+          <figure id="a-fig-1" aria-labelledby="a-fig-1-caption">
+            <svg viewBox="0 0 300 150" role="img" aria-labelledby="a-fig-1-title a-fig-1-desc">
+              <title id="a-fig-1-title">Ratio of ratios by insect order</title>
+              <desc id="a-fig-1-desc">Horizontal interval chart. Moths 0.62, all insects 0.76, flies 0.93, beetles 0.98. A vertical reference line marks no change at 1.0.</desc>
+              <g font-family="Liberation Sans, Arial, sans-serif" font-size="9" fill="#141414">
+                <path d="M200 10V120" stroke="#141414" stroke-dasharray="3 3"/>
+                <path d="M70 120H290" stroke="#141414"/>
+                <text x="70" y="134" text-anchor="middle">0.4</text><text x="135" y="134" text-anchor="middle">0.7</text><text x="200" y="134" text-anchor="middle">1.0</text><text x="265" y="134" text-anchor="middle">1.3</text>
+                <text x="180" y="147" text-anchor="middle">Ratio of ratios (impact / control)</text>
+                <text x="64" y="28" text-anchor="end">All insects</text><path d="M135 25H164" stroke="#141414" stroke-width="2"/><circle cx="148" cy="25" r="3.5"/>
+                <text x="64" y="54" text-anchor="end">Moths</text><path d="M104 51H143" stroke="#141414" stroke-width="2"/><rect x="117.5" y="47.5" width="7" height="7"/>
+                <text x="64" y="80" text-anchor="end">Flies</text><path d="M165 77H209" stroke="#141414" stroke-width="2"/><path d="M185 72 l5 8 h-10z"/>
+                <text x="64" y="106" text-anchor="end">Beetles</text><path d="M168 103H226" stroke="#141414" stroke-width="2"/><path d="M196 98 l5 5 -5 5 -5 -5z"/>
+              </g>
+            </svg>
+            <figcaption id="a-fig-1-caption" class="ef-caption"><span data-label>Figure 1.</span> Estimated retrofit effect by insect order with 95% bootstrap intervals. Values below 1.0 indicate fewer insects at retrofitted lamps relative to controls.</figcaption>
+          </figure>
+        </ef-print-figure>
+        <p>Relative to controls, total counts at retrofitted lamps fell by 24% (ratio of ratios 0.76; 95% CI 0.65 to 0.89). The reduction was largest for moths (0.62; 0.53 to 0.75) and negligible for flies and beetles (<a href="#a-fig-1">Figure 1</a>; <a href="#a-tab-1">Table 1</a>).</p>
+        <ef-print-table>
+          <table id="a-tab-1">
+            <caption class="ef-caption"><span data-label>Table 1.</span> Mean insects per ten-minute recording.</caption>
+            <thead><tr><th scope="col">Order</th><th scope="col" data-align="number">Impact before</th><th scope="col" data-align="number">Impact after</th><th scope="col" data-align="number">Control before</th><th scope="col" data-align="number">Control after</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Moths</th><td data-align="number">7.1</td><td data-align="number">4.6</td><td data-align="number">6.8</td><td data-align="number">7.2</td></tr>
+              <tr><th scope="row">Flies</th><td data-align="number">4.6</td><td data-align="number">4.4</td><td data-align="number">4.8</td><td data-align="number">4.9</td></tr>
+              <tr><th scope="row">Beetles</th><td data-align="number">1.8</td><td data-align="number">1.7</td><td data-align="number">1.9</td><td data-align="number">1.9</td></tr>
+              <tr><th scope="row">Other</th><td data-align="number">1.6</td><td data-align="number">1.5</td><td data-align="number">1.5</td><td data-align="number">1.6</td></tr>
+            </tbody>
+          </table>
+        </ef-print-table>
+      </section>
+      <section aria-labelledby="a-s4">
+        <h2 id="a-s4">4 Discussion</h2>
+        <p>Retrofitting with warm-white, full cut-off LED lamps was followed by fewer insects at lamps, not more. This contrasts with experiments using cool-white lamps, which have generally increased attraction (<a href="#a-ref-whitcombe-2021" role="doc-biblioref">Whitcombe and Laine, 2021</a>). We think two features of the installed lamps explain the difference: their low short-wavelength output and their optics, which direct light downward and reduce the visible glare that draws insects from a distance (<a href="#a-ref-tanaka-2023" role="doc-biblioref">Tanaka, 2023</a>).</p>
+        <p>Counts at lamps measure attraction, not population size. Fewer insects at lamps could reflect reduced attraction or a smaller local population, though the stable control counts argue against a general decline. We did not measure insects away from lamps, and two summers cannot capture longer-term population effects.</p>
+        <p>For practice, our results suggest that the specification of an LED retrofit matters more than the switch to LED itself. Councils that choose warm colour temperatures and full cut-off optics may avoid increasing harm to nocturnal insects and could reduce it.</p>
+      </section>
+    </ef-print-columns>
+
+    <section class="ef-declarations" aria-labelledby="a-declarations">
+      <h2 id="a-declarations">Declarations</h2>
+      <section><h3>Funding</h3><p>Lindqvist Bay City Council environmental monitoring fund (fictional award LBCC-EM-24-03).</p></section>
+      <section><h3>Competing interests</h3><p>None declared.</p></section>
+      <section><h3>Author contributions</h3><p>I.A. designed the study and analysed data; T.L.-R. managed field logistics; F.O. classified video and drafted the discussion. All authors approved the final version.</p></section>
+      <section><h3>Data availability</h3><p>Counts and classification records: <a href="https://doi.org/10.5555/fdr.2026.lamps">https://doi.org/10.5555/fdr.2026.lamps</a>.</p></section>
+    </section>
+
+    <section role="doc-bibliography" aria-labelledby="a-references">
+      <h2 id="a-references">References</h2>
+      <ul class="ef-reference-list">
+        <li id="a-ref-arden-2022">Arden, P. (2022) <cite>Field methods in urban climatology: a practical handbook</cite>. 2nd edn. Port Amsel: Fenwick Academic Press (fictional).</li>
+        <li id="a-ref-bexley-2021">Bexley, N. (2021) ‘A gentle introduction to crossed random effects’, <cite>Statistics for Field Science</cite> (fictional), 15, pp. 1–24. Available at: <a href="https://doi.org/10.5555/sfs.2021.015001">https://doi.org/10.5555/sfs.2021.015001</a>.</li>
+        <li id="a-ref-laine-2026">Laine, R. (2026) ‘Report the cloud screen: a plea for explicit observation-window criteria’, <cite>Fenwick Journal of Field Science</cite>, 14(4), e0504. Available at: <a href="#article-d">this issue</a>.</li>
+        <li id="a-ref-oyelaran-2024">Oyelaran, F. and Abara, I. (2024) ‘Specification, not technology: what determines the ecological footprint of street lighting retrofits in residential neighbourhoods with mixed garden and hard-standing frontages?’, <cite>Urban Ecology Notes</cite> (fictional), 9, pp. 55–73. Available at: <a href="https://doi.org/10.5555/uen.2024.009055">https://doi.org/10.5555/uen.2024.009055</a>.</li>
+        <li id="a-ref-tanaka-2023">Tanaka, H. (2023) ‘Glare, spectrum, and the distance from which moths are drawn to lamps’, <cite>Remote Sensing of Cities</cite> (fictional), 5(2), pp. 101–118.</li>
+        <li id="a-ref-whitcombe-2021">Whitcombe, S. and Laine, R. (2021) ‘Insect attraction to lamps of different correlated colour temperature: a meta-analysis’, <cite>Urban Microclimate Letters</cite> (fictional), 6, pp. 1–15. Available at: <a href="https://example.org/uml/2021/6/1/supplementary-material/insect-attraction-meta-analysis-extraction-sheet-version-3.csv">https://example.org/uml/2021/6/1/supplementary-material/insect-attraction-meta-analysis-extraction-sheet-version-3.csv</a>.</li>
+      </ul>
+    </section>
+  </article>
+
+  <!-- Division page -->
+  <ef-print-section class="jrn-bare jrn-division" break-before="page" break-after="page" aria-labelledby="division-reviews">
+    <h2 id="division-reviews">Reviews</h2>
+    <p>Critical syntheses of methods and evidence, commissioned by the editors or proposed by authors.</p>
+  </ef-print-section>
+
+  <!-- Article B: review with note-style citations -->
+  <article class="ef-article" id="article-b" data-start="page" aria-labelledby="b-title">
+    <ef-print-header class="jrn-opening">
+      <span slot="left"><strong>Fenwick Journal of Field Science</strong></span>
+      <span slot="center">14(4) · December 2026</span>
+      <span slot="right">Review · e0502</span>
+    </ef-print-header>
+    <header class="ef-article-header">
+      <p data-kicker>Review</p>
+      <h1 id="b-title">Measuring night-time noise exposure in cities: a review of methods, 2000–2025</h1>
+      <ol class="ef-authors" aria-label="Authors">
+        <li><span>Mei-Ling Hartono</span><sup><a href="#b-aff-1" aria-label="Affiliation 1">1</a>,<a href="#b-author-notes" aria-label="Corresponding author">*</a></sup></li>
+        <li><span>Thandiwe Mbeki</span><sup><a href="#b-aff-2" aria-label="Affiliation 2">2</a></sup></li>
+      </ol>
+      <ol class="ef-affiliations" aria-label="Affiliations">
+        <li id="b-aff-1"><sup>1</sup> Centre for Urban Microclimate, Lindqvist Bay Institute of Technology, Northmere</li>
+        <li id="b-aff-2"><sup>2</sup> Northmere Public Health Observatory, Harrowgate, Northmere</li>
+      </ol>
+      <ef-print-note id="b-author-notes"><p>* Corresponding author: <a href="mailto:m.hartono@example.org">m.hartono@example.org</a></p></ef-print-note>
+      <dl class="ef-meta-list" aria-label="Article information">
+        <div><dt>DOI</dt><dd><a href="https://doi.org/10.5555/fjfs.2026.1404.e0502">https://doi.org/10.5555/fjfs.2026.1404.e0502</a></dd></div>
+        <div><dt>History</dt><dd>Received <time datetime="2026-02-02">2 February 2026</time> · Accepted <time datetime="2026-09-01">1 September 2026</time> · Published <time datetime="2026-12-01">1 December 2026</time></dd></div>
+        <div><dt>Licence</dt><dd>CC BY 4.0</dd></div>
+      </dl>
+    </header>
+
+    <section class="ef-abstract" data-variant="structured" role="doc-abstract" aria-labelledby="b-abstract-title">
+      <h2 id="b-abstract-title">Abstract</h2>
+      <section><h3>Aim</h3><p>To describe how night-time noise exposure has been measured in urban field studies and to identify sources of incomparability.</p></section>
+      <section><h3>Scope</h3><p>Field studies published 2000–2025 that measured outdoor or indoor sound levels at night in residential settings.</p></section>
+      <section><h3>Findings</h3><p>Studies used at least nine distinct indicators, four definitions of night, and three classes of instrument. Fewer than one in five reported both indoor and outdoor levels.</p></section>
+      <section><h3>Recommendations</h3><p>Report the night window, the indicator, the instrument class, and microphone placement explicitly; pair outdoor with indoor measurement where possible.</p></section>
+    </section>
+
+    <ef-print-columns>
+      <section aria-labelledby="b-s1">
+        <h2 id="b-s1">1 Introduction</h2>
+        <p>Night-time noise disturbs sleep, and disturbed sleep is linked to cardiovascular and mental health outcomes.<sup><a href="#b-note-1" id="b-note-ref-1" role="doc-noteref">1</a></sup> Regulators set night-time limits in terms of outdoor indicators, but people sleep indoors, behind walls and windows whose insulation varies widely.<sup><a href="#b-note-2" id="b-note-ref-2" role="doc-noteref">2</a></sup></p>
+        <p>Field studies of night-time noise have multiplied as sound level meters have become cheaper, but their methods vary so much that results are hard to compare. This review describes that variation and proposes a minimum reporting set.</p>
+      </section>
+      <section aria-labelledby="b-s2">
+        <h2 id="b-s2">2 Approach</h2>
+        <p>We searched three bibliographic databases for field studies published between January 2000 and June 2025 that measured sound at night in residential settings. Two reviewers screened titles, abstracts, and full texts and extracted indicators, night definitions, instruments, and microphone placement.<sup><a href="#b-note-3" id="b-note-ref-3" role="doc-noteref">3</a></sup> We included 87 studies.</p>
+      </section>
+      <section aria-labelledby="b-s3">
+        <h2 id="b-s3">3 What was measured</h2>
+        <p>The equivalent continuous sound level over the night period was the most common indicator, but studies also reported maximum levels, the number of events above a threshold, percentile levels, and intermittency ratios. <a href="#b-tab-1">Table 1</a> summarises the indicator families.</p>
+        <ef-print-table class="ef-column-span">
+          <!-- Named page art-b: label as a preceding paragraph (Chromium 141 caption stranding, EV-PRINT-2026-0007). -->
+          <p id="b-tab-1-caption" class="ef-caption"><span data-label>Table 1.</span> Night-time noise indicator families in 87 field studies, with typical night definitions and instrument classes.</p>
+          <table id="b-tab-1" aria-labelledby="b-tab-1-caption">
+            <thead><tr><th scope="col">Indicator family</th><th scope="col">Examples</th><th scope="col" data-align="number">Studies</th><th scope="col">Typical night window</th><th scope="col">Instrument class</th><th scope="col">Main limitation</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Equivalent level</th><td>L<sub>Aeq,night</sub>, L<sub>night</sub></td><td data-align="number">71</td><td>23:00–07:00</td><td>Class 1 or 2</td><td>Hides short loud events</td></tr>
+              <tr><th scope="row">Maximum level</th><td>L<sub>AFmax</sub></td><td data-align="number">38</td><td>23:00–07:00</td><td>Class 1</td><td>Sensitive to single events</td></tr>
+              <tr><th scope="row">Event counts</th><td>Number above 60 dB</td><td data-align="number">22</td><td>22:00–06:00</td><td>Class 1</td><td>Threshold choice varies</td></tr>
+              <tr><th scope="row">Percentile levels</th><td>L<sub>A90</sub>, L<sub>A10</sub></td><td data-align="number">19</td><td>Varies</td><td>Class 2 or low-cost</td><td>Background versus peaks</td></tr>
+              <tr><th scope="row">Intermittency</th><td>Intermittency ratio</td><td data-align="number">9</td><td>23:00–07:00</td><td>Class 1</td><td>Few validated thresholds</td></tr>
+              <tr><th scope="row">Indoor levels</th><td>Bedroom L<sub>Aeq</sub></td><td data-align="number">15</td><td>Occupant bedtime</td><td>Class 2 or low-cost</td><td>Window position unknown</td></tr>
+              <tr><th scope="row">Spectral content</th><td>Low-frequency share</td><td data-align="number">6</td><td>23:00–07:00</td><td>Class 1</td><td>Rarely comparable</td></tr>
+            </tbody>
+          </table>
+          <p class="ef-caption"><span data-note>Note: studies could report more than one indicator family.</span></p>
+        </ef-print-table>
+        <p>Definitions of night varied as much as indicators. Most studies used a fixed clock window of eight hours, but some used occupants' reported bedtimes, and a few used civil twilight.<sup><a href="#b-note-4" id="b-note-ref-4" role="doc-noteref">4</a></sup> Clock windows are convenient for regulation; bedtime windows match exposure better but cannot be compared across households without adjustment.</p>
+      </section>
+      <section aria-labelledby="b-s4">
+        <h2 id="b-s4">4 Where and how it was measured</h2>
+        <p>Outdoor microphones were mounted at façades, at free-field positions, or on street furniture, and placement was often reported incompletely. Façade measurements are several decibels higher than free-field measurements at the same location, so unreported placement alone can explain apparent differences between studies.<sup><a href="#b-note-5" id="b-note-ref-5" role="doc-noteref">5</a></sup></p>
+        <p>Only 15 studies measured inside bedrooms, and only 12 measured inside and outside at the same dwelling. Those paired studies found indoor-outdoor differences ranging from 10 to 32 dB, depending on window position and glazing.<sup><a href="#b-note-6" id="b-note-ref-6" role="doc-noteref">6</a></sup></p>
+        <p>Low-cost sensors appeared after 2015 and now feature in a quarter of studies. Their accuracy at the low levels typical of quiet nights is limited, and few studies reported calibration against a reference instrument.</p>
+      </section>
+      <section aria-labelledby="b-s5">
+        <h2 id="b-s5">5 Recommendations</h2>
+        <p>We propose that every night-time noise field study report, at minimum: the night window and how it was defined; the indicator or indicators; the instrument class and calibration; microphone placement relative to façades; and whether windows were open or closed for indoor measurements. Paired indoor and outdoor measurement should be the default wherever access allows.</p>
+      </section>
+    </ef-print-columns>
+
+    <section class="ef-declarations" aria-labelledby="b-declarations">
+      <h2 id="b-declarations">Declarations</h2>
+      <section><h3>Funding</h3><p>None.</p></section>
+      <section><h3>Competing interests</h3><p>M.-L.H. was guest editor of this special issue; the review was handled independently by the Deputy Editor.</p></section>
+      <section><h3>Author contributions</h3><p>Both authors screened and extracted studies and wrote the review.</p></section>
+    </section>
+
+    <section role="doc-endnotes" aria-labelledby="b-notes-title">
+      <h2 id="b-notes-title">Notes</h2>
+      <ol class="ef-endnotes">
+        <li id="b-note-1"><p>Dorian Larkspur, “Heat Health Warning Thresholds and Their Night-Time Components,” <cite>Public Health Field Reports</cite> (fictional) 22 (2024): 60–79.</p> <a href="#b-note-ref-1" data-backlink role="doc-backlink" aria-label="Back to note 1 reference">↩</a></li>
+        <li id="b-note-2"><p>Mei-Ling Hartono, “Thermal Inertia of Residential Building Stock,” <cite>Building Physics Quarterly</cite> (fictional) 30 (2021): 140–62.</p> <a href="#b-note-ref-2" data-backlink role="doc-backlink" aria-label="Back to note 2 reference">↩</a></li>
+        <li id="b-note-3"><p>The extraction form and the list of included studies are in the supplementary material: <a href="https://example.org/fjfs/14/4/e0502/supplementary/extraction-form-and-included-studies.pdf">https://example.org/fjfs/14/4/e0502/supplementary/extraction-form-and-included-studies.pdf</a>.</p> <a href="#b-note-ref-3" data-backlink role="doc-backlink" aria-label="Back to note 3 reference">↩</a></li>
+        <li id="b-note-4"><p>Thandiwe Mbeki and Dorian Larkspur, “Cloud Cover Screening for Nocturnal Observation Windows,” <cite>Atmospheric Field Methods</cite> (fictional) 19 (2023): 401–17.</p> <a href="#b-note-ref-4" data-backlink role="doc-backlink" aria-label="Back to note 4 reference">↩</a></li>
+        <li id="b-note-5"><p>Hartono, “Thermal Inertia,” 151; see also Rosalind Laine, “Wind Sheltering by Street Trees,” <cite>Fenwick Journal of Field Science</cite> 8, no. 1 (2020): 33–47.</p> <a href="#b-note-ref-5" data-backlink role="doc-backlink" aria-label="Back to note 5 reference">↩</a></li>
+        <li id="b-note-6"><p>Ibid., 155–58.</p> <a href="#b-note-ref-6" data-backlink role="doc-backlink" aria-label="Back to note 6 reference">↩</a></li>
+      </ol>
+    </section>
+
+    <section role="doc-bibliography" aria-labelledby="b-bibliography">
+      <h2 id="b-bibliography">Bibliography</h2>
+      <ul class="ef-reference-list">
+        <li>Hartono, Mei-Ling. “Thermal Inertia of Residential Building Stock.” <cite>Building Physics Quarterly</cite> (fictional) 30 (2021): 140–62. <a href="https://doi.org/10.5555/bpq.2021.030140">https://doi.org/10.5555/bpq.2021.030140</a>.</li>
+        <li>Laine, Rosalind. “Wind Sheltering by Street Trees.” <cite>Fenwick Journal of Field Science</cite> 8, no. 1 (2020): 33–47. <a href="https://doi.org/10.5555/fjfs.2020.0801">https://doi.org/10.5555/fjfs.2020.0801</a>.</li>
+        <li>Larkspur, Dorian. “Heat Health Warning Thresholds and Their Night-Time Components.” <cite>Public Health Field Reports</cite> (fictional) 22 (2024): 60–79.</li>
+        <li>Mbeki, Thandiwe, and Dorian Larkspur. “Cloud Cover Screening for Nocturnal Observation Windows.” <cite>Atmospheric Field Methods</cite> (fictional) 19 (2023): 401–17.</li>
+      </ul>
+    </section>
+  </article>
+
+  <!-- Division page -->
+  <ef-print-section class="jrn-bare jrn-division" break-before="page" break-after="page" aria-labelledby="division-letters">
+    <h2 id="division-letters">Letters and Brief Reports</h2>
+    <p>Short communications: technical notes, replication attempts, and correspondence on published work.</p>
+  </ef-print-section>
+
+  <!-- Article C: one-column brief report, numeric citations -->
+  <article class="ef-article" id="article-c" data-start="page" aria-labelledby="c-title">
+    <ef-print-header class="jrn-opening">
+      <span slot="left"><strong>Fenwick Journal of Field Science</strong></span>
+      <span slot="center">14(4) · December 2026</span>
+      <span slot="right">Brief Report · e0503</span>
+    </ef-print-header>
+    <header class="ef-article-header">
+      <p data-kicker>Brief Report</p>
+      <h1 id="c-title">Battery life of low-cost temperature loggers on sub-zero nights: a bench test</h1>
+      <ol class="ef-authors" aria-label="Author">
+        <li><span>Ivan Volkov</span><sup><a href="#c-aff-1" aria-label="Affiliation 1">1</a></sup></li>
+      </ol>
+      <ol class="ef-affiliations" aria-label="Affiliation">
+        <li id="c-aff-1"><sup>1</sup> Instrument Laboratory, Lindqvist Bay Institute of Technology, Northmere · <a href="mailto:i.volkov@example.org">i.volkov@example.org</a></li>
+      </ol>
+      <dl class="ef-meta-list" data-layout="inline" aria-label="Article information">
+        <div><dt>DOI</dt><dd><a href="https://doi.org/10.5555/fjfs.2026.1404.e0503">10.5555/fjfs.2026.1404.e0503</a></dd></div>
+        <div><dt>Published</dt><dd><time datetime="2026-12-01">1 December 2026</time></dd></div>
+        <div><dt>Licence</dt><dd>CC BY 4.0</dd></div>
+      </dl>
+    </header>
+    <section class="ef-abstract" role="doc-abstract" aria-labelledby="c-abstract-title">
+      <h2 id="c-abstract-title">Abstract</h2>
+      <p>Winter deployments of low-cost loggers lose data when batteries fail on cold nights. In a climate-chamber test of 24 loggers with three battery chemistries, alkaline cells failed after a median of 9 nights at −10 °C, while lithium iron disulfide cells lasted the full 60-night test. Field networks operating below freezing should specify lithium cells and report battery chemistry.</p>
+    </section>
+    <section aria-labelledby="c-s1">
+      <h2 id="c-s1">1 Method</h2>
+      <p>Twenty-four loggers of one model were fitted with alkaline, nickel-metal hydride, or lithium iron disulfide AA cells (eight each) and held in a climate chamber programmed with a nightly cycle from +5 °C by day to −10 °C by night, logging at ten-minute intervals <a href="#c-ref-1" role="doc-biblioref">[1]</a>. A logger was counted as failed on the first night it recorded fewer than 90% of expected readings.</p>
+    </section>
+    <section aria-labelledby="c-s2">
+      <h2 id="c-s2">2 Results</h2>
+      <p>All alkaline-powered loggers failed within 14 nights (median 9). Nickel-metal hydride loggers failed after a median of 23 nights. No lithium-powered logger failed during the 60-night test (<a href="#c-fig-1">Figure 1</a>). Failures were preceded by two to three nights of missing readings concentrated between 03:00 and 06:00, the coldest part of the cycle, which would bias nightly minima upward if partial nights were retained <a href="#c-ref-2" role="doc-biblioref">[2]</a>.</p>
+      <ef-print-figure>
+        <figure id="c-fig-1" aria-labelledby="c-fig-1-caption">
+          <svg viewBox="0 0 420 150" role="img" aria-labelledby="c-fig-1-title c-fig-1-desc">
+            <title id="c-fig-1-title">Survival curves by battery chemistry</title>
+            <desc id="c-fig-1-desc">Step chart of the share of loggers still recording over 60 nights. Alkaline falls to zero by night 14, nickel-metal hydride to zero by night 31, lithium stays at 100 percent.</desc>
+            <g font-family="Liberation Sans, Arial, sans-serif" font-size="9" fill="#141414">
+              <path d="M50 10V120H410" fill="none" stroke="#141414"/>
+              <text x="44" y="14" text-anchor="end">100%</text><text x="44" y="123" text-anchor="end">0%</text>
+              <text x="50" y="134" text-anchor="middle">0</text><text x="170" y="134" text-anchor="middle">20</text><text x="290" y="134" text-anchor="middle">40</text><text x="410" y="134" text-anchor="middle">60</text>
+              <text x="230" y="147" text-anchor="middle">Nights at −10 °C</text>
+              <path d="M50 12H95V40H104V70H110V100H125V120" fill="none" stroke="#141414" stroke-width="2" stroke-dasharray="2 3"/>
+              <path d="M50 12H158V40H182V70H200V100H236V120" fill="none" stroke="#141414" stroke-width="2" stroke-dasharray="8 4"/>
+              <path d="M50 12H410" fill="none" stroke="#141414" stroke-width="2"/>
+              <text x="300" y="28">Lithium (solid)</text><text x="214" y="88">NiMH (long dash)</text><text x="128" y="112">Alkaline (dots)</text>
+            </g>
+          </svg>
+          <figcaption id="c-fig-1-caption" class="ef-caption"><span data-label>Figure 1.</span> Share of loggers still recording by battery chemistry, eight loggers per group. Line patterns and direct labels identify the series.</figcaption>
+        </figure>
+      </ef-print-figure>
+    </section>
+    <section aria-labelledby="c-s3">
+      <h2 id="c-s3">3 Implications</h2>
+      <p>Networks deployed through winter should use lithium cells, and studies should report battery chemistry and the rule used to exclude partial nights <a href="#c-ref-3" role="doc-biblioref">[3]</a>.</p>
+    </section>
+    <section class="ef-declarations" aria-labelledby="c-declarations">
+      <h2 id="c-declarations">Declarations</h2>
+      <section><h3>Funding and competing interests</h3><p>Internal laboratory funds. None declared.</p></section>
+    </section>
+    <section role="doc-bibliography" aria-labelledby="c-references">
+      <h2 id="c-references">References</h2>
+      <ol class="ef-reference-list" data-style="numeric">
+        <li id="c-ref-1"><span data-marker>[1]</span> Abernathy-Svensson K. Shield design for passive temperature sensors. Instrum Notes (fictional). 2020;41:12–18.</li>
+        <li id="c-ref-2"><span data-marker>[2]</span> Okafor A, Hartono M-L. Low-cost temperature loggers for street-scale microclimate monitoring: drift, shielding, and siting errors. Lindqvist Bay Tech Rep. 2023;17:1–38. doi:<a href="https://doi.org/10.5555/lbit.tr.2023.17">10.5555/lbit.tr.2023.17</a></li>
+        <li id="c-ref-3"><span data-marker>[3]</span> Laine R. Report the cloud screen: a plea for explicit observation-window criteria. Fenwick J Field Sci. 2026;14(4):e0504.</li>
+      </ol>
+    </section>
+  </article>
+
+  <!-- Article D: letter -->
+  <article class="ef-article" id="article-d" data-start="page" aria-labelledby="d-title">
+    <ef-print-header class="jrn-opening">
+      <span slot="left"><strong>Fenwick Journal of Field Science</strong></span>
+      <span slot="center">14(4) · December 2026</span>
+      <span slot="right">Letter · e0504</span>
+    </ef-print-header>
+    <header class="ef-article-header">
+      <p data-kicker>Letter</p>
+      <h1 id="d-title">Report the cloud screen: a plea for explicit observation-window criteria</h1>
+      <ol class="ef-authors" aria-label="Author"><li><span>Rosalind Laine</span></li></ol>
+      <p class="ef-affiliations">Port Amsel, Northmere · <a href="mailto:r.laine@example.org">r.laine@example.org</a></p>
+    </header>
+    <p>Sir — Night-time field studies routinely exclude cloudy or windy nights, for good reason: radiative processes dominate only under clear, calm skies. But the criteria used to define a qualifying night are often unstated, or stated so loosely (“clear nights were selected”) that they cannot be reproduced.</p>
+    <p>The choice matters. A threshold of two oktas rather than four can halve the number of qualifying nights in a maritime climate and shift the sample toward colder, drier air masses. Two studies of the same phenomenon in the same city can reach different conclusions simply because they screened nights differently.</p>
+    <p>I suggest that authors state, at minimum: the cloud and wind thresholds, the data source used to apply them, the time window over which they were applied, and the number of nights excluded. The papers by Abara and colleagues and by Volkov in this issue show how little space this takes.</p>
+    <p class="jrn-signature">Rosalind Laine</p>
+  </article>
+
+  <!-- Back matter -->
+  <ef-print-section id="information-for-authors" break-before="page" aria-labelledby="ifa-title">
+    <h2 id="ifa-title">Information for authors</h2>
+    <ef-print-columns>
+      <p>The journal considers research articles (up to 6,000 words), reviews (up to 8,000 words), brief reports (up to 1,500 words), and letters (up to 600 words). Manuscripts are submitted as semantic HTML or as a word-processor file with structured headings; the production team converts accepted manuscripts to the journal's HTML publication format.</p>
+      <p>Authors supply reference lists formatted in the journal's style. The journal does not validate bibliographic data; authors are responsible for the accuracy of every reference, identifier, and link.</p>
+      <p>Figures should be supplied as vector files where possible, with a text description for each. Colour must not be the only means of conveying information, because the print edition is grey-scale.</p>
+      <p>Every article includes funding, competing-interest, author-contribution, and data-availability statements written by the authors. The editors do not infer these statements from the manuscript.</p>
+    </ef-print-columns>
+    <section id="corrigendum" aria-labelledby="corrigendum-title">
+      <h2 id="corrigendum-title">Corrigendum</h2>
+      <p>In Okafor et al., “Canopy cover and nocturnal surface cooling in mid-latitude residential blocks,” <cite>Fenwick J Field Sci</cite> 14(3): e0412, the confidence interval for the canopy–sky view interaction in Section 3.2 was printed as 0.08 to 0.40 in the online-first version; the correct interval, 0.18 to 0.40, appears in the version of record. This fictional notice exercises corrigendum composition in the fixture.</p>
+    </section>
+  </ef-print-section>
+
+  <!-- Sponsor page: ordinary consumer-authored named page -->
+  <ef-print-section class="jrn-bare jrn-sponsor" break-before="page" aria-label="Sponsor message">
+    <div>
+      <p><strong>Northmere Field Methods Summer School 2027</strong></p>
+      <p>Two weeks of practical training in sensor networks, field statistics, and open data. Applications open 1 February 2027.</p>
+      <p><a href="https://example.org/summer-school">https://example.org/summer-school</a></p>
+    </div>
+  </ef-print-section>
+
+  <!-- Back cover -->
+  <ef-print-back-page class="jrn-bare jrn-back-cover" aria-label="Back cover">
+    <p><strong>Fenwick Journal of Field Science</strong> · Volume 14 · Issue 4 · December 2026</p>
+    <p>Special issue: Measuring the city at night. Guest editors Mei-Ling Hartono and Rafael Quintero.</p>
+    <dl class="ef-meta-list" data-layout="inline" aria-label="Back cover identifiers">
+      <div><dt>ISSN</dt><dd>0000-0019</dd></div>
+      <div><dt>eISSN</dt><dd>0000-0027</dd></div>
+      <div><dt>Online</dt><dd><a href="https://example.org/fjfs/14/4">https://example.org/fjfs/14/4</a></dd></div>
+    </dl>
+  </ef-print-back-page>
+</ef-print-document>
+</body>
+</html>
