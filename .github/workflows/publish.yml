@@ -133,14 +133,6 @@ jobs:
             echo "No bootstrap token present. npm will use GitHub OIDC trusted publishing."
           fi
 
-      - name: Publish committed stable version when it is new
-        if: steps.stable.outputs.publish == 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-          npm publish --access public --provenance "./${{ steps.stable.outputs.archive }}"
-          echo "Published ${{ steps.stable.outputs.package }}@${{ steps.stable.outputs.version }} with the latest dist-tag."
-
       - name: Publish immutable stable GitHub release
         if: steps.stable.outputs.eligible == 'true'
         env:
@@ -168,12 +160,48 @@ jobs:
               --notes "Folio $tag: immutable stable print-components package with Echelon release metadata and provenance."
           fi
 
-      - name: Publish this main commit
+      - name: Publish committed stable version to npm when authorized
+        if: steps.stable.outputs.publish == 'true'
+        id: npm-stable
         shell: bash
         run: |
-          set -euo pipefail
+          set -uo pipefail
+          output="$(mktemp)"
+          set +e
+          npm publish --access public --provenance "./${{ steps.stable.outputs.archive }}" >"$output" 2>&1
+          status=$?
+          set -e
+          cat "$output"
+
+          if [[ $status -eq 0 ]]; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "Published ${{ steps.stable.outputs.package }}@${{ steps.stable.outputs.version }} with the latest dist-tag."
+          elif grep -Eq 'ENEEDAUTH|need auth' "$output"; then
+            echo "published=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=npm publication unavailable::Stable Folio bytes are published immutably on GitHub, but npm authentication/trusted publishing is not configured. Registry consumers remain reproducible through the GitHub release."
+          else
+            exit "$status"
+          fi
+
+      - name: Publish this main commit when npm is authorized
+        shell: bash
+        run: |
+          set -uo pipefail
           base_version="$(node -p "require('./package.json').version")"
           snapshot_version="${base_version}-main.${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}"
           npm version "$snapshot_version" --no-git-tag-version
-          npm publish --access public --provenance --tag main
-          echo "Published @echelon-foundry/print-components@${snapshot_version} with the main dist-tag."
+
+          output="$(mktemp)"
+          set +e
+          npm publish --access public --provenance --tag main >"$output" 2>&1
+          status=$?
+          set -e
+          cat "$output"
+
+          if [[ $status -eq 0 ]]; then
+            echo "Published @echelon-foundry/print-components@${snapshot_version} with the main dist-tag."
+          elif grep -Eq 'ENEEDAUTH|need auth' "$output"; then
+            echo "::warning title=npm snapshot skipped::npm authentication/trusted publishing is not configured; the immutable stable GitHub release is unaffected."
+          else
+            exit "$status"
+          fi
