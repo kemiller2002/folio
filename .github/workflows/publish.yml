@@ -6,8 +6,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
+  attestations: write
 
 concurrency:
   group: npm-publish-folio-main
@@ -56,6 +57,72 @@ jobs:
         run: |
           node -e "const p=require('./package.json'); if (p.private) { console.error('package.json is private'); process.exit(1); }"
 
+      - name: Prepare stable package bytes
+        id: stable
+        shell: bash
+        run: |
+          set -euo pipefail
+          package_name="$(node -p "require('./package.json').name")"
+          package_version="$(node -p "require('./package.json').version")"
+          mkdir -p release
+          current_json="$(npm pack --pack-destination release --json)"
+          current_file="$(printf '%s' "$current_json" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s)[0].filename))')"
+          current_path="release/$current_file"
+          current_sha="$(sha256sum "$current_path" | awk '{print $1}')"
+
+          echo "package=$package_name" >> "$GITHUB_OUTPUT"
+          echo "version=$package_version" >> "$GITHUB_OUTPUT"
+          echo "archive=$current_path" >> "$GITHUB_OUTPUT"
+          echo "sha256=$current_sha" >> "$GITHUB_OUTPUT"
+
+          if npm view "$package_name@$package_version" version >/dev/null 2>&1; then
+            published="$(mktemp -d)"
+            published_json="$(npm pack "$package_name@$package_version" --pack-destination "$published" --json)"
+            published_file="$(printf '%s' "$published_json" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s)[0].filename))')"
+            published_sha="$(sha256sum "$published/$published_file" | awk '{print $1}')"
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+
+            if [[ "$published_sha" == "$current_sha" ]]; then
+              echo "eligible=true" >> "$GITHUB_OUTPUT"
+              echo "Committed stable bytes match npm $package_name@$package_version."
+            else
+              echo "eligible=false" >> "$GITHUB_OUTPUT"
+              echo "::warning title=Stable version needs bump::$package_name@$package_version already exists on npm with different bytes. Registry stable publication is intentionally skipped until package.json is bumped."
+            fi
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "eligible=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create stable checksums
+        if: steps.stable.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          archive="${{ steps.stable.outputs.archive }}"
+          (cd release && sha256sum "$(basename "$archive")" > checksums.txt)
+          cat release/checksums.txt
+
+      - name: Generate shared Echelon release manifest
+        if: steps.stable.outputs.eligible == 'true'
+        uses: kemiller2002/echelon-registry/actions/release-contract@d615f2d0a3dee428aa072c92a5a2de8062b373ed
+        with:
+          release-input: release/echelon.release-input.json
+          artifact-dir: release
+          output: release/echelon-release.json
+          version: ${{ steps.stable.outputs.version }}
+          tag: v${{ steps.stable.outputs.version }}
+          commit: ${{ github.sha }}
+          release-stage: stable
+
+      - name: Attest stable package bytes
+        if: steps.stable.outputs.eligible == 'true'
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: |
+            release/*.tgz
+            release/checksums.txt
+            release/echelon-release.json
+
       - name: Configure bootstrap npm authentication when present
         shell: bash
         run: |
@@ -66,18 +133,39 @@ jobs:
             echo "No bootstrap token present. npm will use GitHub OIDC trusted publishing."
           fi
 
-      - name: Publish committed version when it is new
+      - name: Publish committed stable version when it is new
+        if: steps.stable.outputs.publish == 'true'
         shell: bash
         run: |
           set -euo pipefail
-          package_name="$(node -p "require('./package.json').name")"
-          package_version="$(node -p "require('./package.json').version")"
+          npm publish --access public --provenance "${{ steps.stable.outputs.archive }}"
+          echo "Published ${{ steps.stable.outputs.package }}@${{ steps.stable.outputs.version }} with the latest dist-tag."
 
-          if npm view "${package_name}@${package_version}" version >/dev/null 2>&1; then
-            echo "${package_name}@${package_version} is already published; leaving latest unchanged."
+      - name: Publish immutable stable GitHub release
+        if: steps.stable.outputs.eligible == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v${{ steps.stable.outputs.version }}"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            tmp="$(mktemp -d)"
+            if ! gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern checksums.txt --dir "$tmp" >/dev/null 2>&1; then
+              echo "::error title=Immutable release metadata missing::$tag already exists without checksums.txt; bump package.json instead of overwriting it."
+              exit 1
+            fi
+            cmp "$tmp/checksums.txt" release/checksums.txt
+            echo "$tag already exists with identical stable package bytes."
           else
-            npm publish --access public --provenance
-            echo "Published ${package_name}@${package_version} with the latest dist-tag."
+            gh release create "$tag" \
+              "${{ steps.stable.outputs.archive }}" \
+              release/checksums.txt \
+              release/echelon-release.json \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title "Folio $tag" \
+              --notes "Folio $tag: immutable stable print-components package with Echelon release metadata and provenance."
           fi
 
       - name: Publish this main commit
