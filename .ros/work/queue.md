@@ -5,6 +5,7 @@
 | FOLIO-GH-21 | FOLIO-GH-21 | complete |  |  |
 | FOLIO-GH-25 | FOLIO-GH-25 | complete |  |  |
 | FOLIO-GH-28 | Attribute GH-28 journal family changes on PR #32 relative to main | complete | folio,gh-28,attribution | high |
+| FOLIO-GH-33 | Make Folio output and interactions machine-operable | complete | folio,machine-operability,automation | high |
 | GH-11 | Implement the remaining Folio core print primitives | complete | folio,print,components | high |
 | GH-13 | Implement canonical Signal results report fixture | complete | folio,print,reports,signal | high |
 | GH-14 | Keep canonical report documentation deployment in sync | complete | folio,documentation,deployment,reports | medium |
