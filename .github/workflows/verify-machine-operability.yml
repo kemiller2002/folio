@@ -1,0 +1,54 @@
+name: Verify machine-operability contract
+
+on:
+  push:
+    branches: [feature/machine-operability-contract]
+    paths:
+      - ".github/workflows/verify-machine-operability.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Run machine-operability conformance
+        id: conformance
+        shell: bash
+        run: |
+          set +e
+          npm run test:machine
+          STATUS=$?
+          echo "status=$STATUS" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Remove temporary verifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/verify-machine-operability.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Remove temporary machine-operability verifier"
+          git pull --rebase origin feature/machine-operability-contract
+          git push origin HEAD:feature/machine-operability-contract
+
+      - name: Propagate conformance result
+        if: steps.conformance.outputs.status != '0'
+        run: exit 1
