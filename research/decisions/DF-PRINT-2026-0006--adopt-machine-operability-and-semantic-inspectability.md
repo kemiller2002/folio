@@ -2,13 +2,18 @@
 id: DF-PRINT-2026-0006
 title: Adopt machine operability and semantic inspectability as public Folio contracts
 status: accepted
-date: 2026-10-02
-work_item: FOLIO-GH-33
-related:
+type: decision-record
+created: 2026-10-02
+updated: 2026-10-02
+tags: [architecture, machine-operability, semantics, automation, playwright, public-api]
+supersedes: []
+superseded_by: []
+related_documents:
   - docs/requirements/MACHINE-OPERABILITY.md
   - docs/AGENT-USAGE.md
   - tests/run-machine-operability-tests.mjs
 ---
+
 
 # Context
 
