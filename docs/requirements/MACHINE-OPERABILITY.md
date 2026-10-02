@@ -104,3 +104,7 @@ For an interactive preview/configuration action, it must additionally be able to
 6. How do I know it succeeded, failed, or was rejected?
 
 If the relevant questions cannot be answered through the public document/interaction contract, the feature is not complete.
+
+## 6. CI gate
+
+Machine-operability conformance MUST run as part of Folio's normal test gate. A regression in semantic document structure, stable identity, or an established interactive machine path blocks merge/release unless the public contract is intentionally versioned with migration guidance.
