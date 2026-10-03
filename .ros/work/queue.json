@@ -196,6 +196,22 @@
       "createdBy": "agent:openai-chatgpt",
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/folio/issues/33"
+    },
+    {
+      "id": "FOLIO-GH-35",
+      "title": "Establish Folio machine-operability retrofit audit",
+      "description": null,
+      "tags": [
+        "folio,machine-operability,audit"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-03T09:37:54.137Z",
+      "updatedAt": "2026-10-03T09:37:54.000Z",
+      "createdBy": "agent:openai-chatgpt",
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/35"
     }
   ]
 }

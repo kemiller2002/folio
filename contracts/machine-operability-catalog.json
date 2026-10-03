@@ -1,0 +1,790 @@
+{
+  "contract": "folio-machine-operability",
+  "contractVersion": "1.0.0",
+  "summary": {
+    "registeredElements": 27,
+    "componentPass": 27,
+    "componentNeedsRetrofit": 0,
+    "recipes": 21,
+    "recipePass": 21,
+    "recipeNeedsRetrofit": 0
+  },
+  "components": [
+    {
+      "tag": "ef-print-document",
+      "slug": "document",
+      "title": "Document",
+      "category": "Document structure",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-title-page",
+      "slug": "title-page",
+      "title": "Title Page",
+      "category": "Document structure",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-section",
+      "slug": "section",
+      "title": "Section",
+      "category": "Document structure",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-back-page",
+      "slug": "back-page",
+      "title": "Back Page",
+      "category": "Document structure",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-header",
+      "slug": "header",
+      "title": "Header",
+      "category": "Running content",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-footer",
+      "slug": "footer",
+      "title": "Footer",
+      "category": "Running content",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-page-number",
+      "slug": "page-number",
+      "title": "Page Number",
+      "category": "Running content",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-columns",
+      "slug": "columns",
+      "title": "Columns",
+      "category": "Flow layout",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-sidebar",
+      "slug": "sidebar",
+      "title": "Sidebar",
+      "category": "Flow layout",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-layer",
+      "slug": "layer",
+      "title": "Artwork Layer",
+      "category": "Page artwork",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-break",
+      "slug": "break",
+      "title": "Page Break",
+      "category": "Fragmentation",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-keep",
+      "slug": "keep",
+      "title": "Keep Together",
+      "category": "Fragmentation",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-metric",
+      "slug": "metric",
+      "title": "Metric",
+      "category": "Report composition",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-integrity",
+      "slug": "integrity",
+      "title": "Integrity",
+      "category": "Report composition",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-finding",
+      "slug": "finding",
+      "title": "Finding",
+      "category": "Report composition",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-callout",
+      "slug": "callout",
+      "title": "Callout",
+      "category": "Content emphasis",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-figure",
+      "slug": "figure",
+      "title": "Figure",
+      "category": "Media",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-table",
+      "slug": "table",
+      "title": "Table",
+      "category": "Structured data",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-code",
+      "slug": "code",
+      "title": "Code",
+      "category": "Technical content",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-toc",
+      "slug": "toc",
+      "title": "Table of Contents",
+      "category": "Navigation",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-note",
+      "slug": "note",
+      "title": "Note",
+      "category": "Annotations",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-security-record",
+      "slug": "security-record",
+      "title": "Security Evidence Record",
+      "category": "Security",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-security-posture",
+      "slug": "security-posture",
+      "title": "Security Posture",
+      "category": "Security",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-security-invariant",
+      "slug": "security-invariant",
+      "title": "Security Invariant",
+      "category": "Security",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-security-evidence",
+      "slug": "security-evidence",
+      "title": "Security Evidence",
+      "category": "Security",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-security-unknown",
+      "slug": "security-unknown",
+      "title": "Unknown Security Effect",
+      "category": "Security",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "tag": "ef-print-security-exception",
+      "slug": "security-exception",
+      "title": "Security Exception",
+      "category": "Security",
+      "interaction": "document",
+      "identity": [
+        "consumer-supplied-native-id",
+        "semantic-child-structure"
+      ],
+      "actions": [
+        "inspect",
+        "follow-native-links-when-present"
+      ],
+      "state": [
+        "attributes",
+        "semantic-content"
+      ],
+      "completion": [
+        "dom-content-available"
+      ],
+      "status": "pass",
+      "reasons": []
+    }
+  ],
+  "recipes": [
+    {
+      "slug": "identity",
+      "selector": ".ef-identity",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "row",
+      "selector": ".ef-row",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "entry",
+      "selector": ".ef-entry",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "lead-list",
+      "selector": ".ef-lead-list",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "inline-list",
+      "selector": ".ef-inline-list",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "labeled",
+      "selector": ".ef-labeled",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "category-grid",
+      "selector": ".ef-category-grid",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "dense",
+      "selector": ".ef-dense",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "longform",
+      "selector": ".ef-longform",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "article",
+      "selector": ".ef-article",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "article-header",
+      "selector": ".ef-article-header",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "authors",
+      "selector": ".ef-authors",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "affiliations",
+      "selector": ".ef-affiliations",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "meta-list",
+      "selector": ".ef-meta-list",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "abstract",
+      "selector": ".ef-abstract",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "caption",
+      "selector": ".ef-caption",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "equation",
+      "selector": ".ef-equation",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "column-span",
+      "selector": ".ef-column-span",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "reference-list",
+      "selector": ".ef-reference-list",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "endnotes",
+      "selector": ".ef-endnotes",
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "slug": "declarations",
+      "selector": ".ef-declarations",
+      "status": "pass",
+      "reasons": []
+    }
+  ]
+}
