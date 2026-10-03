@@ -71,6 +71,22 @@ for (const [name, engine] of engines) {
     await page.getByRole("link", { name: "View totals" }).click();
     assert.equal(new URL(page.url()).hash, "#totals", `${name}: native link reaches the stable semantic target`);
     assert.equal(await page.getByRole("heading", { name: "Totals", level: 2 }).count(), 1, `${name}: target content remains role-addressable`);
+
+    const probes = elementNames.map((elementName, index) =>
+      `<${elementName} id="machine-probe-${index}"><span data-machine-probe="${elementName}">${elementName} content</span></${elementName}>`
+    ).join("");
+    await page.setContent(`<!doctype html><html lang="en"><body>${probes}</body></html>`);
+    await page.evaluate((names) => {
+      for (const elementName of names) {
+        if (!customElements.get(elementName)) customElements.define(elementName, class extends HTMLElement {});
+      }
+    }, elementNames);
+    for (const [index, elementName] of elementNames.entries()) {
+      const element = page.locator(elementName).first();
+      assert.equal(await element.getAttribute("id"), `machine-probe-${index}`, `${name}: ${elementName} preserves supplied identity`);
+      assert.equal(await element.locator("[data-machine-probe]").textContent(), `${elementName} content`, `${name}: ${elementName} preserves light-DOM content`);
+      assert.equal(await element.evaluate(node => node.shadowRoot === null), true, `${name}: ${elementName} does not hide content behind Shadow DOM`);
+    }
   } finally {
     await browser.close();
   }
