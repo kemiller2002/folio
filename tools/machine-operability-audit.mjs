@@ -8,6 +8,7 @@ const site = path.join(root, "site-dist");
 const args = new Set(process.argv.slice(2));
 const write = args.has("--write");
 const check = args.has("--check");
+const strict = args.has("--strict");
 
 if (!fs.existsSync(path.join(site, "site-manifest.json"))) {
   console.error("site-dist is missing. Run npm run site:build before the machine-operability audit.");
@@ -159,4 +160,9 @@ if (check) {
     process.exitCode = 1;
   }
 }
+if (strict && (summary.componentNeedsRetrofit > 0 || summary.recipeNeedsRetrofit > 0)) {
+  console.error(`Folio machine-operability strict audit failed: ${summary.componentNeedsRetrofit} component retrofit finding(s); ${summary.recipeNeedsRetrofit} recipe retrofit finding(s).`);
+  process.exitCode = 1;
+}
+
 console.log(JSON.stringify(summary));
