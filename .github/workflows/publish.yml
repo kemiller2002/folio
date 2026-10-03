@@ -15,7 +15,19 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  debounce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    concurrency:
+      group: folio-publish-debounce-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Wait for commit batch
+        if: github.event_name == 'push'
+        run: sleep 600
+
   publish:
+    needs: debounce
     if: github.repository == 'kemiller2002/folio'
     runs-on: ubuntu-latest
     env:
