@@ -592,3 +592,18 @@ export const coreComponentMetadata = {
     ]
   }
 };
+
+
+// Machine-operability metadata is normalized here so every documented primitive
+// exposes the same public automation contract without repeating boilerplate in
+// each catalog entry. Consumers may supply stable native ids; Folio preserves
+// them because registered elements are passive light-DOM containers.
+for (const metadata of Object.values(coreComponentMetadata)) {
+  metadata.machine ??= Object.freeze({
+    interaction: "document",
+    identity: ["consumer-supplied-native-id", "semantic-child-structure"],
+    actions: ["inspect", "follow-native-links-when-present"],
+    state: ["attributes", "semantic-content"],
+    completion: ["dom-content-available"]
+  });
+}
