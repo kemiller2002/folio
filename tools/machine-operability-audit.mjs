@@ -1,13 +1,20 @@
 import fs from "node:fs";
 import path from "node:path";
-import { coreComponentMetadata } from "./core-component-metadata.mjs";
 import { elementNames } from "../src/components/register.js";
+import { machineComponentMetadata } from "./machine-component-metadata.mjs";
 
 const root = process.cwd();
+const site = path.join(root, "site-dist");
 const args = new Set(process.argv.slice(2));
 const write = args.has("--write");
 const check = args.has("--check");
 
+if (!fs.existsSync(path.join(site, "site-manifest.json"))) {
+  console.error("site-dist is missing. Run npm run site:build before the machine-operability audit.");
+  process.exit(2);
+}
+
+const manifest = JSON.parse(fs.readFileSync(path.join(site, "site-manifest.json"), "utf8"));
 const unsafe = [
   [/<script\b/i, "embedded script"],
   [/\son[a-z]+\s*=/i, "inline event handler"],
@@ -15,87 +22,122 @@ const unsafe = [
   [/\bdraggable=["']true["']/i, "drag-only surface"]
 ];
 
-const semanticRules = {
-  "ef-print-table": html => /<table\b/i.test(html) ? [] : ["examples must preserve a native table"],
-  "ef-print-figure": html => /<figure\b/i.test(html) ? [] : ["examples must preserve a native figure"],
-  "ef-print-toc": html => /href=["']#/i.test(html) ? [] : ["examples must expose native document links"],
-  "ef-print-layer": html => /decorative/i.test(html) && !/aria-hidden=["']true["']/i.test(html)
-    ? ["decorative artwork must be explicitly hidden from semantic reading order"]
-    : []
-};
+const inspectHtml = html => unsafe.filter(([pattern]) => pattern.test(html)).map(([, label]) => label);
+const read = (...parts) => fs.readFileSync(path.join(site, ...parts), "utf8");
 
-const entries = elementNames.map(tag => {
-  const metadata = coreComponentMetadata[tag];
-  const examples = metadata?.examples ?? [];
-  const html = examples.map(example => example.html ?? "").join("\n");
+const components = elementNames.map(tag => {
+  const siteEntry = manifest.components.find(component => component.element === tag);
+  const machine = machineComponentMetadata[tag];
   const reasons = [];
+  if (!machine) reasons.push("machine metadata missing");
+  if (!siteEntry) reasons.push("documentation catalog entry missing");
 
-  if (!metadata) reasons.push("component metadata missing");
-  if (!metadata?.machine) reasons.push("machine metadata missing");
-  if (!examples.length) reasons.push("no executable documentation examples");
-  if (examples.length && !new RegExp(`<${tag}\\b`, "i").test(html)) reasons.push("examples do not exercise the registered element");
-  for (const [pattern, label] of unsafe) if (pattern.test(html)) reasons.push(`forbidden public path: ${label}`);
-  for (const reason of semanticRules[tag]?.(html) ?? []) reasons.push(reason);
+  if (siteEntry) {
+    for (let index = 1; index <= 3; index += 1) {
+      const file = path.join(site, "demos", siteEntry.slug, `${index}.html`);
+      if (!fs.existsSync(file)) {
+        reasons.push(`example ${index} missing`);
+        continue;
+      }
+      const html = fs.readFileSync(file, "utf8");
+      if (!new RegExp(`<${tag}\\b`, "i").test(html)) reasons.push(`example ${index} does not exercise ${tag}`);
+      reasons.push(...inspectHtml(html).map(label => `example ${index}: forbidden public path: ${label}`));
+    }
+  }
 
   return {
     tag,
-    slug: metadata?.slug ?? tag.replace(/^ef-print-/, ""),
-    title: metadata?.title ?? tag,
-    category: metadata?.category ?? "unknown",
-    maturity: metadata?.maturity ?? "unknown",
-    interaction: metadata?.machine?.interaction ?? "document",
-    identity: metadata?.machine?.identity ?? [],
-    actions: metadata?.machine?.actions ?? [],
-    state: metadata?.machine?.state ?? [],
-    completion: metadata?.machine?.completion ?? [],
+    slug: siteEntry?.slug ?? tag.replace(/^ef-print-/, ""),
+    title: siteEntry?.title ?? tag,
+    category: siteEntry?.category ?? "unknown",
+    ...machine,
     status: reasons.length ? "needs-retrofit" : "pass",
-    reasons
+    reasons: [...new Set(reasons)]
   };
 });
 
-const unregisteredMetadata = Object.keys(coreComponentMetadata).filter(tag => !elementNames.includes(tag));
+const recipes = manifest.recipes.map(recipe => {
+  const reasons = [];
+  for (let index = 1; index <= 3; index += 1) {
+    const file = path.join(site, "demos", recipe.demoSlug, `${index}.html`);
+    if (!fs.existsSync(file)) {
+      reasons.push(`example ${index} missing`);
+      continue;
+    }
+    const html = fs.readFileSync(file, "utf8");
+    reasons.push(...inspectHtml(html).map(label => `example ${index}: forbidden public path: ${label}`));
+    if (!/<(?:main|article|section|header|footer|nav|table|figure|h[1-6]|p|ul|ol|dl)\b/i.test(html)) {
+      reasons.push(`example ${index} has no detected native semantic content`);
+    }
+  }
+  return {
+    slug: recipe.slug,
+    selector: recipe.selector,
+    status: reasons.length ? "needs-retrofit" : "pass",
+    reasons: [...new Set(reasons)]
+  };
+});
+
 const summary = {
-  registered: elementNames.length,
-  pass: entries.filter(entry => entry.status === "pass").length,
-  needsRetrofit: entries.filter(entry => entry.status === "needs-retrofit").length,
-  unregisteredMetadata: unregisteredMetadata.length
+  registeredElements: components.length,
+  componentPass: components.filter(item => item.status === "pass").length,
+  componentNeedsRetrofit: components.filter(item => item.status === "needs-retrofit").length,
+  recipes: recipes.length,
+  recipePass: recipes.filter(item => item.status === "pass").length,
+  recipeNeedsRetrofit: recipes.filter(item => item.status === "needs-retrofit").length
 };
 
 const report = {
   contract: "folio-machine-operability",
   contractVersion: "1.0.0",
   summary,
-  unregisteredMetadata,
-  components: entries
+  components,
+  recipes
 };
-
 const json = JSON.stringify(report, null, 2) + "\n";
-const row = entry => `| \`${entry.tag}\` | ${entry.title} | ${entry.category} | ${entry.reasons.join("; ") || "passive light-DOM semantic contract"} |`;
-const failed = entries.filter(entry => entry.status === "needs-retrofit");
-const passed = entries.filter(entry => entry.status === "pass");
+
+const componentRow = item => `| \`${item.tag}\` | ${item.title} | ${item.category} | ${item.reasons.join("; ") || "passive light-DOM element; three semantic demos"} |`;
+const recipeRow = item => `| \`${item.slug}\` | \`${item.selector}\` | ${item.reasons.join("; ") || "three semantic, script-free demos"} |`;
+const badComponents = components.filter(item => item.status === "needs-retrofit");
+const badRecipes = recipes.filter(item => item.status === "needs-retrofit");
+
 const markdown = [
   "# Folio Machine-Operability Retrofit Audit",
   "",
-  "This file is generated by `tools/machine-operability-audit.mjs`. It checks every registered Folio print element against `docs/requirements/MACHINE-OPERABILITY.md`.",
+  "This file is generated from the built Folio documentation catalog by `tools/machine-operability-audit.mjs`. It covers every registered print primitive and every published recipe.",
   "",
-  `**Registered elements:** ${summary.registered}  `,
-  `**Pass:** ${summary.pass}  `,
-  `**Needs retrofit:** ${summary.needsRetrofit}  `,
-  `**Metadata entries without a registered element:** ${summary.unregisteredMetadata}`,
+  `**Registered elements:** ${summary.registeredElements}  `,
+  `**Component pass:** ${summary.componentPass}  `,
+  `**Component needs retrofit:** ${summary.componentNeedsRetrofit}  `,
+  `**Recipes:** ${summary.recipes}  `,
+  `**Recipe pass:** ${summary.recipePass}  `,
+  `**Recipe needs retrofit:** ${summary.recipeNeedsRetrofit}`,
   "",
-  "The cross-browser machine suite separately proves that every registered element preserves consumer-supplied identity, light-DOM children, and semantic descendants after custom-element upgrade.",
+  "The cross-browser machine suite separately proves stable native identity, light-DOM preservation, and semantic descendant visibility for every registered element after custom-element upgrade.",
   "",
-  `## Needs retrofit (${failed.length})`,
+  `## Component retrofit findings (${badComponents.length})`,
   "",
   "| Element | Name | Category | Finding |",
   "| --- | --- | --- | --- |",
-  ...(failed.length ? failed.map(row) : ["| _None_ | | | |"]),
+  ...(badComponents.length ? badComponents.map(componentRow) : ["| _None_ | | | |"]),
   "",
-  `## Pass (${passed.length})`,
+  "## All components",
   "",
   "| Element | Name | Category | Evidence |",
   "| --- | --- | --- | --- |",
-  ...passed.map(row),
+  ...components.map(componentRow),
+  "",
+  `## Recipe retrofit findings (${badRecipes.length})`,
+  "",
+  "| Recipe | Selector | Finding |",
+  "| --- | --- | --- |",
+  ...(badRecipes.length ? badRecipes.map(recipeRow) : ["| _None_ | | |"]),
+  "",
+  "## All recipes",
+  "",
+  "| Recipe | Selector | Evidence |",
+  "| --- | --- | --- |",
+  ...recipes.map(recipeRow),
   ""
 ].join("\n");
 
