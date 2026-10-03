@@ -180,6 +180,22 @@
       "createdBy": "unknown",
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/folio/issues/28"
+    },
+    {
+      "id": "FOLIO-GH-33",
+      "title": "Make Folio output and interactions machine-operable",
+      "description": null,
+      "tags": [
+        "folio,machine-operability,automation"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-02T19:50:58.939Z",
+      "updatedAt": "2026-10-02T19:50:59.000Z",
+      "createdBy": "agent:openai-chatgpt",
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/33"
     }
   ]
 }

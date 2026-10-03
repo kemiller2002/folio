@@ -141,6 +141,20 @@ Folio's public stylesheet is responsive on screens and keeps print behavior sepa
 - Do not change pagination semantics to make a screen preview fit.
 - If consumer content itself is intrinsically wide, such as a large data table, preserve the content and use an explicit contained scrolling or alternate screen presentation strategy rather than clipping it.
 
+## Machine operability
+
+Read `docs/requirements/MACHINE-OPERABILITY.md` before adding or changing document structure or interactive preview/configuration behavior.
+
+- Keep meaningful document content and relationships in semantic native HTML and inspectable light DOM.
+- Preserve consumer-supplied stable IDs and URL/hash targets. Do not substitute page position, CSS classes or renderer coordinates for identity.
+- Interactive preview/configuration actions follow the Forma machine-operability contract: role plus accessible name first, deterministic observable completion, and no coordinate-only, hover-only or pointer-only public action path.
+- Direct manipulation may be a convenience path, but meaningful state changes need a semantic non-coordinate equivalent in the consuming application/Limen layer.
+- Machine actors do not bypass application behavior, Ordo/domain legality, authorization or validation.
+- Playwright is the reference verifier. Folio does not expose a privileged automation runtime.
+- DOM conformance does not prove PDF accessibility; keep renderer/PDF evidence separate.
+
+Run `npm run test:machine` for the cross-browser semantic conformance suite. It is also part of `npm test`.
+
 ## Boundary ownership
 
 | Concern | Owner |

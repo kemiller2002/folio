@@ -118,5 +118,29 @@
     "title": "Adopt generic publication recipes, not journal elements, for scholarly articles and issues",
     "type": "decision-record",
     "updated": "2026-10-01"
+  },
+  {
+    "created": "2026-10-02",
+    "id": "DF-PRINT-2026-0006",
+    "path": "research/decisions/DF-PRINT-2026-0006--adopt-machine-operability-and-semantic-inspectability.md",
+    "related_documents": [
+      "docs/requirements/MACHINE-OPERABILITY.md",
+      "docs/AGENT-USAGE.md",
+      "tests/run-machine-operability-tests.mjs"
+    ],
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [],
+    "tags": [
+      "architecture",
+      "machine-operability",
+      "semantics",
+      "automation",
+      "playwright",
+      "public-api"
+    ],
+    "title": "Adopt machine operability and semantic inspectability as public Folio contracts",
+    "type": "decision-record",
+    "updated": "2026-10-02"
   }
 ]
