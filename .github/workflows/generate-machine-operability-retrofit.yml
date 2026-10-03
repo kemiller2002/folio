@@ -1,4 +1,5 @@
 name: Generate machine-operability retrofit audit
+# rerun after catalog-wide audit correction
 
 on:
   push:
