@@ -23,7 +23,7 @@
     "./src/styles/print.css"
   ],
   "scripts": {
-    "test": "node tests/run-primitive-component-tests.mjs && node tests/machine-operability-audit.test.mjs && node tools/machine-operability-audit.mjs --check && node tests/run-machine-operability-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-journal-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs",
+    "test": "node tests/run-primitive-component-tests.mjs && node tests/machine-operability-audit.test.mjs && npm run machine:audit:check && node tests/run-machine-operability-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-journal-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs",
     "test:print": "node tests/run-print-experiments.mjs",
     "site:build": "node tools/build-site.mjs",
     "site:test": "node --test tests/site-build.test.mjs",
@@ -37,8 +37,8 @@
     "test:journal": "node tests/run-journal-fixture-tests.mjs",
     "experiment:journal-enhanced": "node tests/run-journal-enhanced-experiment.mjs",
     "test:machine": "node tests/run-machine-operability-tests.mjs",
-    "machine:audit": "node tools/machine-operability-audit.mjs --write",
-    "machine:audit:check": "node tools/machine-operability-audit.mjs --check",
+    "machine:audit": "npm run site:build && node tools/machine-operability-audit.mjs --write",
+    "machine:audit:check": "npm run site:build && node tools/machine-operability-audit.mjs --check",
     "test:machine:audit": "node --test tests/machine-operability-audit.test.mjs"
   },
   "devDependencies": {
