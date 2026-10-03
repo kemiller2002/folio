@@ -38,7 +38,7 @@
     "experiment:journal-enhanced": "node tests/run-journal-enhanced-experiment.mjs",
     "test:machine": "node tests/run-machine-operability-tests.mjs",
     "machine:audit": "npm run site:build && node tools/machine-operability-audit.mjs --write",
-    "machine:audit:check": "npm run site:build && node tools/machine-operability-audit.mjs --check",
+    "machine:audit:check": "npm run site:build && node tools/machine-operability-audit.mjs --check --strict",
     "test:machine:audit": "node --test tests/machine-operability-audit.test.mjs"
   },
   "devDependencies": {
