@@ -10,7 +10,7 @@ Installed foundation:
 - SDE / Ordo 1.3.0
 - Visual Engineering 1.0.0
 - Communication Engineering 1.0.0 operational context
-- Limen 0.6.2
+- Limen 0.7.0 (`@echelon-foundry/limen`; boundary declared not applicable until preview engine code exists)
 
 Communication Engineering 1.0.0 was installed from a pinned repository commit
 because the package metadata is current but that version was not available from

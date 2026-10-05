@@ -1,11 +1,8 @@
 {
   "configurationVersion": 1,
   "boundary": {
-    "engine": [
-      "src/engine"
-    ],
-    "kernel": [
-      "src/kernel"
-    ]
+    "notApplicable": {
+      "rationale": "Folio is a print-layout component library (custom elements and print CSS) with no browser application engine yet. src/engine and src/kernel are reserved, empty placeholders for a future interactive preview/configuration application (docs/architecture/PRINT-ARCHITECTURE.md); replace this declaration with real engine and kernel paths when that engine code lands."
+    }
   }
 }

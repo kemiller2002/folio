@@ -14,7 +14,7 @@ Installed engineering foundation:
 - State-Directed Engineering / Ordo (SDE) 1.3.0
 - Visual Engineering 1.0.0
 - Communication Engineering 1.0.0 operational context
-- Limen 0.6.2
+- Limen 0.7.0 (`@echelon-foundry/limen`; boundary declared not applicable until preview engine code exists)
 
 ## Architecture direction
 
@@ -27,7 +27,7 @@ Renderer capability is intentionally tiered:
 - **P2 Deterministic Chromium:** controlled automated PDF export.
 - **P3 Enhanced paged media:** optional publishing-engine capabilities such as richer running content, automatic footnotes, target page counters, sidenotes, bleed, and crop marks.
 
-Limen is installed for a future interactive preview/configuration application. It is not intended to become the pagination engine.
+Limen is installed for a future interactive preview/configuration application. Until that engine code exists, `limen.config.json` declares the boundary `notApplicable` (Limen 0.7 no longer passes an empty boundary silently). It is not intended to become the pagination engine.
 
 ## Start here
 
