@@ -25,3 +25,4 @@
 | WI-0002 | Upgrade Limen to 0.7.0 (@echelon-foundry/limen) and declare boundary notApplicable until an interactive preview engine exists | complete | limen,dependencies | medium |
 | WI-0003 | Upgrade Limen to 0.7.1 to match the echelon-current channel | complete |  | medium |
 | WI-0004 | Move Folio to the echelon-current toolchain: Praxis 3.6.0 (from ROS 3.1.4) and Ordo 1.4.0 (from SDE 1.3.0) | complete | praxis, ordo, toolchain | medium |
+| WI-0005 | Move folio to Praxis 3.7.1 (ROS -> Praxis rename) and Ordo 1.4.0 | ready | praxis, ordo, toolchain | medium |
