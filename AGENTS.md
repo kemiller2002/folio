@@ -2,21 +2,24 @@
 id: GV-START-001
 title: Agent Startup Guide
 status: canonical
-version: 1.4.0
+version: 1.9.0
 owners:
   - repository-governance
 created: 2026-07-22
-updated: 2026-09-14
+updated: 2026-09-29
 review_cycle: quarterly
 supersedes: []
 superseded_by: []
 related_documents:
   - docs/00-governance/README.md
   - docs/development-telemetry.md
+  - docs/agent-provenance.md
   - docs/cli.md
   - docs/installation.md
   - docs/upgrading.md
-tags: [governance, agents, startup]
+  - docs/remote-agent-contract.md
+  - docs/remote-protocol.md
+tags: [governance, agents, startup, provenance]
 ---
 
 # Agent Startup Guide
@@ -73,9 +76,115 @@ For substantial work, record: objective; work completed; files changed; decision
 
 ## Work Protocol
 
-Before meaningful mutation, identify the external work item and run `./ros work begin --id ID --occurred-at TIMESTAMP` (see the F# CLI note below for the timestamp — it must be the real current time, not an arbitrary one). That transition starts an execution-telemetry record; inspect `./ros work context ID`, classify the work, and ingest runtime telemetry that the current environment can expose. Preserve unknown provider fields through the sanitized raw layer and record unsupported/unavailable capability explicitly. Perform the bounded work, gather configured evidence, request a legal transition with `./ros work complete --id ID --occurred-at TIMESTAMP --evidence TYPE=PATH` (repeatable; finalizes active telemetry), then run `./ros registry build` and `./ros validate`. Use `./ros work block --id ID --occurred-at TIMESTAMP --reason TEXT` and `./ros work resume --id ID --occurred-at TIMESTAMP` rather than hand-editing context. Use `./ros status` when resuming unfamiliar work. Meaningful committed changes require machine-readable attribution; see `docs/work-protocol.md` and `docs/development-telemetry.md`.
+Before meaningful mutation, identify the external work item and run `./ros work begin --id ID --occurred-at TIMESTAMP` (see the F# CLI note below for the timestamp — it must be the real current time, not an arbitrary one). That transition starts an execution-telemetry record; inspect `./ros work context ID`, classify the work, and ingest runtime telemetry that the current environment can expose. Preserve unknown provider fields through the sanitized raw layer and record unsupported/unavailable capability explicitly. Perform the bounded work, gather configured evidence, commit and push it, record a durable checkpoint (see "Durable checkpoints and continuity" below), request a legal transition with `./ros work complete --id ID --occurred-at TIMESTAMP --evidence TYPE=PATH` (repeatable; finalizes active telemetry), then run `./ros registry build` and `./ros validate`, and commit and push the resulting Praxis state. Attribute canonical records you create or change with `./ros provenance record` (see Agent Identity and Provenance below). Use `./ros work block --id ID --occurred-at TIMESTAMP --reason TEXT` and `./ros work resume --id ID --occurred-at TIMESTAMP` rather than hand-editing context. Use `./ros status` when resuming unfamiliar work. Meaningful committed changes require machine-readable attribution; see `docs/work-protocol.md` and `docs/development-telemetry.md`. If meaningful changes were committed while no work item was active, reconcile them after the fact with `./ros work reconcile --id ID --reason TEXT --commit REV --occurred-at TIMESTAMP` (Git-evidenced, recorded as post-hoc, never a substitute for beginning work). Never touch, rewrite, or recommit files to manufacture attribution, and never create a work item only to absorb changes.
 
 No externally-assigned ID yet? Check `./ros work ready` for capturable, unblocked repository work before assuming none exists, and use `./ros add "..."` to record a newly discovered obligation instead of leaving it as an unfiled comment or dropped observation (`add` does not require `--occurred-at`; it defaults to the real current time). `./ros work start --id ID --occurred-at TIMESTAMP` (`begin` is also accepted) promotes a ready backlog item into the protocol above. This local backlog is repository-scoped triage, not a project-management system; see the "Local backlog" section of `docs/work-protocol.md`.
+
+## Durable checkpoints and continuity
+
+**An executor session is disposable. Repository state and Praxis state are
+the continuity boundary.** No meaningful completed work may exist only in an
+executor's local environment: a successor on another machine, with no access
+to your filesystem, process, or conversation, must be able to continue. See
+`docs/work-protocol.md` ("Durable checkpoints and continuity") and
+`DF-ROS-2026-A042`.
+
+- A **commit** is local. A **pushed commit** is on a remote. A **verified
+  durable checkpoint** is Praxis's own record that your HEAD, the checkpoint
+  commit, and the head of your upstream remote branch were the same commit,
+  with no meaningful uncommitted work: `./ros work checkpoint --id ID
+  --occurred-at NOW --summary "what is done" --next-action "what is next"
+  [--step STEP-ID]`. Praxis never commits, pushes, or stashes for you.
+- A **historical checkpoint** is that record; it is never rewritten. A
+  **currently recoverable checkpoint** is one the remote still carries now;
+  `./ros work context ID --text` and `./ros status` report both, separately.
+- Checkpoint at coherent recovery boundaries, not on a timer and not per
+  edit: after a meaningful implementation slice or material telemetry step;
+  before a risky change; before switching work items or repositories; before
+  an intentional handoff; when context exhaustion or termination looks
+  possible; before blocking after new work; before completing Git-backed
+  work. Never create a meaningless commit to satisfy Praxis.
+- For Git-backed work the order is: commit, push, `work checkpoint`,
+  `work complete`, then commit and push the Praxis state (`.ros/`). Where
+  `workProtocol.continuity.requireDurableCheckpoint` is set, completion
+  refuses anything else, and blocking after un-checkpointed work needs a
+  checkpoint or `--unrecoverable-reason TEXT` stated truthfully. Work that
+  changed nothing completes as before.
+- **New observability is effective-current.** Praxis preserves truthful
+  historical gaps rather than restarting work or fabricating telemetry.
+  Adopt step telemetry (`./ros telemetry step start|complete|fail`) at the
+  next material slice; never restart an execution or work item to gain it,
+  never invent earlier steps, and never split earlier usage among steps.
+  Missing historical step data is unavailable, not zero and not invalid.
+- **Taking over** active work whose executor disappeared: fetch, switch to
+  the checkpoint's branch in a clean checkout, then `./ros work continue
+  --id ID --occurred-at NOW` under your own identity. You get a new
+  execution whose parent is the predecessor's; the predecessor is recorded
+  as interrupted, never as you and never as successful. `blocked -> resume`
+  remains for intentionally blocked work.
+
+## Agent Identity and Provenance
+
+Every agent working under this repository has an explicit, machine-readable
+identity, and records it on the work it creates or changes. This applies to
+every provider and runtime, and equally to humans and automation. See
+[`docs/agent-provenance.md`](docs/agent-provenance.md).
+
+1. **Establish identity once, at the start of the execution.**
+   `./ros work begin` records who you are in the execution record, and every
+   later command inherits that identity.
+   - A known runtime (Codex, Claude Code, Gemini CLI, Copilot, GitHub
+     Actions) is detected automatically.
+   - Otherwise declare yourself with `ROS_ACTOR_KIND`
+     (`agent|human|automation`), `ROS_ACTOR` (your stable agent ID),
+     `ROS_TELEMETRY_PROVIDER`, `ROS_TELEMETRY_MODEL`, and
+     `ROS_TELEMETRY_RUNTIME`, or pass the matching flags on `work begin`.
+   - Check the result with `./ros provenance identity`.
+2. **Never impersonate** another agent, human, or execution. Never record work
+   under an execution you did not run. ROS refuses a contribution whose
+   actor contradicts its execution.
+3. **Never fabricate** a provider, model, version, session, or agent name.
+   Leave an unknown value unset: ROS records it as `unknown`, which is correct.
+4. **Preserve existing provenance.** Never edit, reorder, or delete another
+   contributor's `provenance` entry.
+5. **Add your contribution; do not replace anyone else's.**
+6. **Attribute every requirement you create**:
+   `./ros provenance record --id RQ-... --operation created`.
+7. **Attribute every meaningful modification you make** to a canonical record
+   (requirement, decision, evidence, hypothesis, experiment, theory,
+   journal, mission, research package): `--operation modified`. Use
+   `reviewed` or `approved` only for review or approval you actually
+   performed.
+8. **Propagate lineage** when you derive one artifact from another:
+   `--derived-from SOURCE-ID`. Lineage names the source. It does not make
+   the source's author an author of your artifact.
+9. **Make generated evidence, findings, and results traceable** to your
+   execution. Record them inside the work execution, and name supporting
+   records with `--evidence`.
+10. **Run `./ros validate` before finishing.** Missing or contradictory
+    provenance on new work is an error.
+
+Identity recorded this way is provenance, not authentication. It is
+self-reported and cross-checked, not cryptographically proven.
+
+## No local runtime? Use remote execution
+
+If you can reach this repository on GitHub but cannot run Praxis locally,
+for example because there is no .NET, you are governed the same way through
+typed remote requests. Follow
+[`docs/remote-agent-contract.md`](docs/remote-agent-contract.md): discover
+with a `praxis.describe` request, send typed operations with a stable
+`requestId` and the `expectedSha` you read, and read results from the
+repository.
+
+- Remote execution is available only when
+  `.github/workflows/praxis-remote.yml` exists. Remote mutation is available
+  only where `ros.json` lists it under `remote.capabilities`.
+- The rules above still apply: never impersonate, never fabricate identity,
+  and never touch files to manufacture attribution.
+- Do not work around a missing runtime by hand-editing `.ros/` state.
+- Checkpoint and take over remotely with `work.checkpoint` (naming your own
+  `execution.id`) and `work.continue` (protocol 1.3).
 
 ## Lifecycle commands
 

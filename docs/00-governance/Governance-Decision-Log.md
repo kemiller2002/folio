@@ -2,11 +2,11 @@
 id: GV-DEC-001
 title: Governance Decision Log
 status: canonical
-version: 1.1.0
+version: 1.4.0
 owners:
   - repository-governance
 created: 2026-07-22
-updated: 2026-09-05
+updated: 2026-09-29
 review_cycle: quarterly
 supersedes: []
 superseded_by: []
@@ -166,3 +166,87 @@ On 2026-07-22, repository discovery found the Phase 1 execution prompt as the on
 - **Confidence:** High (0.86)
 - **Consequences:** Deterministic collection is inherited mechanically; detailed runtime and research facts remain capability-dependent. Records grow but are segmented and bounded. Historical work is not rewritten.
 - **Revisit trigger:** Cross-provider pilots reveal incompatible semantics, runtime hook security changes materially, or record volume requires an external retention tier.
+
+## DF-GOV-012 — Remote Execution Entry Point in `AGENTS.md`
+
+- **Date:** 2026-09-28
+- **Status:** accepted
+- **Context:** Issue #90 (`RQ-ROS-2026-A021`) requires that a cloud agent
+  without a local Praxis runtime be governed as rigorously as a local agent,
+  and that it be able to discover how without a large bespoke prompt
+  (`PRX-REMOTE-033`, `PRX-REMOTE-044`). The protocol, executor and adapter
+  exist (`DF-ROS-2026-A041`).
+- **Hypothesis:** Under `DF-GOV-010`, a short routing section in
+  `AGENTS.md` that points to one concise contract is enough for discovery. It
+  works only if the section embeds no scripts or protocol detail.
+- **Evidence considered:**
+  - `EV-ROS-2026-A053`;
+  - `docs/remote-agent-contract.md`;
+  - the machine-readable `praxis.describe` document.
+- **Alternatives:**
+  - Put the protocol and example scripts in `AGENTS.md`. This is fragile and
+    duplicates the specification.
+  - Give no pointer. Agents without a runtime then improvise or hand-edit
+    `.ros/`.
+- **Decision:** `AGENTS.md` gains the section "No local runtime? Use remote
+  execution". It routes agents to `docs/remote-agent-contract.md` and
+  restates only the conditions under which remote execution is available,
+  and the rule against hand-editing state. The contract and
+  `praxis.describe` hold the details.
+- **Confidence:** Medium (0.75). Live use by cloud agents
+  (`PRAXIS-REMOTE-11`) is still pending.
+- **Consequences:** Installed repositories receive the section through the
+  shared `AGENTS.md`, and both remote documents ship with the scaffold. A
+  repository without the workflow tells agents plainly that remote
+  execution is not installed.
+- **Revisit trigger:** The end-to-end proof or agent evaluations show that
+  agents cannot complete the flow from the contract alone.
+
+## DF-GOV-013 — Durable Continuity Is a Governance Rule
+
+- **Date:** 2026-09-29
+- **Status:** accepted
+- **Context:** Handoffs were prose in block reasons and chat. An executor
+  that disappears can take unpushed work with it. `RQ-ROS-2026-A022`
+  requires that a successor on another machine be able to continue without
+  the original executor's filesystem, process, or conversation.
+- **Hypothesis:** Governance plus a verified mechanism prevents work that
+  exists only locally, without meaningless commits. Governance states the
+  rule and the recovery boundaries. The mechanism is `work checkpoint`,
+  enforced completion, and `work continue` (`DF-ROS-2026-A042`).
+- **Evidence considered:**
+  - the two-clone agent-loss proof (`tests/Ros.Tests/RecoveryProofTests.fs`);
+  - the remote contract test (`tests/remote-checkpoint.test.mjs`);
+  - this repository's own dogfooding, where every `PRAXIS-CONT-*` item
+    completed from a verified checkpoint.
+- **Alternatives:**
+  - Timed or per-edit checkpoints. These produce noise and meaningless
+    commits.
+  - Automatic commit and push. This takes the choice of a coherent
+    recovery point away from the executor.
+  - Documentation only. Unverified claims of durability are what the rule
+    exists to prevent.
+- **Decision:**
+  - `AGENTS.md` ("Durable checkpoints and continuity"), the Agent Operating
+    Manual ("Durable Continuity"), and the Engineering Standards'
+    Definition of Done state the rule: an executor session is disposable;
+    repository and Praxis state are the continuity boundary.
+  - They also list the recovery boundaries at which agents checkpoint.
+  - New installations enforce durable completion through
+    `workProtocol.continuity.requireDurableCheckpoint`. Existing
+    installations opt in.
+- **Confidence:** Medium (0.75). No live cloud-agent run of protocol 1.3
+  has happened yet.
+- **Consequences:**
+  - Git-backed work follows the order commit, push, checkpoint, complete,
+    then persist the Praxis state.
+  - No-change work is unaffected.
+- **Revisit trigger:**
+  - Agents routinely need `--unrecoverable-reason`.
+  - The meaningful-mutation heuristic blocks legitimate work.
+- **Amendment (2026-09-29, `DF-ROS-2026-A043`):** New observability is
+  effective-current. Governance states that step telemetry is adopted
+  prospectively, never by restarting work, and that historical step
+  attribution that was never captured stays unavailable rather than being
+  reconstructed or read as zero.
+

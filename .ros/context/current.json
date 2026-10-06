@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "openai-chatgpt",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-10-06T09:36:31Z",
+  "updatedAt": "2026-10-06T10:06:05.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -593,6 +593,51 @@
         "EXE-20261006T093557751Z-c9c3bfe8"
       ],
       "completedAt": "2026-10-06T09:36:31Z"
+    },
+    {
+      "id": "WI-0004",
+      "type": "mechanical",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": ".echelon/ros.json"
+        },
+        {
+          "type": "implementation",
+          "path": ".echelon/sde.json"
+        },
+        {
+          "type": "documentation",
+          "path": "AGENTS.md"
+        }
+      ],
+      "updatedAt": "2026-10-06T10:06:05.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261006T100303577Z-917fcdd2"
+      ],
+      "latestCheckpoint": {
+        "id": "8997fe5be000b0df834edc35",
+        "recordedAt": "2026-10-06T10:06:03.000Z",
+        "executionId": "EXE-20261006T100303577Z-917fcdd2",
+        "repository": "echelon-print-components",
+        "branch": "chore/praxis-ordo-current",
+        "commit": "c9b3a158a8d972ec05f35da67cd20f4e24673d64",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "chore/praxis-ordo-current",
+        "remoteCommit": "c9b3a158a8d972ec05f35da67cd20f4e24673d64",
+        "summary": "Praxis 3.6.0 and Ordo 1.4.0 upgrades applied, verified and pushed",
+        "nextAction": "Complete WI-0004, open draft PR, merge on green CI",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-06T10:06:05.000Z"
     }
   ]
 }

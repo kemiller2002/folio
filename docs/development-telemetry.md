@@ -19,7 +19,7 @@ work begin
   -> telemetry validation with normal ROS validation
 ```
 
-`work block` and `work resume` add interruption events and allow ROS to derive blocked duration. A resumed item whose prior execution was already finalized receives a new child execution. An agent handoff or a parallel/subagent run can be represented explicitly with `telemetry start --parent-execution`, `--agent`, and `--subagent`.
+`work block` and `work resume` add interruption events and allow ROS to derive blocked duration. A resumed item whose prior execution was already finalized receives a new child execution. `work continue` (a successor taking over active work whose executor disappeared) also creates a new execution whose `identity.parentExecutionId` names the predecessor, and records the predecessor as interrupted in a `work.continued` event, never in the predecessor's own record. See "Durable checkpoints and continuity" in `work-protocol.md`. An agent handoff or a parallel/subagent run can be represented explicitly with `telemetry start --parent-execution`, `--agent`, and `--subagent`.
 
 Historical work records created before telemetry existed remain valid. The compatibility boundary is explicit: once a work item has `telemetryExecutionIds`, completed work requires those records to be finalized. ROS does not invent telemetry for older history.
 
@@ -142,6 +142,7 @@ Classification is multi-valued. The core vocabulary is: Research, Development, R
 | commits, files, lines, extensions, test-file changes, documentation changes | mechanical only from a clean execution baseline; otherwise explicitly unavailable because pre-existing edits prevent trustworthy attribution |
 | completion finalization and structural validation | mechanical for work items that have entered the telemetry contract |
 | provider/model/runtime/session identity | discovered from a small whitelist of non-secret environment fields, adapter input, or explicit flags; unknown values remain explicit |
+| actor kind (`identity.actorKind`: agent, human, automation, unknown) | explicit `--actor-kind`/`ROS_ACTOR_KIND`, else implied only by a whitelisted agent runtime (agent) or CI (automation); otherwise `unknown`. Records predating the field are projected from `provenance.sources`; see `agent-provenance.md` |
 | tokens, cost, model/tool time, turns, retries, subagents, and detailed tool events | mechanical only when a provider runtime stream, hook, API, or OpenTelemetry exporter is connected |
 | research context, failed approaches, scope variance, requirements, decisions, and evidence links | dependent on agent/human/work-system reporting unless a domain tool exposes them |
 
@@ -180,3 +181,140 @@ Breaking identity, quality, unit, or aggregation meaning requires a new telemetr
 ROS cannot obtain hidden reasoning cycles, self-corrections, precise active-versus-waiting time, human interruption time, authoritative billed cost, model rerouting identity, or detailed tool activity unless the runtime exposes them. This Codex desktop environment exposes session/thread identity to repository commands but not its in-app token/cost counters. Provider hooks may miss UI-only actions, and exporter formats may change. Git-delta attribution also assumes one execution owns its working tree; concurrent actors in the same checkout require separate worktrees or a richer attribution mechanism. Agent-reported findings remain lower-assurance than runtime or deterministic Git/test output.
 
 Raw values can still contain a secret under a novel innocuous key, so upstream content suppression remains mandatory. Metric and event arrays are not capped because silently discarding normalized evidence would be worse without measured thresholds; very high callback volume will eventually make whole-record rewrites expensive even though raw payload and capability history are bounded. The accepted design is per-execution JSON, not an append-only event store. Reopen segmentation/compaction when real records approach retention limits, lock contention becomes routine, or profiling shows write amplification is material. Local records also remain unsigned, not centrally reconciled, and not globally deduplicated.
+
+## Steps, evidence quality, and usage (PRAXIS-REMOTE-04)
+
+**Steps.** A step is a unit of work inside an execution. It lets work,
+evidence and usage be attributed below the execution level. Steps are
+recorded as events on the execution record, so a step inherits the
+execution's identity and never carries one of its own:
+
+```
+praxis telemetry step start    [TARGET] --step STEP-ID [--name TEXT]
+praxis telemetry step complete [TARGET] --step STEP-ID [--reason TEXT]
+praxis telemetry step fail     [TARGET] --step STEP-ID [--reason TEXT]
+praxis telemetry record [TARGET] --metric ID --value V ... --step STEP-ID
+```
+
+The caller chooses the step ID, so repeating a transition is an idempotent
+no-op. Illegal transitions are refused:
+
+- completing or failing a step that was never started;
+- failing a step that has already completed.
+
+A step-scoped measurement carries the `step` dimension, and it is refused
+if its step was never started in that execution.
+
+**Evidence quality.** Every measurement already records a `quality` and a
+`source.type`. The vocabulary from #90 is projected from those two fields;
+there is no competing field. The projection never upgrades a value.
+
+| Projected quality | Condition |
+|---|---|
+| measured | Source type `ros-git`, `ros-clock` or `environment`. This is Praxis's own observation. |
+| provider-reported | Source type `runtime-api`, `runtime-output`, `runtime-hook` or `external-tool`. |
+| agent-reported | Source type `agent-report`. |
+| human-reported | Source type `human-report`. |
+| calculated | Source type `calculated`, or quality `derived`. |
+| estimated | Quality `estimated`. This wins over every source type. |
+| unavailable | The metric has no measurement. Its capability status records why. |
+
+Remotely supplied telemetry keeps the source type the requester asserted,
+or `agent-report` when it asserted none. A request can never claim a source
+type that only Praxis can observe.
+
+**Usage report.**
+
+```
+praxis telemetry usage [WORKITEM] --by work-item|execution|step|provider|model|day
+```
+
+The report sums the registry's additive (`sum`) metrics for each group and
+says what backs each total:
+
+- the number of measurements;
+- how many have each evidence quality;
+- which executions reported the metric;
+- which executions in the group reported nothing (`unavailableExecutions`).
+
+A group whose executions reported nothing has a `total` of `null`, not `0`.
+A total with any unavailable executions is marked `complete: false`, which
+means it is a lower bound.
+
+The existing `telemetry summary` is unchanged.
+
+## Effective-current step telemetry (PRAXIS-CONT-11)
+
+**New observability is effective-current. Praxis preserves truthful
+historical gaps rather than restarting work or fabricating telemetry.**
+Historical absence of step data is not an invalid execution, and unknown
+historical step attribution is not zero step usage.
+
+An execution's telemetry has one of two legitimate granularities:
+
+| Term | Meaning |
+|---|---|
+| execution-level telemetry | measurements with no `step` dimension; attributed to the execution as a whole |
+| step-level telemetry | measurements recorded against a started step of the same execution |
+| unavailable historical step attribution | usage recorded before step tracking was adopted: known per execution, unknown per step |
+
+Step tracking can be adopted at any point of an execution by starting a
+step. Nothing restarts. The boundary is derived from the execution's own
+first `step.started` event, so no field is backfilled and no history is
+rewritten:
+
+- measurements recorded before adoption stay execution-scoped exactly as
+  recorded;
+- Praxis never creates synthetic historical steps, and never splits
+  earlier usage among later steps by any proportion, duration or guess;
+- an execution that never adopts steps stays valid, and so does its work
+  item's completion;
+- a successor (`work continue`) starts its own execution and its own steps;
+  nothing is appended to its predecessor.
+
+`work context`, `status` and `work continue` report this per execution in
+the continuity block's `telemetry.executions[]`:
+
+| Field | Meaning |
+|---|---|
+| `segmentation` | `execution-level` (no step ever recorded), `step-level` (steps from the execution's start) or `step-level-adopted` (steps adopted partway) |
+| `stepTrackingStartedAt` | the first step's start, or `null` |
+| `executionScopedBefore` | `{from, until}` of the execution-scoped period before adoption; `from` is `null` when the execution's start is unknown |
+| `historicalStepAttribution` | `unavailable` when some activity has no step attribution, else `not-applicable` |
+| `measurements` | counts of `executionScopedBeforeSteps`, `executionScopedOutsideSteps` and `stepScoped` measurements |
+
+`--text` renders it as, for example:
+
+```
+TELEMETRY SEGMENTATION
+  EXE-... (active): execution-level before: 2026-09-29T10:11:41.946Z .. 2026-09-29T10:11:55.000Z (step attribution unavailable); step-level from: 2026-09-29T10:11:55.000Z
+```
+
+In `telemetry usage --by step`, execution-scoped usage is the
+`(outside any step)` group. Every execution with an execution-scoped period
+belongs to that group, so one that reported nothing there is listed in
+`unavailableExecutions` (unknown, `complete: false`), never counted as zero.
+
+`validate` accepts measurements without a step whatever the execution's
+segmentation, and reports a measurement whose `step` names a step its own
+execution never started.
+
+## Steps and durable checkpoints (PRAXIS-CONT)
+
+A durable checkpoint (`work checkpoint`, see `work-protocol.md`) may name a
+step with `--step STEP-ID`. Praxis refuses the link unless the step was
+started in the checkpointing process's own execution, and that execution
+belongs to the work item. `validate` re-checks the link offline.
+
+Steps and checkpoints are not coupled otherwise:
+
+- A material implementation step that ends after repository changes should
+  normally be followed by a checkpoint.
+- Research and analysis steps that change nothing need none.
+- Praxis never checkpoints automatically and never requires a synthetic
+  step.
+
+A checkpoint's summary is agent-reported prose. Test results remain
+telemetry measurements (such as `tests.passed`) with their source and
+quality. `work continue` shows a successor exactly those measurements, so a
+summary is never mistaken for evidence.
