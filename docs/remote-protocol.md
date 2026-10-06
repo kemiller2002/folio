@@ -9,8 +9,8 @@ explicit Praxis operation.
 - **How it was designed:** [`DF-ROS-2026-A041`](../research/decisions/DF-ROS-2026-A041--remote-execution-protocol-and-adapter-architecture.md).
 - **Schemas:** [`schemas/praxis-remote-request.schema.json`](../schemas/praxis-remote-request.schema.json)
   and [`schemas/praxis-remote-response.schema.json`](../schemas/praxis-remote-response.schema.json).
-- **Typed model:** `Ros.Domain.Remote` (`src/Ros.Domain/Remote/Protocol.fs`).
-- **JSON contract:** `Ros.Contracts.Remote.RemoteJson`.
+- **Typed model:** `Praxis.Domain.Remote` (`src/Praxis.Domain/Remote/Protocol.fs`).
+- **JSON contract:** `Praxis.Contracts.Remote.RemoteJson`.
 - **Operating it** (installation, permissions, upgrades, troubleshooting):
   [`remote-execution-operations.md`](remote-execution-operations.md).
 
@@ -121,6 +121,17 @@ request cannot use them.
 **Step operations** act on the requester's *own* execution. That execution
 must be named in `execution.id`, and it must be one the requester may
 continue.
+
+**Completion finalizes only the requester's own executions (GH-113).**
+`work.complete` finalizes every active execution of each item it completes,
+so every one of them must be an execution the requester may continue,
+whether or not the request names one in `execution.id`. If any belongs to
+another actor or run -- including another session of the same agent -- the
+request is refused as `domain-rejected` on `arguments.workItemIds`, and
+nothing is persisted. The successor takes the work over with `work.continue`
+first (which records the predecessor as interrupted), then completes it in
+its own execution. The owner of the only active execution may still omit
+`execution.id`.
 
 **Batches (version 1.2).** The `batch` operation carries ordered
 constituents in `arguments.requests`. Each constituent has the form
@@ -471,6 +482,17 @@ record.
   access to the repository, and `workflow_call` can start the workflow.
   There is no `pull_request` trigger, so forks can neither run it nor
   obtain its credentials.
+- **The inbox relay** (`praxis-remote-inbox.yml`, `DF-ROS-2026-A045`) is for
+  a writer that cannot dispatch. It runs on a push to a `praxis-inbox/**`
+  branch that adds or changes `.praxis-inbox/*.json`, and dispatches this
+  workflow with each file's exact bytes on the ref the request names.
+  - It needs only `contents: read` and `actions: write`.
+  - It checks only what routing needs: the document is JSON, the
+    `protocol`, the `requestId`, and a `refs/heads/` ref that is not an
+    inbox branch.
+  - Everything else is decided here, by Praxis.
+  - Pushing a branch requires write access, so its trust boundary is the
+    same as dispatch's.
 - **Credentials per job.** The default is `permissions: {}`.
   - `praxis remote classify` decides whether a request mutates.
   - Reads execute in a job with `contents: read`.
