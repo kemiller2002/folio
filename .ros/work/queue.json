@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "echelon-print-components",
-  "nextSeq": 6,
+  "nextSeq": 7,
   "items": [
     {
       "id": "GH-3",
@@ -288,6 +288,30 @@
         "id": "anthropic/claude-code",
         "provider": "anthropic",
         "model": "claude-opus-5-5",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0006",
+      "title": "Move folio to Ordo 1.4.1",
+      "description": null,
+      "tags": [
+        "ordo",
+        "toolchain"
+      ],
+      "priority": "medium",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-10-06T13:56:33.382Z",
+      "updatedAt": "2026-10-06T13:56:53.000Z",
+      "createdBy": "anthropic/claude-code",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
         "runtime": "claude-code"
       },
       "source": "manual",
