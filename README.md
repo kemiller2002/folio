@@ -14,7 +14,7 @@ Installed engineering foundation:
 - State-Directed Engineering / Ordo (SDE) 1.3.0
 - Visual Engineering 1.0.0
 - Communication Engineering 1.0.0 operational context
-- Limen 0.7.0 (`@echelon-foundry/limen`; boundary declared not applicable until preview engine code exists)
+- Limen 0.7.1 (`@echelon-foundry/limen`; boundary declared not applicable until preview engine code exists)
 
 ## Architecture direction
 
