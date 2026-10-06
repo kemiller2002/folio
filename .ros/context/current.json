@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-10-06T12:22:29.000Z",
+  "updatedAt": "2026-10-06T12:22:51.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -642,13 +642,47 @@
     {
       "id": "WI-0005",
       "type": "mechanical",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-10-06T12:22:29.000Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": ".echelon/ros.json"
+        },
+        {
+          "type": "documentation",
+          "path": "AGENTS.md"
+        },
+        {
+          "type": "implementation",
+          "path": ".echelon/sde.json"
+        }
+      ],
+      "updatedAt": "2026-10-06T12:22:51.000Z",
       "telemetryExecutionIds": [
         "EXE-20261006T122229999Z-e350fca5"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "86464456a904d2a00baa58e3",
+        "recordedAt": "2026-10-06T12:22:50.000Z",
+        "executionId": "EXE-20261006T122229999Z-e350fca5",
+        "repository": "echelon-print-components",
+        "branch": "chore/praxis-3.7.1",
+        "commit": "acd4b4c542dc7bd1fbe87dc5e09398eac9534f1d",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "chore/praxis-3.7.1",
+        "remoteCommit": "acd4b4c542dc7bd1fbe87dc5e09398eac9534f1d",
+        "summary": "upgrade applied, verified, pushed",
+        "nextAction": "complete, PR",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-06T12:22:51.000Z"
     }
   ]
 }
