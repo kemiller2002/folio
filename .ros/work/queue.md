@@ -27,4 +27,4 @@
 | WI-0004 | Move Folio to the echelon-current toolchain: Praxis 3.6.0 (from ROS 3.1.4) and Ordo 1.4.0 (from SDE 1.3.0) | complete | praxis, ordo, toolchain | medium |
 | WI-0005 | Move folio to Praxis 3.7.1 (ROS -> Praxis rename) and Ordo 1.4.0 | complete | praxis, ordo, toolchain | medium |
 | WI-0006 | Move folio to Ordo 1.4.1 | complete | ordo, toolchain | medium |
-| WI-0007 | Move folio to Praxis 3.7.2, Ordo 1.4.2, Visual Engineering 1.0.1 and adopt Conditor | ready | praxis, ordo, toolchain | medium |
+| WI-0007 | Move folio to Praxis 3.7.2, Ordo 1.4.2, Visual Engineering 1.0.1 and adopt Conditor | complete | praxis, ordo, toolchain | medium |
