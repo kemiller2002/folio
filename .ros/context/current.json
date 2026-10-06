@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-10-06T13:56:53.000Z",
+  "updatedAt": "2026-10-06T13:58:23.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -687,13 +687,47 @@
     {
       "id": "WI-0006",
       "type": "mechanical",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-10-06T13:56:53.000Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": ".echelon/toolchain.json"
+        },
+        {
+          "type": "implementation",
+          "path": ".echelon/sde.json"
+        },
+        {
+          "type": "tests",
+          "path": ".github/workflows/praxis-validation.yml"
+        }
+      ],
+      "updatedAt": "2026-10-06T13:58:23.000Z",
       "telemetryExecutionIds": [
         "EXE-20261006T135654199Z-df843a0f"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "cfc6bf1f6b45b77e65775d65",
+        "recordedAt": "2026-10-06T13:58:21.000Z",
+        "executionId": "EXE-20261006T135654199Z-df843a0f",
+        "repository": "echelon-print-components",
+        "branch": "chore/ordo-1.4.1",
+        "commit": "3721f1645b1a1f6fee50d638f90bb94ff6ceba6c",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "chore/ordo-1.4.1",
+        "remoteCommit": "3721f1645b1a1f6fee50d638f90bb94ff6ceba6c",
+        "summary": "Ordo 1.4.1 applied, verified, pushed",
+        "nextAction": "complete, PR",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-06T13:58:23.000Z"
     }
   ]
 }
