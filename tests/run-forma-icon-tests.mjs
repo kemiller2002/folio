@@ -1,0 +1,44 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import {createHash} from "node:crypto";
+import {loadFormaIcons,renderFormaPrintIcon} from "../tools/forma-icons.mjs";
+
+const root=fs.mkdtempSync(path.join(os.tmpdir(),"folio-forma-icons-"));
+const asset=path.join(root,"icons");
+fs.mkdirSync(asset,{recursive:true});
+const src='<svg xmlns="http://www.w3.org/2000/svg" class="ef-icon__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V19M5 12H19"/></svg>\n';
+const name="add";
+const digest=content=>createHash("sha256").update(content).digest("hex");
+const manifest={schemaVersion:1,formaVersion:"0.6.0",grid:24,icons:[{name,category:"actions",label:"Add",keywords:[],origin:"original",svg:"icons/add.svg",html:"icons/html/add.html",svgSha256:digest(src)}]};
+const save=()=>fs.writeFileSync(path.join(asset,"registry.json"),JSON.stringify(manifest));
+const assertReject=(f,pattern)=>assert.throws(f,pattern);
+try{
+  save();
+  fs.writeFileSync(path.join(asset,name+".svg"),src);
+  assert.deepEqual(loadFormaIcons(asset,{expectedFormaVersion:"0.6.0"}).icons.map(row=>row.name),["add"]);
+  assertReject(()=>loadFormaIcons(asset,{expectedFormaVersion:"0.5.0"}),/Forma version/);
+  assertReject(()=>renderFormaPrintIcon("add",{assetsRoot:asset,expectedFormaVersion:"0.5.0"}),/Forma version/);
+  const decorative=renderFormaPrintIcon("add",{assetsRoot:asset});
+  assert.match(decorative,/aria-hidden="true"/);
+  assert.match(decorative,/stroke="currentColor"/);
+  assert.match(decorative,/--ef-print-icon-size:1em/);
+  assert.doesNotMatch(decorative.replaceAll("http://www.w3.org/2000/svg", ""),/<script|https?:\/\/|<iframe/i);
+  const meaningful=renderFormaPrintIcon("add",{assetsRoot:asset,label:'Add "record" & return',size:"14pt"});
+  assert.match(meaningful,/role="img" aria-label="Add &quot;record&quot; &amp; return"/);
+  assertReject(()=>renderFormaPrintIcon("delete",{assetsRoot:asset}),/unknown icon/);
+  assertReject(()=>renderFormaPrintIcon("../add",{assetsRoot:asset}),/invalid name/);
+  assertReject(()=>renderFormaPrintIcon("add",{assetsRoot:asset,size:"10pt;background:url(x)"}),/unsafe size/);
+  fs.writeFileSync(path.join(asset,name+".svg"),'<svg onload="alert(1)"></svg>');
+  assertReject(()=>renderFormaPrintIcon("add",{assetsRoot:asset}),/SVG digest/);
+  fs.writeFileSync(path.join(asset,name+".svg"),src.replace('stroke="currentColor"','stroke="red"'));
+  assertReject(()=>renderFormaPrintIcon("add",{assetsRoot:asset}),/SVG digest/);
+  fs.writeFileSync(path.join(asset,name+".svg"),src);
+  manifest.icons[0].svgSha256="0000000000000000000000000000000000000000000000000000000000000000";save();
+  assertReject(()=>renderFormaPrintIcon("add",{assetsRoot:asset}),/SVG digest/);
+  manifest.icons[0].svgSha256=digest(src);
+  manifest.icons[0].name="../add";save();
+  assertReject(()=>loadFormaIcons(asset),/invalid or duplicate/);
+  console.log("PASS Folio Forma icon assets: static rendering, registry constraints, labeling, escaping, safe geometry");
+}finally{fs.rmSync(root,{recursive:true,force:true})}
