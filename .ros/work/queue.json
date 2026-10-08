@@ -362,6 +362,27 @@
       },
       "source": "manual",
       "sourceReference": null
+    },
+    {
+      "id": "GH-45",
+      "title": "Integrate pinned Forma icons into Folio print rendering",
+      "description": null,
+      "tags": [],
+      "priority": "high",
+      "status": "captured",
+      "attachments": [],
+      "createdAt": "2026-10-08T22:59:23.261Z",
+      "updatedAt": "2026-10-08T22:59:23.261Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "automation",
+        "id": "github/github-actions",
+        "provider": "github",
+        "model": "unknown",
+        "runtime": "github-actions"
+      },
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/45"
     }
   ]
 }
