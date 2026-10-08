@@ -348,10 +348,10 @@
       "description": null,
       "tags": [],
       "priority": "medium",
-      "status": "ready",
+      "status": "complete",
       "attachments": [],
       "createdAt": "2026-10-08T07:17:17.729Z",
-      "updatedAt": "2026-10-08T07:17:17.992Z",
+      "updatedAt": "2026-10-08T07:26:17.701Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
