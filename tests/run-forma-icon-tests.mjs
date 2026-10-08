@@ -20,7 +20,7 @@ try{
   assert.match(decorative,/aria-hidden="true"/);
   assert.match(decorative,/stroke="currentColor"/);
   assert.match(decorative,/--ef-print-icon-size:1em/);
-  assert.doesNotMatch(decorative,/<script|https?:\/\/|<iframe/i);
+  assert.doesNotMatch(decorative.replaceAll("http://www.w3.org/2000/svg", ""),/<script|https?:\/\/|<iframe/i);
   const meaningful=renderFormaPrintIcon("add",{assetsRoot:asset,label:'Add "record" & return',size:"14pt"});
   assert.match(meaningful,/role="img" aria-label="Add &quot;record&quot; &amp; return"/);
   assertReject(()=>renderFormaPrintIcon("delete",{assetsRoot:asset}),/unknown icon/);
