@@ -1,10 +1,11 @@
 # Using Forma icons in Folio print and PDF output
 
-**Status:** Implemented and proven end to end against a committed,
-clearly labelled **pre-release** Forma 0.5.0 icon fixture (GH-45, issue #45).
-Folio's real Forma pin is still 0.4.1, which publishes no icons, so with the
-pin as committed every icon reference prints as inert data and the words carry
-the meaning. Swapping the pin to a *published* 0.5.0 is the remaining step
+**Status:** Implemented and proven end to end against a committed fixture of
+the **published** Forma 0.5.0 release (GH-45, issue #45; release asset sha256
+`c4ad3ae5…f558f`, byte-verified). Folio's real Forma pin is still 0.4.1, which
+publishes no icons, so with the pin as committed every icon reference prints as
+inert data and the words carry the meaning. The pin cannot move yet: the
+echelon-registry `echelon-current` set does not record or select Forma 0.5.0
 (see "Moving the pin").
 
 ## Contract
@@ -106,15 +107,20 @@ icon in it.
 
 ## Moving the pin
 
-Forma 0.5.0 is not published yet. Do not point the pin at it until it is.
-After the release:
+Forma 0.5.0 is published (https://github.com/kemiller2002/forma/releases/tag/v0.5.0),
+and the fixture is verified against it. The pin is still blocked upstream:
+Conditor moves a Forma `project-binding` only from an integrity-bound Registry
+resolved set, and the echelon-registry `echelon-current` set (1.7.0, `e9b8cf7`)
+has no `releases/forma/0.5.0.release.json` and still selects 0.4.1. Never edit
+`.conditor/authority/resolved-release-set.json` or its sha256 by hand.
 
-1. Move Folio's pin through Conditor (`conditor upgrade`) so
-   `.conditor/authority/resolved-release-set.json` names Forma 0.5.0 and its
-   release tarball sha256.
-2. Extract the released tarball and run
-   `FOLIO_FORMA_PACKAGE_DIR=… npm run test:forma-icon-print`. Refresh the
-   fixture files from the release if they differ, set `PROVENANCE.json`
-   `status` to `published` and `artifactSha256` to the released tarball's
-   sha256. The suite fails until both match the pin.
-3. The same suite then prints the document under the real pin with icons.
+1. echelon-registry records the Forma 0.5.0 release (release manifest and
+   package artifact sha256 `c4ad3ae5…f558f`) and publishes an `echelon-current`
+   resolved set that selects it.
+2. In Folio, run `conditor upgrade --current --check` with that resolved set and
+   its sha256, review the plan, then apply it with `--authorize`. Conditor
+   replaces the authority and writes the lock.
+3. Run `npm run test:forma-icon-print`. With the pin at 0.5.0 the suite requires
+   `PROVENANCE.json` to be `published` with `artifactSha256` equal to the pinned
+   package sha256 (already true for the current fixture), and the real-pin print
+   then contains the icon vectors.

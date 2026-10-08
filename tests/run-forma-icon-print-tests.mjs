@@ -19,21 +19,22 @@ import { composeIconPrintDocument, openOfflineDocument, printOfflinePdf } from "
 
 const root = resolve(new URL("..", import.meta.url).pathname);
 const fixtureDir = resolve(root, "tests/fixtures/forma-icons");
-const fixtureIcons = resolve(fixtureDir, "forma-0.5.0-prerelease/dist/icons");
+const fixtureIcons = resolve(fixtureDir, "forma-0.5.0/dist/icons");
 const outputDir = resolve(root, "test-results/forma-icon-print");
 const baselinePath = resolve(fixtureDir, "visual-baseline.json");
 const updateBaseline = process.env.FOLIO_UPDATE_ICON_BASELINE === "1";
 const packageDir = process.env.FOLIO_FORMA_PACKAGE_DIR;
 
-const provenance = JSON.parse(readFileSync(resolve(fixtureDir, "forma-0.5.0-prerelease/PROVENANCE.json"), "utf8"));
+const provenance = JSON.parse(readFileSync(resolve(fixtureDir, "forma-0.5.0/PROVENANCE.json"), "utf8"));
 const fixtureRegistry = JSON.parse(readFileSync(resolve(fixtureIcons, "registry.json"), "utf8"));
 const body = readFileSync(resolve(fixtureDir, "status-report.html"), "utf8");
 const documentCss = readFileSync(resolve(fixtureDir, "status-report.css"), "utf8");
 const printCss = readFileSync(resolve(root, "src/styles/print.css"), "utf8");
 
 const repositoryPin = loadFormaPin(root);
-// The fixture is labelled pre-release; it is used *as if* pinned only here, and
-// the provenance check below keeps that label honest against the real pin.
+// The fixture may be ahead of the repository pin; it is used *as if* pinned
+// only here, and the provenance check below keeps its label honest against the
+// real pin.
 const fixturePin = Object.freeze({ systemId: "forma", version: provenance.formaVersion, source: `test fixture (${provenance.status})` });
 const fixtureLibrary = loadIconLibrary({ pin: fixturePin, assetsRoot: fixtureIcons });
 const pinnedLibrary = loadIconLibrary({ pin: repositoryPin, assetsRoot: fixtureIcons });
@@ -255,7 +256,10 @@ try {
     const order = compareVersions(repositoryPin.version, provenance.formaVersion);
     assert.ok(order <= 0, `the Forma pin ${repositoryPin.version} is newer than the ${provenance.formaVersion} icon fixture; refresh it (tests/fixtures/forma-icons/SOURCE.md)`);
     if (order < 0) {
-      assert.equal(provenance.status, "pre-release-unpublished");
+      // Ahead of the pin: either a labelled pre-release copy, or bytes verified
+      // against a published release the Registry does not select yet.
+      assert.ok(["pre-release-unpublished", "published"].includes(provenance.status), `unexpected fixture status ${provenance.status}`);
+      if (provenance.status === "published") assert.match(provenance.source.artifactSha256, /^[0-9a-f]{64}$/);
       assert.equal(pinnedLibrary.status, "unavailable", "an icon-less pin must not render icons");
       assert.deepEqual(pinnedLibrary.findings, []);
     } else {

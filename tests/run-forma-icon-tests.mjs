@@ -22,7 +22,7 @@ import {
 import { compileIconReferences, composeIconPrintDocument, inspectOfflineMarkup } from "../tools/forma-icon-print.mjs";
 
 const root = path.resolve(new URL("..", import.meta.url).pathname);
-const fixtureIcons = path.join(root, "tests/fixtures/forma-icons/forma-0.5.0-prerelease/dist/icons");
+const fixtureIcons = path.join(root, "tests/fixtures/forma-icons/forma-0.5.0/dist/icons");
 const fixtureRegistry = JSON.parse(fs.readFileSync(path.join(fixtureIcons, "registry.json"), "utf8"));
 const fixtureAssets = new Map(fixtureRegistry.icons.map((entry) => [entry.name, fs.readFileSync(path.join(fixtureIcons, `${entry.name}.svg`))]));
 const pin050 = Object.freeze({ systemId: "forma", version: "0.5.0" });
@@ -74,7 +74,7 @@ check("the Forma pin comes from the verified Conditor authority", () => {
   }
 });
 
-check("the pre-release fixture verifies against its own registry digests", () => {
+check("the Forma 0.5.0 fixture verifies against its own registry digests", () => {
   assert.deepEqual(codes(inspectIconRegistry(fixtureRegistry, pin050)), []);
   assert.equal(library.status, "available");
   assert.equal(library.formaVersion, "0.5.0");
