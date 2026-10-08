@@ -837,7 +837,28 @@
       "updatedAt": "2026-10-08T11:40:32.000Z",
       "telemetryExecutionIds": [
         "EXE-20261008T114032514Z-0fe00183"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "3bb21e386b7f6e33389ead71",
+        "recordedAt": "2026-10-08T11:57:03.000Z",
+        "executionId": "EXE-20261008T114032514Z-0fe00183",
+        "stepId": "STEP-20261008T114036000Z-8ec99623",
+        "repository": "echelon-print-components",
+        "branch": "claude/forma-icon-system-handoff-6xlsyn",
+        "commit": "cf05a03d55c1a6cc5a1a78aaf71df5950df12a1a",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "claude/forma-icon-system-handoff-6xlsyn",
+        "remoteCommit": "cf05a03d55c1a6cc5a1a78aaf71df5950df12a1a",
+        "summary": "Pinned Forma icon adapter wired into offline Letter/A4 PDF pipeline with FORMA-ICON-PRINT-01 evidence; pin unchanged at 0.4.1",
+        "nextAction": "Open draft PR, watch CI, complete GH-45 with evidence",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      }
     }
   ]
 }
