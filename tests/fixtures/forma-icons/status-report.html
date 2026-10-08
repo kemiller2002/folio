@@ -1,0 +1,45 @@
+<!-- FORMA-ICON-PRINT-01 body fragment (GH-45). Composed by
+     tools/forma-icon-print.mjs; every status is printed in words, icons are
+     decorative unless the document supplies data-ef-icon-label. -->
+<ef-print-document>
+  <ef-print-section>
+    <h1>FORMA-ICON-PRINT-01 release readiness</h1>
+    <p>Static, release-pinned Forma icons compiled into a Folio print document. Each status below is stated in words; the icon and colour only repeat it.</p>
+    <ef-print-table>
+      <table class="status-table">
+        <caption>Release checks and their status</caption>
+        <thead><tr><th scope="col">Check</th><th scope="col">Status</th><th scope="col">Detail</th></tr></thead>
+        <tbody>
+          <tr data-status="passed"><th scope="row">Offline HTML</th><td class="status"><span data-ef-icon="success"></span> Status: Passed</td><td>No network request while printing.</td></tr>
+          <tr data-status="warning"><th scope="row">Grayscale print</th><td class="status"><span data-ef-icon="warning"></span> Status: Warning</td><td>Two tints are close in luminance.</td></tr>
+          <tr data-status="failed"><th scope="row">Release pin</th><td class="status"><span data-ef-icon="close"></span> Status: Failed</td><td>Forma 0.5.0 is not yet published.</td></tr>
+          <tr data-status="pending"><th scope="row">Visual review</th><td class="status"><span data-ef-icon="clock"></span> Status: Pending</td><td>Awaiting an independent reviewer.</td></tr>
+        </tbody>
+      </table>
+    </ef-print-table>
+    <ef-print-callout>
+      <p><span data-ef-icon="shield"></span> Status: Passed. Security review found no script, link or embedded content in any icon.</p>
+    </ef-print-callout>
+    <ef-print-figure>
+      <figure>
+        <span data-ef-icon="workflow" data-ef-icon-label="Workflow stage: release" data-ef-icon-size="36pt"></span>
+        <figcaption>Figure 1. A meaningful standalone icon; its accessible name is supplied by this document, not by Forma.</figcaption>
+      </figure>
+    </ef-print-figure>
+    <p>Reserved reference: <span data-ef-icon="future-rocket"></span> FUTURE-ICON-TEXT stays readable; an unknown icon name is kept as inert data.</p>
+  </ef-print-section>
+  <ef-print-section break-before="page">
+    <h2>Icon geometry sheet</h2>
+    <p>Each glyph is printed at 48pt beside its printed name.</p>
+    <ul class="geometry-sheet">
+      <li><span data-ef-icon="success" data-ef-icon-size="48pt"></span> <span>GEOM-success</span></li>
+      <li><span data-ef-icon="warning" data-ef-icon-size="48pt"></span> <span>GEOM-warning</span></li>
+      <li><span data-ef-icon="close" data-ef-icon-size="48pt"></span> <span>GEOM-close</span></li>
+      <li><span data-ef-icon="clock" data-ef-icon-size="48pt"></span> <span>GEOM-clock</span></li>
+      <li><span data-ef-icon="shield" data-ef-icon-size="48pt"></span> <span>GEOM-shield</span></li>
+      <li><span data-ef-icon="workflow" data-ef-icon-size="48pt"></span> <span>GEOM-workflow</span></li>
+      <li><span data-ef-icon="search" data-ef-icon-size="48pt"></span> <span>GEOM-search</span></li>
+      <li><span data-ef-icon="print" data-ef-icon-size="48pt"></span> <span>GEOM-print</span></li>
+    </ul>
+  </ef-print-section>
+</ef-print-document>

@@ -13,6 +13,8 @@ on:
       - "src/**"
       - "tests/**"
       - "tools/diagram-projection.mjs"
+      - "tools/forma-icons.mjs"
+      - "tools/forma-icon-print.mjs"
       - ".github/workflows/print-experiments.yml"
   pull_request:
     paths:
@@ -21,6 +23,8 @@ on:
       - "src/**"
       - "tests/**"
       - "tools/diagram-projection.mjs"
+      - "tools/forma-icons.mjs"
+      - "tools/forma-icon-print.mjs"
       - ".github/workflows/print-experiments.yml"
   workflow_dispatch:
 
@@ -61,7 +65,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: print-experiment-evidence
-          path: test-results/print-experiments/
+          path: |
+            test-results/print-experiments/
+            test-results/forma-icon-print/
           if-no-files-found: warn
 
       - name: Record dependency lock

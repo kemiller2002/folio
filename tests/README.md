@@ -32,6 +32,8 @@ The test runner:
 
 `npm test` also runs the fixture suites: reports, Tutela, professional profiles (`npm run test:profiles`), journal publications (`npm run test:journal`, JOURNAL-ARTICLE-01 and JOURNAL-ISSUE-01; PDFs in `test-results/journal-fixtures/`), and diagram projection. Set `FOLIO_ENGINES=chromium` to limit the profile and journal suites to one engine.
 
+`npm test` also runs the Forma icon suites: `npm run test:forma-icons` (adapter, no browser) and `npm run test:forma-icon-print` (FORMA-ICON-PRINT-01, Chromium only; Letter, A4, grayscale via Ghostscript and backgrounds-off PDFs in `test-results/forma-icon-print/`). The print suite uses a committed, pre-release Forma 0.5.0 icon fixture; see `tests/fixtures/forma-icons/SOURCE.md`.
+
 `npm run experiment:journal-enhanced` is an optional P3 comparison (JOURNAL-ENHANCED-01, `EX-PRINT-2026-0008`). It is not part of `npm test`: the enhanced renderer is not a dependency. Install `@vivliostyle/cli` outside the repository and set `VIVLIOSTYLE_CLI` (and optionally `VIVLIOSTYLE_BROWSER`); without it only the Chromium leg runs.
 
 Important limitation: Playwright exposes Chromium PDF generation, but not equivalent Firefox/WebKit PDF generation. The Firefox/WebKit portion therefore proves print-media DOM/layout equivalence, not final paginated-output equivalence. That limitation must remain visible in the research record.
