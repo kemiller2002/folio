@@ -1279,3 +1279,30 @@
     overflow: visible;
   }
 }
+
+/* Static icons compiled by Forma; Folio never redefines their SVG geometry. */
+@layer ef-print-components {
+  .ef-print-icon {
+    display: inline-flex;
+    inline-size: var(--ef-print-icon-size, 1em);
+    block-size: var(--ef-print-icon-size, 1em);
+    align-items: center;
+    justify-content: center;
+    vertical-align: -0.16em;
+    color: currentColor;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .ef-print-icon > svg {
+    inline-size: 100%;
+    block-size: 100%;
+    max-inline-size: 100%;
+    display: block;
+  }
+  @media print {
+    .ef-print-icon, .ef-print-icon > svg { color: inherit; print-color-adjust: economy; }
+  }
+  @media (forced-colors: active) {
+    .ef-print-icon { color: CanvasText; }
+  }
+}
