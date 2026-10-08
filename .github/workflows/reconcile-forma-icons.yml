@@ -1,0 +1,47 @@
+# One-time audited recovery for already committed icon work.
+# Only changes .ros work/event records and generated registries, via Praxis itself.
+name: Reconcile Forma icon attribution
+on:
+  push:
+    branches: [feature/folio-forma-icons]
+    paths: [.github/workflows/reconcile-forma-icons.yml]
+permissions:
+  contents: write
+jobs:
+  reconcile:
+    if: github.repository == 'kemiller2002/folio'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Reconcile real Git commits against recorded GitHub issue
+        shell: bash
+        env:
+          WORK_ID: GH-45
+          WORK_TITLE: "Integrate Forma icon assets into Folio print output"
+          WORK_URL: "https://github.com/kemiller2002/folio/issues/45"
+          BASE_COMMIT: 334306b02b8588c20958761cbe6014478723752d
+        run: |
+          set -euo pipefail
+          git fetch origin main --no-tags
+          chmod +x ./praxis
+          ./praxis registry check
+          if ! ./praxis work show "$WORK_ID" >/dev/null 2>&1; then
+            ./praxis add "$WORK_TITLE" --id "$WORK_ID" --source github-issue --source-reference "$WORK_URL" --priority high
+          fi
+          timestamp="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
+          echo "Previewing Git-evidenced post-hoc attribution for $WORK_ID"
+          ./praxis work reconcile --id "$WORK_ID" --reason "Icon work was committed before a Praxis work context was begun; recovering attribution against Git history" --range "$BASE_COMMIT..HEAD" --occurred-at "$timestamp" --dry-run
+          ./praxis work reconcile --id "$WORK_ID" --reason "Icon work was committed before a Praxis work context was begun; recovering attribution against Git history" --range "$BASE_COMMIT..HEAD" --occurred-at "$timestamp"
+          ./praxis registry build
+          ./praxis validate
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .ros/work .ros/events .ros/telemetry registries
+          if ! git diff --cached --quiet; then
+            git commit -m "praxis: reconcile icon work to GH-45 using Git evidence"
+            git push origin "HEAD:feature/folio-forma-icons"
+          fi
