@@ -11,19 +11,21 @@
       "default": "./src/components/register.js"
     },
     "./print.css": "./src/styles/print.css",
-    "./machine-operability.json": "./contracts/machine-operability-catalog.json"
+    "./machine-operability.json": "./contracts/machine-operability-catalog.json",
+    "./forma-icons": "./tools/forma-icons.mjs"
   },
   "files": [
     "src",
     "README.md",
-    "contracts"
+    "contracts",
+    "tools/forma-icons.mjs"
   ],
   "sideEffects": [
     "./src/components/register.js",
     "./src/styles/print.css"
   ],
   "scripts": {
-    "test": "node tests/run-primitive-component-tests.mjs && node tests/machine-operability-audit.test.mjs && npm run machine:audit:check && node tests/run-machine-operability-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-journal-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs",
+    "test": "node tests/run-primitive-component-tests.mjs && node tests/machine-operability-audit.test.mjs && npm run machine:audit:check && node tests/run-machine-operability-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-journal-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs && node tests/run-forma-icon-tests.mjs",
     "test:print": "node tests/run-print-experiments.mjs",
     "site:build": "node tools/build-site.mjs",
     "site:test": "node --test tests/site-build.test.mjs",
@@ -39,7 +41,8 @@
     "test:machine": "node tests/run-machine-operability-tests.mjs",
     "machine:audit": "npm run site:build && node tools/machine-operability-audit.mjs --write",
     "machine:audit:check": "npm run site:build && node tools/machine-operability-audit.mjs --check --strict",
-    "test:machine:audit": "node --test tests/machine-operability-audit.test.mjs"
+    "test:machine:audit": "node --test tests/machine-operability-audit.test.mjs",
+    "test:forma-icons": "node tests/run-forma-icon-tests.mjs"
   },
   "devDependencies": {
     "playwright": "1.63.0"
