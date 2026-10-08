@@ -348,10 +348,10 @@
       "description": null,
       "tags": [],
       "priority": "high",
-      "status": "ready",
+      "status": "complete",
       "attachments": [],
       "createdAt": "2026-10-08T06:48:41.866Z",
-      "updatedAt": "2026-10-08T11:40:31.000Z",
+      "updatedAt": "2026-10-08T12:00:58.000Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "automation",
