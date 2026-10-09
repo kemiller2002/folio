@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "echelon-print-components",
-  "nextSeq": 10,
+  "nextSeq": 11,
   "items": [
     {
       "id": "GH-3",
@@ -425,6 +425,27 @@
       },
       "source": "manual",
       "sourceReference": null
+    },
+    {
+      "id": "WI-0010",
+      "title": "Fold the Folio 0.4.0 forma-icons contract test into the functional adapter suite (GH-45 follow-up)",
+      "description": null,
+      "tags": [],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-09T00:30:30.035Z",
+      "updatedAt": "2026-10-09T00:31:13.094Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/45"
     }
   ]
 }
