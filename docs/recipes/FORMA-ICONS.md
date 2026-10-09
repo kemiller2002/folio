@@ -1,12 +1,11 @@
 # Using Forma icons in Folio print and PDF output
 
-**Status:** Implemented and proven end to end against a committed fixture of
-the **published** Forma 0.5.0 release (GH-45, issue #45; release asset sha256
-`c4ad3ae5…f558f`, byte-verified). Folio's real Forma pin is still 0.4.1, which
-publishes no icons, so with the pin as committed every icon reference prints as
-inert data and the words carry the meaning. The pin cannot move yet: the
-echelon-registry `echelon-current` set does not record or select Forma 0.5.0
-(see "Moving the pin").
+**Status:** Implemented, pinned and proven end to end (GH-45, GH-45-PIN,
+issue #45). Folio's Conditor pin is Forma **0.5.0** (echelon-current 1.13.0;
+release asset sha256 `c4ad3ae5…f558f`), so the committed pin prints verified
+icon vectors. Forma 0.4.1, which publishes no icons, remains the control in the
+print suite: every reference prints as inert data and the words carry the
+meaning.
 
 ## Contract
 
@@ -108,7 +107,8 @@ and prints it offline with Chromium to `test-results/forma-icon-print/`:
 
 - Letter colour (612 x 792 pt, 2 pages), A4 colour (2 pages), Letter with
   `printBackground: false`, Letter converted to grayscale by Ghostscript, and
-  Letter under the repository's real pin (0.4.1, no icons);
+  Letter under the committed pin (0.5.0, icons) and under the 0.4.1 control
+  (no icons);
 - no request in any document, plus a control showing the guard records one;
 - every status in words in every output, and icons add no extracted text;
 - icons are vector strokes (no raster images) and add strokes over the
@@ -125,22 +125,21 @@ Set `FOLIO_FORMA_PACKAGE_DIR=<extracted package>/package` to also check the
 fixture bytes and registry entries against a Forma package and print every
 icon in it.
 
-## Moving the pin
+## The pin
 
-Forma 0.5.0 is published (https://github.com/kemiller2002/forma/releases/tag/v0.5.0),
-and the fixture is verified against it. The pin is still blocked upstream:
-Conditor moves a Forma `project-binding` only from an integrity-bound Registry
-resolved set, and the echelon-registry `echelon-current` set (1.7.0, `e9b8cf7`)
-has no `releases/forma/0.5.0.release.json` and still selects 0.4.1. Never edit
-`.conditor/authority/resolved-release-set.json` or its sha256 by hand.
+The pin moved from 0.4.1 to 0.5.0 only through Conditor (v0.8.1, checksum
+verified): `conditor upgrade --current` with the exact echelon-registry
+`echelon-current` 1.13.0 linux-x64 resolved set (registry commit `eceb948`,
+sha256 `85a54366…c169`). The plan had no version transitions for declared
+components; Conditor verified the repository and replaced the authority and
+lock. The newer 1.14.0 set was refused by Conditor 0.8.1 because it moves
+Praxis 3.7.2 to 3.9.1, a lifecycle version that Conditor build has not
+qualified; that move is separate work.
 
-1. echelon-registry records the Forma 0.5.0 release (release manifest and
-   package artifact sha256 `c4ad3ae5…f558f`) and publishes an `echelon-current`
-   resolved set that selects it.
-2. In Folio, run `conditor upgrade --current --check` with that resolved set and
-   its sha256, review the plan, then apply it with `--authorize`. Conditor
-   replaces the authority and writes the lock.
-3. Run `npm run test:forma-icon-print`. With the pin at 0.5.0 the suite requires
-   `PROVENANCE.json` to be `published` with `artifactSha256` equal to the pinned
-   package sha256 (already true for the current fixture), and the real-pin print
-   then contains the icon vectors.
+With the pin equal to the fixture version, `npm run test:forma-icon-print`
+requires `PROVENANCE.json` to be `published` with `artifactSha256` equal to the
+pinned package sha256, and the print under the committed pin must be identical
+to the verified-fixture print (same HTML, same vectors, same glyph masks). For a
+later Forma release: move the pin with Conditor, refresh the fixture from the
+released tarball (`FOLIO_FORMA_PACKAGE_DIR` leg), and update `PROVENANCE.json`
+and the visual baseline only after review.

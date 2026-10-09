@@ -15,11 +15,9 @@ fixture byte and registry entry was verified against it, so `PROVENANCE.json`
 now says `published`. No fixture file changed.
 
 Folio's actual Forma version is the Conditor pin in
-`.conditor/authority/resolved-release-set.json`. It is still 0.4.1, which
-publishes no icons, because the echelon-registry `echelon-current` resolved set
-(1.7.0 at the time of writing) does not yet record or select Forma 0.5.0, and
-Conditor moves the pin only from a Registry selection.
-`tests/run-forma-icon-print-tests.mjs` enforces the relationship:
+`.conditor/authority/resolved-release-set.json`: Forma 0.5.0 since the move to
+echelon-registry `echelon-current` 1.13.0, whose Forma package artifact sha256
+is the one above. `tests/run-forma-icon-print-tests.mjs` enforces the relationship:
 
 - pin older than the fixture: `PROVENANCE.json` says `pre-release-unpublished`
   or `published`;

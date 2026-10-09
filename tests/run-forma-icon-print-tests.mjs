@@ -6,7 +6,8 @@
 // still states every status in words, role/name accessibility, visual
 // regression against committed glyph masks, and that the bundled bytes are the
 // pinned release's bytes. The same document is also printed under the
-// repository's real Forma pin, which (at 0.4.1) publishes no icons.
+// repository's committed Conditor pin, and under Forma 0.4.1 (no icons) as the
+// control that shows what the icons add and that the words suffice.
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
@@ -14,7 +15,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { inflateSync } from "node:zlib";
 import { chromium } from "playwright";
-import { compareVersions, loadFormaPin, loadIconLibrary, sha256Hex } from "../tools/forma-icons.mjs";
+import { compareVersions, loadFormaPin, loadIconLibrary, pinPublishesIcons, sha256Hex } from "../tools/forma-icons.mjs";
 import { composeIconPrintDocument, openOfflineDocument, printOfflinePdf } from "../tools/forma-icon-print.mjs";
 
 const root = resolve(new URL("..", import.meta.url).pathname);
@@ -38,6 +39,9 @@ const repositoryPin = loadFormaPin(root);
 const fixturePin = Object.freeze({ systemId: "forma", version: provenance.formaVersion, source: `test fixture (${provenance.status})` });
 const fixtureLibrary = loadIconLibrary({ pin: fixturePin, assetsRoot: fixtureIcons });
 const pinnedLibrary = loadIconLibrary({ pin: repositoryPin, assetsRoot: fixtureIcons });
+// Forma 0.4.1, the last release without icons, is the control: the same document
+// with every reference inert proves what the icons add and that words suffice.
+const iconlessLibrary = loadIconLibrary({ pin: Object.freeze({ systemId: "forma", version: "0.4.1" }), assetsRoot: fixtureIcons });
 
 const statuses = ["Status: Passed", "Status: Warning", "Status: Failed", "Status: Pending"];
 const geometryNames = ["success", "warning", "close", "clock", "shield", "workflow", "search", "print"];
@@ -195,6 +199,7 @@ const compose = (library, page) => composeIconPrintDocument({
 const documents = {
   letter: compose(fixtureLibrary, "letter"),
   a4: compose(fixtureLibrary, "a4"),
+  iconlessLetter: compose(iconlessLibrary, "letter"),
   pinnedLetter: compose(pinnedLibrary, "letter")
 };
 
@@ -235,6 +240,7 @@ const pdfPaths = {
   a4: resolve(outputDir, "forma-icon-print-a4-color.pdf"),
   letterBackgroundsOff: resolve(outputDir, "forma-icon-print-letter-backgrounds-off.pdf"),
   letterGrayscale: resolve(outputDir, "forma-icon-print-letter-grayscale.pdf"),
+  iconlessLetter: resolve(outputDir, "forma-icon-print-letter-iconless-forma-0.4.1.pdf"),
   pinnedLetter: resolve(outputDir, `forma-icon-print-letter-pinned-forma-${repositoryPin.version}.pdf`)
 };
 
@@ -277,8 +283,8 @@ try {
     }
     assert.ok(documents.letter.html.includes('data-ef-icon-forma="0.5.0"'));
     assert.deepEqual(documents.letter.references.filter((r) => r.state !== "rendered").map((r) => [r.name, r.state]), [["future-rocket", "unknown"]]);
-    assert.ok(documents.pinnedLetter.references.every((r) => r.state === "unavailable"));
-    assert.ok(!documents.pinnedLetter.html.includes("<svg"), "the icon-less pin embeds no geometry");
+    assert.ok(documents.iconlessLetter.references.every((r) => r.state === "unavailable"));
+    assert.ok(!documents.iconlessLetter.html.includes("<svg"), "the icon-less pin embeds no geometry");
   });
 
   const dom = {};
@@ -307,8 +313,8 @@ try {
     assert.deepEqual(dom.letter.decorativeWithoutWords, [], "a decorative icon must sit next to words that carry its meaning");
     assert.equal(dom.letter.svgWithoutHiddenGlyph, 0);
     assert.deepEqual(dom.letter.unknown, { hidden: true, state: "unknown", children: 0, display: "none" });
-    assert.deepEqual(dom.pinnedLetter.unknown, { hidden: true, state: "unavailable", children: 0, display: "none" });
-    assert.equal(dom.pinnedLetter.iconCount, 0);
+    assert.deepEqual(dom.iconlessLetter.unknown, { hidden: true, state: "unavailable", children: 0, display: "none" });
+    assert.equal(dom.iconlessLetter.iconCount, 0);
     await withPage(async (page) => {
       await openOfflineDocument(page, documents.letter.html);
       assert.equal(await page.getByRole("img").count(), 1);
@@ -324,7 +330,7 @@ try {
       assert.ok(await page.getByText("FUTURE-ICON-TEXT").isVisible());
     });
     await withPage(async (page) => {
-      await openOfflineDocument(page, documents.pinnedLetter.html);
+      await openOfflineDocument(page, documents.iconlessLetter.html);
       assert.equal(await page.getByRole("img").count(), 0);
       for (const status of statuses) assert.ok(await page.getByText(status, { exact: true }).first().isVisible(), `${status} visible without icons`);
     });
@@ -347,6 +353,7 @@ try {
   await withPage(async (page) => { printed.letter = await printOfflinePdf(page, documents.letter, { path: pdfPaths.letter }); });
   await withPage(async (page) => { printed.a4 = await printOfflinePdf(page, documents.a4, { path: pdfPaths.a4 }); });
   await withPage(async (page) => { printed.letterBackgroundsOff = await printOfflinePdf(page, documents.letter, { path: pdfPaths.letterBackgroundsOff, printBackground: false }); });
+  await withPage(async (page) => { printed.iconlessLetter = await printOfflinePdf(page, documents.iconlessLetter, { path: pdfPaths.iconlessLetter }); });
   await withPage(async (page) => { printed.pinnedLetter = await printOfflinePdf(page, documents.pinnedLetter, { path: pdfPaths.pinnedLetter }); });
   // A grayscale printer's device conversion of the colour PDF (as in the diagram
   // suite): vectors and text survive, colour does not.
@@ -361,7 +368,7 @@ try {
   });
 
   await check("Letter and A4 PDFs have the right page size and two pages", () => {
-    for (const name of ["letter", "letterBackgroundsOff", "pinnedLetter", "letterGrayscale"]) {
+    for (const name of ["letter", "letterBackgroundsOff", "iconlessLetter", "pinnedLetter", "letterGrayscale"]) {
       assert.ok(Math.abs(info[name].width - 612) < 1 && Math.abs(info[name].height - 792) < 1, `${name}: ${info[name].width}x${info[name].height}`);
       assert.equal(info[name].pages, 2, `${name} pages`);
     }
@@ -377,7 +384,7 @@ try {
       for (const glyph of geometryNames) assert.ok(text.includes(`GEOM-${glyph}`), `${name} lacks GEOM-${glyph}`);
       assert.ok(!/future-rocket|Workflow stage: release/.test(text), `${name} printed icon data as text`);
     }
-    assert.equal(texts.letter, texts.pinnedLetter, "icons changed extracted text");
+    assert.equal(texts.letter, texts.iconlessLetter, "icons changed extracted text");
     assert.equal(texts.letterBackgroundsOff, texts.letter, "backgrounds-off changed extracted text");
     assert.deepEqual(words(texts.letterGrayscale), words(texts.letter), "grayscale changed extracted text");
     assert.deepEqual(words(texts.a4), words(texts.letter), "A4 changed extracted text");
@@ -385,11 +392,11 @@ try {
 
   await check("icons are vector strokes in the PDF, not images", () => {
     for (const [name, summary] of Object.entries(vectors)) assert.equal(summary.imageXObjects, 0, `${name} contains raster images`);
-    const added = vectors.letter.strokeOps - vectors.pinnedLetter.strokeOps;
+    const added = vectors.letter.strokeOps - vectors.iconlessLetter.strokeOps;
     assert.ok(added >= 14, `expected at least one stroke per rendered icon (14), got ${added}`);
-    assert.ok(vectors.letter.curveOps > vectors.pinnedLetter.curveOps, "curved icon geometry (circles, quadratic joins) is absent");
+    assert.ok(vectors.letter.curveOps > vectors.iconlessLetter.curveOps, "curved icon geometry (circles, quadratic joins) is absent");
     assert.equal(vectors.letterBackgroundsOff.strokeOps, vectors.letter.strokeOps, "backgrounds-off dropped icon strokes");
-    assert.ok(vectors.a4.strokeOps - vectors.pinnedLetter.strokeOps >= 14);
+    assert.ok(vectors.a4.strokeOps - vectors.iconlessLetter.strokeOps >= 14);
   });
 
   const statusInk = {
@@ -397,14 +404,14 @@ try {
     a4: statusGlyphInk(pdfPaths.a4),
     letterBackgroundsOff: statusGlyphInk(pdfPaths.letterBackgroundsOff),
     letterGrayscale: statusGlyphInk(pdfPaths.letterGrayscale, { gray: true }),
-    pinnedLetter: statusGlyphInk(pdfPaths.pinnedLetter)
+    iconlessLetter: statusGlyphInk(pdfPaths.iconlessLetter)
   };
   await check("status glyphs print beside their words in colour, A4, grayscale and backgrounds-off", () => {
     // Without icons the four table rows have no ink left of "Status:", so the
     // ink measured there with icons is the glyph. (The fifth word starts the
     // callout line, where the icon-less print reaches the callout's left rule.)
-    assert.equal(statusInk.pinnedLetter.length, 5);
-    assert.deepEqual(statusInk.pinnedLetter.slice(0, 4), [0, 0, 0, 0], "table rows carry no other ink beside the status word");
+    assert.equal(statusInk.iconlessLetter.length, 5);
+    assert.deepEqual(statusInk.iconlessLetter.slice(0, 4), [0, 0, 0, 0], "table rows carry no other ink beside the status word");
     for (const name of ["letter", "letterBackgroundsOff", "letterGrayscale", "a4"]) {
       assert.equal(statusInk[name].length, 5, `${name}: five printed status words`);
       statusInk[name].forEach((ink, i) => assert.ok(ink > 30, `${name}: status glyph ${i} ink ${ink}`));
@@ -473,6 +480,23 @@ try {
     }
   });
 
+  await check(`the committed Forma pin (${repositoryPin.version}) prints ${pinPublishesIcons(repositoryPin) ? "the verified icon vectors" : "no icons, only words"}`, () => {
+    assert.deepEqual(printed.pinnedLetter.requests, []);
+    assert.equal(texts.pinnedLetter, texts.letter, "the pinned print states the same words");
+    if (pinPublishesIcons(repositoryPin)) {
+      assert.equal(pinnedLibrary.status, "available", JSON.stringify(pinnedLibrary.findings));
+      assert.equal(documents.pinnedLetter.html, documents.letter.html, "under the pin the document is exactly the verified-fixture document");
+      assert.deepEqual(vectors.pinnedLetter, vectors.letter, "the pinned PDF carries the same icon vectors");
+      assert.ok(vectors.pinnedLetter.strokeOps - vectors.iconlessLetter.strokeOps >= 14);
+      assert.deepEqual(statusGlyphInk(pdfPaths.pinnedLetter), statusInk.letter);
+      const pinnedSheet = sheetSignatures(pdfPaths.pinnedLetter, 2);
+      for (const name of geometryNames) assert.ok(maskDistance(pinnedSheet[name].mask, baseline.glyphs[name].mask) <= maskTolerance, `pinned ${name} differs from the visual baseline`);
+    } else {
+      assert.equal(pinnedLibrary.status, "unavailable");
+      assert.deepEqual(vectors.pinnedLetter, vectors.iconlessLetter);
+    }
+  });
+
   if (packageDir) {
     await check(`local Forma package at FOLIO_FORMA_PACKAGE_DIR matches the fixture and prints every icon`, async () => {
       const packageIcons = resolve(packageDir, "dist/icons");
@@ -510,7 +534,11 @@ try {
     vectors,
     statusInk,
     maskDistances: distances,
-    references: { letter: documents.letter.references.length, pinned: documents.pinnedLetter.references.map((r) => r.state).filter((s, i, all) => all.indexOf(s) === i) },
+    references: {
+      letter: documents.letter.references.length,
+      iconless: documents.iconlessLetter.references.map((r) => r.state).filter((s, i, all) => all.indexOf(s) === i),
+      pinned: documents.pinnedLetter.references.map((r) => r.state).filter((s, i, all) => all.indexOf(s) === i)
+    },
     pins: { repository: repositoryPin.version, fixture: `${fixturePin.version} (${provenance.status})` },
     packageLeg: packageDir ? "ran" : "not run (set FOLIO_FORMA_PACKAGE_DIR to an extracted Forma package)"
   });

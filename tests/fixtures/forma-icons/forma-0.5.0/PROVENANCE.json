@@ -23,5 +23,5 @@
     "search",
     "print"
   ],
-  "notAPin": "Folio's Forma pin is .conditor/authority/resolved-release-set.json, still 0.4.1 because the echelon-registry echelon-current set does not yet select Forma 0.5.0. This fixture never changes the pin; once the pin reaches 0.5.0 the suite requires artifactSha256 to equal the pinned package sha256."
+  "notAPin": "Folio's Forma pin is .conditor/authority/resolved-release-set.json (Forma 0.5.0 since echelon-current 1.13.0). This fixture never changes the pin; while the pin equals 0.5.0 the suite requires artifactSha256 to equal the pinned package sha256."
 }

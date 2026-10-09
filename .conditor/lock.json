@@ -1,14 +1,14 @@
 {
   "schemaVersion": 4,
   "project": "folio",
-  "manifestSha256": "3bcacdb55374b73ccce42dd42152590ef0e26e6c9de35e341b96a6ba75364490",
+  "manifestSha256": "19097feb845f1f165fcf8063c0b318b61fea1af6a9e827ba3fd6d63e94371ae1",
   "manifest": {
     "schemaVersion": 1,
     "name": "folio",
     "registryAuthority": {
       "kind": "resolved-release-set",
       "path": ".conditor/authority/resolved-release-set.json",
-      "sha256": "ea1b39a003d3f2f41c4fb6e979694ec82fd03964854e5dd268e38df51cd22931"
+      "sha256": "85a54366126ea1e6ff19570d8eb36838637e639215cf22169276d7381712c169"
     },
     "components": [
       {
@@ -97,6 +97,13 @@
       "band": "review",
       "path": "tools/core-component-metadata.mjs",
       "lineCount": 594
+    },
+    {
+      "component": "ordo",
+      "code": "SDE-STRUCT-001",
+      "band": "review",
+      "path": "tests/run-forma-icon-print-tests.mjs",
+      "lineCount": 549
     }
   ]
 }
