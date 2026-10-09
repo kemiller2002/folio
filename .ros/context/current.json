@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-10-09T00:02:46.000Z",
+  "updatedAt": "2026-10-09T00:29:35.219Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -885,35 +885,61 @@
     {
       "id": "GH-45-PIN",
       "type": "task",
-      "state": "blocked",
-      "semanticState": "blocked",
-      "evidence": [],
-      "updatedAt": "2026-10-08T14:23:58.446Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": ".conditor/authority/resolved-release-set.json"
+        },
+        {
+          "type": "implementation",
+          "path": "conditor.json"
+        },
+        {
+          "type": "implementation",
+          "path": ".conditor/lock.json"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-forma-icon-print-tests.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-forma-icon-040-api-tests.mjs"
+        },
+        {
+          "type": "documentation",
+          "path": "docs/recipes/FORMA-ICONS.md"
+        }
+      ],
+      "updatedAt": "2026-10-09T00:29:35.219Z",
       "telemetryExecutionIds": [
         "EXE-20261008T142117351Z-6c5f14b3"
       ],
       "latestCheckpoint": {
-        "id": "2f5e28214bd2fa9f5b53247f",
-        "recordedAt": "2026-10-08T14:23:55.193Z",
+        "id": "fb7e6ded912f4258cb1cfece",
+        "recordedAt": "2026-10-09T00:29:31.903Z",
         "executionId": "EXE-20261008T142117351Z-6c5f14b3",
-        "stepId": "STEP-20261008T142123000Z-7a6f4e28",
+        "stepId": "STEP-20261009T002533262Z-1c4bd866",
         "repository": "echelon-print-components",
         "branch": "claude/forma-icon-system-handoff-6xlsyn",
-        "commit": "ea2b7c079a07d0c183262c75609bde5ba4c90f10",
+        "commit": "1a70ad7dddb94a104d9d210886810ee39fc24ebc",
         "remote": {
           "name": "origin",
           "url": "https://github.com/kemiller2002/folio"
         },
         "remoteBranch": "claude/forma-icon-system-handoff-6xlsyn",
-        "remoteCommit": "ea2b7c079a07d0c183262c75609bde5ba4c90f10",
-        "summary": "Published Forma 0.5.0 asset verified (sha256 c4ad3ae5...f558f); fixture marked published; pin swap blocked: echelon-registry echelon-current 1.7.0 has no Forma 0.5.0 release",
-        "nextAction": "After echelon-registry records Forma 0.5.0 in an echelon-current resolved set, run conditor upgrade --current in Folio and rerun test:forma-icon-print",
+        "remoteCommit": "1a70ad7dddb94a104d9d210886810ee39fc24ebc",
+        "summary": "Forma pinned to 0.5.0 via Conditor 0.8.1 and echelon-current 1.13.0; print suite proves icon vectors under the committed pin",
+        "nextAction": "Complete GH-45-PIN, push Praxis state, confirm CI and mark PR #50 ready",
         "verification": {
           "status": "verified",
           "mechanism": "git-remote-observation"
         }
       },
-      "blockReason": "Forma 0.5.0 is published (v0.5.0, sha256 c4ad3ae525a85f55a9e9aec4f0e19c59b7f552cececb4224a0bbc3434f4f558f) but kemiller2002/echelon-registry at e9b8cf7 has no releases/forma/0.5.0.release.json and echelon-current 1.7.0 still selects Forma 0.4.1; Conditor moves a Forma project-binding only from a Registry resolved set, so the pin cannot be moved without forging authority"
+      "blockReason": "Forma 0.5.0 is published (v0.5.0, sha256 c4ad3ae525a85f55a9e9aec4f0e19c59b7f552cececb4224a0bbc3434f4f558f) but kemiller2002/echelon-registry at e9b8cf7 has no releases/forma/0.5.0.release.json and echelon-current 1.7.0 still selects Forma 0.4.1; Conditor moves a Forma project-binding only from a Registry resolved set, so the pin cannot be moved without forging authority",
+      "completedAt": "2026-10-09T00:29:35.219Z"
     },
     {
       "id": "WI-0009",
