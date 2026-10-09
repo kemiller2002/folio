@@ -93,12 +93,12 @@ const html = renderFormaPrintIcon("warning", {
 ```
 
 `loadFormaIcons(assetsRoot, { expectedFormaVersion })` returns the verified
-registry rows. `tests/run-forma-icon-040-api-tests.mjs` keeps the 0.4.0
-contract (synthetic registry, digest and tamper checks) green.
+registry rows. `tests/run-forma-icon-tests.mjs` keeps the 0.4.0 contract
+(synthetic 0.6.0 registry, digest and tamper checks) as one of its checks.
 
 ## Evidence
 
-`npm run test:forma-icons` (both adapter suites) covers the adapter without a browser: pin
+`npm run test:forma-icons` covers the adapter without a browser: pin
 resolution, digest mismatch, missing or mismatched registry, injection,
 unknown IDs, and offline refusal.
 

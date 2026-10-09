@@ -185,6 +185,45 @@ check("the strict build-script API keeps the Folio 0.4.0 contract", () => {
   assert.throws(() => renderFormaPrintIconGallery("success", options), /list of IDs/);
 });
 
+// The Folio 0.4.0 contract (PR #52), folded in from its standalone test: a
+// synthetic future release (0.6.0) written fresh per scenario, so no state is
+// shared or mutated between cases.
+const syntheticSvg = '<svg xmlns="http://www.w3.org/2000/svg" class="ef-icon__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V19M5 12H19"/></svg>\n';
+const syntheticEntry = Object.freeze({ name: "add", category: "actions", label: "Add", keywords: [], origin: "original", svg: "icons/add.svg", html: "icons/html/add.html", svgSha256: sha256Hex(syntheticSvg) });
+const syntheticRegistry = (entry = {}) => ({ schemaVersion: 1, formaVersion: "0.6.0", grid: 24, icons: [{ ...syntheticEntry, ...entry }] });
+const withSyntheticRelease = ({ registry = syntheticRegistry(), svg = syntheticSvg } = {}, use) => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "folio-forma-040-"));
+  try {
+    fs.writeFileSync(path.join(dir, "registry.json"), JSON.stringify(registry));
+    fs.writeFileSync(path.join(dir, "add.svg"), svg);
+    return use(dir);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+};
+
+check("the Folio 0.4.0 synthetic-release contract still holds", () => {
+  withSyntheticRelease({}, (dir) => {
+    assert.deepEqual(loadFormaIcons(dir, { expectedFormaVersion: "0.6.0" }).icons.map((row) => row.name), ["add"]);
+    assert.throws(() => loadFormaIcons(dir, { expectedFormaVersion: "0.5.0" }), /Forma version/);
+    assert.throws(() => renderFormaPrintIcon("add", { assetsRoot: dir, expectedFormaVersion: "0.5.0" }), /Forma version/);
+    const decorative = renderFormaPrintIcon("add", { assetsRoot: dir });
+    assert.match(decorative, /aria-hidden="true"/);
+    assert.match(decorative, /stroke="currentColor"/);
+    assert.match(decorative, /--ef-print-icon-size:1em/);
+    assert.doesNotMatch(decorative.replaceAll("http://www.w3.org/2000/svg", ""), /<script|https?:\/\/|<iframe/i);
+    assert.match(renderFormaPrintIcon("add", { assetsRoot: dir, label: 'Add "record" & return', size: "14pt" }), /role="img" aria-label="Add &quot;record&quot; &amp; return"/);
+    assert.throws(() => renderFormaPrintIcon("delete", { assetsRoot: dir }), /unknown icon/);
+    assert.throws(() => renderFormaPrintIcon("../add", { assetsRoot: dir }), /invalid name/);
+    assert.throws(() => renderFormaPrintIcon("add", { assetsRoot: dir, size: "10pt;background:url(x)" }), /unsafe size/);
+  });
+  withSyntheticRelease({ svg: '<svg onload="alert(1)"></svg>' }, (dir) => assert.throws(() => renderFormaPrintIcon("add", { assetsRoot: dir }), /SVG digest/));
+  withSyntheticRelease({ svg: syntheticSvg.replace('stroke="currentColor"', 'stroke="red"') }, (dir) => assert.throws(() => renderFormaPrintIcon("add", { assetsRoot: dir }), /SVG digest/));
+  withSyntheticRelease({ registry: syntheticRegistry({ svgSha256: "0".repeat(64) }) }, (dir) => assert.throws(() => renderFormaPrintIcon("add", { assetsRoot: dir }), /SVG digest/));
+  withSyntheticRelease({ registry: syntheticRegistry({ name: "../add" }) }, (dir) => assert.throws(() => loadFormaIcons(dir), /invalid or duplicate/));
+  withSyntheticRelease({ registry: { ...syntheticRegistry(), formaVersion: "next" } }, (dir) => assert.throws(() => loadFormaIcons(dir), /not stamped with an exact Forma release/));
+});
+
 check("reference compilation renders known icons and preserves the rest as hidden data", () => {
   const body = '<p><span data-ef-icon="success"></span> Passed <span data-ef-icon="future-rocket" data-ef-icon-label="Launch &amp; go"></span> <span data-ef-icon="&quot;&gt;&lt;script&gt;"></span></p>';
   const compiled = compileIconReferences(body, library);

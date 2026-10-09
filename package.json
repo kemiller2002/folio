@@ -44,7 +44,7 @@
     "machine:audit": "npm run site:build && node tools/machine-operability-audit.mjs --write",
     "machine:audit:check": "npm run site:build && node tools/machine-operability-audit.mjs --check --strict",
     "test:machine:audit": "node --test tests/machine-operability-audit.test.mjs",
-    "test:forma-icons": "node tests/run-forma-icon-tests.mjs && node tests/run-forma-icon-040-api-tests.mjs",
+    "test:forma-icons": "node tests/run-forma-icon-tests.mjs",
     "test:forma-icon-print": "node tests/run-forma-icon-print-tests.mjs"
   },
   "devDependencies": {
