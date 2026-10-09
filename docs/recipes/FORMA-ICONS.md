@@ -77,9 +77,29 @@ allowed to disappear in grayscale or backgrounds-disabled output.
 `print.css` owns size (`--ef-print-icon-size`), alignment, `currentColor` and
 forced colours (`.ef-print-icon`).
 
+### Strict build-script API (Folio 0.4.0)
+
+The 0.4.0 functions remain and throw instead of returning inert data. They now
+verify every SVG through the same pipeline:
+
+```js
+import { renderFormaPrintIcon } from "@echelon-foundry/print-components/forma-icons";
+
+const html = renderFormaPrintIcon("warning", {
+  assetsRoot: "<pinned forma>/dist/icons",
+  expectedFormaVersion: "0.5.0", // omit to use the registry's stamped release
+  label: null,                   // decorative; set only for meaningful icons
+  size: "14pt"
+});
+```
+
+`loadFormaIcons(assetsRoot, { expectedFormaVersion })` returns the verified
+registry rows. `tests/run-forma-icon-040-api-tests.mjs` keeps the 0.4.0
+contract (synthetic registry, digest and tamper checks) green.
+
 ## Evidence
 
-`npm run test:forma-icons` covers the adapter without a browser: pin
+`npm run test:forma-icons` (both adapter suites) covers the adapter without a browser: pin
 resolution, digest mismatch, missing or mismatched registry, injection,
 unknown IDs, and offline refusal.
 

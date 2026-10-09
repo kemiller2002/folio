@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "echelon-print-components",
-  "nextSeq": 9,
+  "nextSeq": 10,
   "items": [
     {
       "id": "GH-3",
@@ -404,6 +404,27 @@
       },
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/folio/issues/45"
+    },
+    {
+      "id": "WI-0009",
+      "title": "Upgrade Limen from 0.7.1 to 0.9.0 (echelon-current)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-09T00:00:56.678Z",
+      "updatedAt": "2026-10-09T00:02:46.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
     }
   ]
 }

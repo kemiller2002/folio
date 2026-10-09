@@ -220,26 +220,67 @@ export const renderIcon = (library, { name, label = null, size = "1em" }) => {
   });
 };
 
-const strictLibrary = ({ assetsRoot, formaVersion }) => {
-  if (typeof formaVersion !== "string") throw new Error("Invalid Forma icon asset: explicit pinned formaVersion required");
-  const library = loadIconLibrary({ pin: Object.freeze({ systemId: "forma", version: formaVersion }), assetsRoot });
-  if (library.status !== "available") {
-    throw new Error(`Invalid Forma icon asset: ${[library.reason, ...library.findings.map((f) => `${f.code}: ${f.message}`)].join(" ")}`);
-  }
-  return library;
+// ---------------------------------------------------------------------------
+// Strict build-script API, compatible with the Folio 0.4.0 release
+// (`loadFormaIcons`, `renderFormaPrintIcon`, `renderFormaPrintIconGallery`):
+// these throw instead of returning inert data, with the 0.4.0 error wording.
+// ---------------------------------------------------------------------------
+
+const fail = (reason) => {
+  throw new Error(`Invalid Forma icon asset: ${reason}`);
 };
 
+const exactVersion = /^\d+\.\d+\.\d+$/;
+
+const legacyReason = (library) => {
+  const codes = library.findings.map((f) => f.code);
+  const detail = library.findings.map((f) => `${f.code}: ${f.message}`).join(" ");
+  if (codes.includes("registry.missing")) return `registry missing. ${detail}`;
+  if (codes.includes("registry.version")) return `Forma version does not match the requested immutable release. ${detail}`;
+  if (codes.includes("registry.entry")) return `invalid or duplicate icon identifier, or registry does not match Forma v1 artifact contract. ${detail}`;
+  if (codes.includes("registry.digest")) return `missing trusted SVG digest. ${detail}`;
+  if (codes.includes("icon.digest")) return `SVG digest differs from pinned registry. ${detail}`;
+  if (codes.includes("icon.markup")) return `unsafe SVG features. ${detail}`;
+  if (codes.includes("icon.grammar") || codes.includes("icon.missing") || codes.includes("icon.size")) return `unexpected SVG vocabulary. ${detail}`;
+  if (library.findings.length) return `unsupported registry. ${detail}`;
+  return library.reason;
+};
+
+const strictLibrary = (assetsRoot, expectedFormaVersion) => {
+  if (typeof assetsRoot !== "string" || !assetsRoot.trim()) fail("explicit pinned asset directory required");
+  const registry = readJson(path.join(path.resolve(assetsRoot), "registry.json"));
+  if (!registry) fail("registry missing or unreadable");
+  if (typeof registry.formaVersion !== "string" || !exactVersion.test(registry.formaVersion)) fail("registry is not stamped with an exact Forma release");
+  if (expectedFormaVersion !== null && (typeof expectedFormaVersion !== "string" || !exactVersion.test(expectedFormaVersion))) fail("expectedFormaVersion must be an exact release");
+  const version = expectedFormaVersion ?? registry.formaVersion;
+  const library = loadIconLibrary({ pin: Object.freeze({ systemId: "forma", version }), assetsRoot });
+  if (library.status !== "available") fail(legacyReason(library));
+  return Object.freeze({ library, registry });
+};
+
+/**
+ * Loads and fully verifies a release's icons (Folio 0.4.0 API). With no
+ * `expectedFormaVersion` the registry's own stamped release is used, but every
+ * SVG must still match its digest and the grammar.
+ */
+export function loadFormaIcons(assetsRoot, { expectedFormaVersion = null } = {}) {
+  const { library, registry } = strictLibrary(assetsRoot, expectedFormaVersion);
+  // The verified registry rows themselves, as 0.4.0 returned them.
+  const icons = Object.freeze(registry.icons.map((row) => Object.freeze({ ...row })));
+  return Object.freeze({ base: path.resolve(assetsRoot), icons, names: new Set(library.icons.keys()), formaVersion: library.formaVersion });
+}
+
 /** Strict single-icon API for build scripts: throws instead of returning inert data. */
-export function renderFormaPrintIcon(name, { assetsRoot, formaVersion, label = null, size = "1em" } = {}) {
-  if (typeof name !== "string" || !stableName.test(name)) throw new Error("Invalid Forma icon asset: invalid name");
-  if (typeof size !== "string" || !safeSize.test(size)) throw new Error("Invalid Forma icon asset: unsafe size");
-  if (label !== null && (typeof label !== "string" || !label.trim() || label.length > 180)) throw new Error("Invalid Forma icon asset: invalid accessible label");
-  const rendered = renderIcon(strictLibrary({ assetsRoot, formaVersion }), { name, label, size });
-  if (rendered.state !== "rendered") throw new Error(`Invalid Forma icon asset: unknown icon '${name}'`);
-  return rendered.html;
+export function renderFormaPrintIcon(name, { assetsRoot, label = null, size = "1em", expectedFormaVersion = null } = {}) {
+  if (typeof name !== "string" || !stableName.test(name)) fail("invalid name");
+  const { library } = strictLibrary(assetsRoot, expectedFormaVersion);
+  if (!library.icons.has(name)) fail(`unknown icon '${name}'`);
+  if (typeof size !== "string" || !safeSize.test(size)) fail("unsafe size");
+  if (label !== null && (typeof label !== "string" || !label.trim() || label.length > 180)) fail("invalid accessible label");
+  return renderIcon(library, { name, label, size }).html;
 }
 
 export function renderFormaPrintIconGallery(names, options) {
-  if (!Array.isArray(names)) throw new Error("Invalid Forma icon asset: gallery requires list of IDs");
+  if (!Array.isArray(names)) fail("gallery requires list of IDs");
   return names.map((name) => renderFormaPrintIcon(name, options)).join("\n");
 }

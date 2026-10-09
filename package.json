@@ -1,6 +1,6 @@
 {
   "name": "@echelon-foundry/print-components",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": false,
   "description": "Folio: standards-first web components and CSS primitives for professional HTML print documents.",
   "type": "module",
@@ -27,7 +27,7 @@
     "./src/styles/print.css"
   ],
   "scripts": {
-    "test": "node tests/run-primitive-component-tests.mjs && node tests/machine-operability-audit.test.mjs && npm run machine:audit:check && node tests/run-machine-operability-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-journal-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs && node tests/run-forma-icon-tests.mjs && node tests/run-forma-icon-print-tests.mjs",
+    "test": "node tests/run-primitive-component-tests.mjs && node tests/machine-operability-audit.test.mjs && npm run machine:audit:check && node tests/run-machine-operability-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-journal-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs && npm run test:forma-icons && npm run test:forma-icon-print",
     "test:print": "node tests/run-print-experiments.mjs",
     "site:build": "node tools/build-site.mjs",
     "site:test": "node --test tests/site-build.test.mjs",
@@ -44,7 +44,7 @@
     "machine:audit": "npm run site:build && node tools/machine-operability-audit.mjs --write",
     "machine:audit:check": "npm run site:build && node tools/machine-operability-audit.mjs --check --strict",
     "test:machine:audit": "node --test tests/machine-operability-audit.test.mjs",
-    "test:forma-icons": "node tests/run-forma-icon-tests.mjs",
+    "test:forma-icons": "node tests/run-forma-icon-tests.mjs && node tests/run-forma-icon-040-api-tests.mjs",
     "test:forma-icon-print": "node tests/run-forma-icon-print-tests.mjs"
   },
   "devDependencies": {

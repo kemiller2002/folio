@@ -11,6 +11,7 @@ import {
   formaPinFromReleaseSet,
   inspectIconAsset,
   inspectIconRegistry,
+  loadFormaIcons,
   loadFormaPin,
   loadIconLibrary,
   pinPublishesIcons,
@@ -167,13 +168,17 @@ check("unknown, invalid and unsafe references are inert, never thrown", () => {
   assert.deepEqual(renderIcon(library, { name: "warning", label: "x".repeat(181) }), { state: "invalid", html: "" });
 });
 
-check("the strict build-script API keeps its explicit contract", () => {
-  const options = { assetsRoot: fixtureIcons, formaVersion: "0.5.0" };
+check("the strict build-script API keeps the Folio 0.4.0 contract", () => {
+  const options = { assetsRoot: fixtureIcons, expectedFormaVersion: "0.5.0" };
   assert.match(renderFormaPrintIcon("success", options), /data-ef-icon="success"/);
   assert.equal(renderFormaPrintIconGallery(["success", "warning"], options).split("\n").length, 2);
-  assert.throws(() => renderFormaPrintIcon("success", { assetsRoot: fixtureIcons }), /explicit pinned formaVersion required/);
-  assert.throws(() => renderFormaPrintIcon("success", { assetsRoot: fixtureIcons, formaVersion: "0.4.1" }), /predates the static icon registry/);
-  assert.throws(() => renderFormaPrintIcon("success", { assetsRoot: fixtureIcons, formaVersion: "0.5.1" }), /registry\.version/);
+  assert.match(renderFormaPrintIcon("success", { assetsRoot: fixtureIcons }), /data-ef-icon-forma="0\.5\.0"/, "without a version the registry's stamped release is used, still digest-verified");
+  const loaded = loadFormaIcons(fixtureIcons, { expectedFormaVersion: "0.5.0" });
+  assert.equal(loaded.formaVersion, "0.5.0");
+  assert.deepEqual(loaded.icons.map((row) => row.svg), fixtureRegistry.icons.map((row) => row.svg), "0.4.0 returned the registry rows");
+  assert.throws(() => renderFormaPrintIcon("success", { assetsRoot: fixtureIcons, expectedFormaVersion: "0.5.1" }), /Forma version/);
+  assert.throws(() => renderFormaPrintIcon("success", { assetsRoot: fixtureIcons, expectedFormaVersion: "latest" }), /exact release/);
+  assert.throws(() => renderFormaPrintIcon("success", { assetsRoot: "" }), /explicit pinned asset directory required/);
   assert.throws(() => renderFormaPrintIcon("delete", options), /unknown icon/);
   assert.throws(() => renderFormaPrintIcon("../add", options), /invalid name/);
   assert.throws(() => renderFormaPrintIcon("success", { ...options, size: "10pt;background:url(x)" }), /unsafe size/);
