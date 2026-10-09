@@ -30,3 +30,4 @@
 | WI-0006 | Move folio to Ordo 1.4.1 | complete | ordo, toolchain | medium |
 | WI-0007 | Move folio to Praxis 3.7.2, Ordo 1.4.2, Visual Engineering 1.0.1 and adopt Conditor | complete | praxis, ordo, toolchain | medium |
 | WI-0008 | Move folio to Ordo 1.5.0 via echelon-current 1.2.0 (conditor upgrade --current) | complete |  | medium |
+| WI-0009 | Upgrade Limen from 0.7.1 to 0.9.0 (echelon-current) | complete |  | medium |
