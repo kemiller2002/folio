@@ -17,7 +17,8 @@
 | GH-28 | GH-28 | complete |  |  |
 | GH-3 | Attribute and complete ART-01 / ACCESS-PDF-01 work | complete | print,governance,experiments | high |
 | GH-4 | Build Folio component documentation site | complete | folio,print,documentation | high |
-| GH-45 | Integrate pinned Forma icons into Folio print rendering | captured |  | high |
+| GH-45 | Integrate Forma icon assets into Folio print output | complete |  | high |
+| GH-45-PIN | Move Folio's Forma pin to the published 0.5.0 icon release (GH-45 follow-up) | complete |  | high |
 | GH-6 | Harden Folio documentation site for mobile | complete | folio,mobile,documentation | high |
 | GH-8 | Finalize Folio mobile governance cleanup | complete | folio,governance,cleanup | high |
 | GH-9 | Make Folio instructions and remaining components mobile-friendly | complete | folio,mobile,components,documentation | high |
@@ -31,3 +32,4 @@
 | WI-0007 | Move folio to Praxis 3.7.2, Ordo 1.4.2, Visual Engineering 1.0.1 and adopt Conditor | complete | praxis, ordo, toolchain | medium |
 | WI-0008 | Move folio to Ordo 1.5.0 via echelon-current 1.2.0 (conditor upgrade --current) | complete |  | medium |
 | WI-0009 | Upgrade Limen from 0.7.1 to 0.9.0 (echelon-current) | complete |  | medium |
+| WI-0010 | Fold the Folio 0.4.0 forma-icons contract test into the functional adapter suite (GH-45 follow-up) | complete |  | high |

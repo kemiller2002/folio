@@ -1,0 +1,17 @@
+/* Consumer document CSS for FORMA-ICON-PRINT-01. Status colours and row tints
+   only repeat the printed status words; they are allowed to disappear in
+   grayscale or backgrounds-disabled output. */
+.status-table th, .status-table td { padding: 0.06in 0.1in; border-block-end: 1px solid #9a9a9a; text-align: start; vertical-align: middle; }
+.status-table .status { white-space: nowrap; font-weight: 700; }
+.status-table .status .ef-print-icon { --ef-print-icon-size: 1.2em; margin-inline-end: 0.25em; }
+.status-table tr[data-status="passed"] { background: #ddf3e4; }
+.status-table tr[data-status="warning"] { background: #fff0cc; }
+.status-table tr[data-status="failed"] { background: #fde0de; }
+.status-table tr[data-status="pending"] { background: #e6ebf2; }
+.status-table tr[data-status="passed"] .status { color: #17663a; }
+.status-table tr[data-status="warning"] .status { color: #8a4b00; }
+.status-table tr[data-status="failed"] .status { color: #a3201c; }
+.status-table tr[data-status="pending"] .status { color: #34495e; }
+ef-print-callout .ef-print-icon { --ef-print-icon-size: 1.2em; color: #17663a; }
+.geometry-sheet { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.35in 0.5in; }
+.geometry-sheet li { display: flex; align-items: center; gap: 12pt; break-inside: avoid; }

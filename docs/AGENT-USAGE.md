@@ -31,6 +31,7 @@ Before creating or changing printable document UI:
 10. Preserve consumer-supplied object metadata only through an explicit visibility/transport policy; do not leak source-only metadata into print/PDF.
 11. When printing workflows/diagrams, preserve authored color where supported but ensure the same meaning survives grayscale and backgrounds-disabled output.
 12. Print Forma Studio diagrams through `tools/diagram-projection.mjs`. Call `inspectProjection` first, since the projection is untrusted input. Then call `planFit`, which never shrinks text below 7pt, and `composeDocument`, which embeds the markup verbatim inside `ef-print-figure`. Do not rewrite projection geometry or re-derive appearance from metadata.
+13. Print Forma icons only through `tools/forma-icons.mjs` and `tools/forma-icon-print.mjs`, from the Forma version the Conditor pin names. Author `<span data-ef-icon="name"></span>` references next to words that state the meaning; add `data-ef-icon-label` only when the icon itself is meaningful content. Never paste or redraw SVG geometry, never use an icon or colour as the only status signal, and never point the pin at an unpublished Forma release. See `docs/recipes/FORMA-ICONS.md`.
 
 ## Current public component surface
 

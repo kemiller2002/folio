@@ -3,3 +3,4 @@
 *.cmd text eol=crlf
 praxis.cmd text eol=crlf
 ros.cmd text eol=crlf
+tests/fixtures/forma-icons/forma-*/** -text

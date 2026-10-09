@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "status": "published",
+  "formaVersion": "0.5.0",
+  "purpose": "test-fixture-only",
+  "source": {
+    "package": "@echelon-foundry/design-system",
+    "artifact": "echelon-foundry-design-system-0.5.0.tgz",
+    "artifactSha256": "c4ad3ae525a85f55a9e9aec4f0e19c59b7f552cececb4224a0bbc3434f4f558f",
+    "release": "https://github.com/kemiller2002/forma/releases/tag/v0.5.0",
+    "releaseCommit": "8a5a5993421fbfd808582f735dedcf2adea07010",
+    "verifiedAgainstRelease": "2026-10-08: the release asset was downloaded, its sha256 matched the GitHub asset digest above, and all 8 SVGs and registry entries were byte-identical to this fixture (FOLIO_FORMA_PACKAGE_DIR leg of tests/run-forma-icon-print-tests.mjs)",
+    "history": "First committed from a local npm pack of kemiller2002/forma PR #114 before publication; the published asset is byte-identical (same sha256), so no file changed on refresh.",
+    "files": "dist/icons/registry.json (8 of 40 entries, copied verbatim) and the 8 matching dist/icons/<name>.svg files (bytes verbatim)"
+  },
+  "icons": [
+    "success",
+    "warning",
+    "close",
+    "clock",
+    "workflow",
+    "shield",
+    "search",
+    "print"
+  ],
+  "notAPin": "Folio's Forma pin is .conditor/authority/resolved-release-set.json (Forma 0.5.0 since echelon-current 1.13.0). This fixture never changes the pin; while the pin equals 0.5.0 the suite requires artifactSha256 to equal the pinned package sha256."
+}

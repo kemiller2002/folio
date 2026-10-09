@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-10-09T00:02:46.000Z",
+  "updatedAt": "2026-10-09T00:31:13.094Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -829,6 +829,119 @@
       "conclusion": "Ordo 1.5.0 through echelon-current 1.2.0; local checks passed (log: /tmp/claude-0/-home-user-praxis/7bcb3038-90cc-534e-8e5b-9be62aa1de8c/scratchpad/sweep/logs/folio.log)"
     },
     {
+      "id": "GH-45",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "tools/forma-icon-print.mjs"
+        },
+        {
+          "type": "implementation",
+          "path": "tools/forma-icons.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-forma-icon-print-tests.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-forma-icon-tests.mjs"
+        },
+        {
+          "type": "documentation",
+          "path": "docs/recipes/FORMA-ICONS.md"
+        }
+      ],
+      "updatedAt": "2026-10-08T12:00:58.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261008T114032514Z-0fe00183"
+      ],
+      "latestCheckpoint": {
+        "id": "3bb21e386b7f6e33389ead71",
+        "recordedAt": "2026-10-08T11:57:03.000Z",
+        "executionId": "EXE-20261008T114032514Z-0fe00183",
+        "stepId": "STEP-20261008T114036000Z-8ec99623",
+        "repository": "echelon-print-components",
+        "branch": "claude/forma-icon-system-handoff-6xlsyn",
+        "commit": "cf05a03d55c1a6cc5a1a78aaf71df5950df12a1a",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "claude/forma-icon-system-handoff-6xlsyn",
+        "remoteCommit": "cf05a03d55c1a6cc5a1a78aaf71df5950df12a1a",
+        "summary": "Pinned Forma icon adapter wired into offline Letter/A4 PDF pipeline with FORMA-ICON-PRINT-01 evidence; pin unchanged at 0.4.1",
+        "nextAction": "Open draft PR, watch CI, complete GH-45 with evidence",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-08T12:00:58.000Z"
+    },
+    {
+      "id": "GH-45-PIN",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": ".conditor/authority/resolved-release-set.json"
+        },
+        {
+          "type": "implementation",
+          "path": "conditor.json"
+        },
+        {
+          "type": "implementation",
+          "path": ".conditor/lock.json"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-forma-icon-print-tests.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-forma-icon-040-api-tests.mjs"
+        },
+        {
+          "type": "documentation",
+          "path": "docs/recipes/FORMA-ICONS.md"
+        }
+      ],
+      "updatedAt": "2026-10-09T00:29:35.219Z",
+      "telemetryExecutionIds": [
+        "EXE-20261008T142117351Z-6c5f14b3"
+      ],
+      "latestCheckpoint": {
+        "id": "fb7e6ded912f4258cb1cfece",
+        "recordedAt": "2026-10-09T00:29:31.903Z",
+        "executionId": "EXE-20261008T142117351Z-6c5f14b3",
+        "stepId": "STEP-20261009T002533262Z-1c4bd866",
+        "repository": "echelon-print-components",
+        "branch": "claude/forma-icon-system-handoff-6xlsyn",
+        "commit": "1a70ad7dddb94a104d9d210886810ee39fc24ebc",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "claude/forma-icon-system-handoff-6xlsyn",
+        "remoteCommit": "1a70ad7dddb94a104d9d210886810ee39fc24ebc",
+        "summary": "Forma pinned to 0.5.0 via Conditor 0.8.1 and echelon-current 1.13.0; print suite proves icon vectors under the committed pin",
+        "nextAction": "Complete GH-45-PIN, push Praxis state, confirm CI and mark PR #50 ready",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "blockReason": "Forma 0.5.0 is published (v0.5.0, sha256 c4ad3ae525a85f55a9e9aec4f0e19c59b7f552cececb4224a0bbc3434f4f558f) but kemiller2002/echelon-registry at e9b8cf7 has no releases/forma/0.5.0.release.json and echelon-current 1.7.0 still selects Forma 0.4.1; Conditor moves a Forma project-binding only from a Registry resolved set, so the pin cannot be moved without forging authority",
+      "completedAt": "2026-10-09T00:29:35.219Z"
+    },
+    {
       "id": "WI-0009",
       "type": "task",
       "state": "complete",
@@ -869,6 +982,51 @@
       },
       "completedAt": "2026-10-09T00:02:46.000Z",
       "conclusion": "Limen upgraded 0.7.1 -> 0.9.0; limen verify --strict and the repository checks pass locally"
+    },
+    {
+      "id": "WI-0010",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "tests",
+          "path": "tests/run-forma-icon-tests.mjs"
+        },
+        {
+          "type": "implementation",
+          "path": "tools/forma-icons.mjs"
+        },
+        {
+          "type": "documentation",
+          "path": "docs/recipes/FORMA-ICONS.md"
+        }
+      ],
+      "updatedAt": "2026-10-09T00:31:13.094Z",
+      "telemetryExecutionIds": [
+        "EXE-20261009T003034937Z-7e5f4342"
+      ],
+      "latestCheckpoint": {
+        "id": "0db7d4bfad1a40ce2e9a9bcc",
+        "recordedAt": "2026-10-09T00:31:10.483Z",
+        "executionId": "EXE-20261009T003034937Z-7e5f4342",
+        "repository": "echelon-print-components",
+        "branch": "claude/forma-icon-system-handoff-6xlsyn",
+        "commit": "03b6ebc89d0035687dbafd89a91b5f870d1acc3f",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "claude/forma-icon-system-handoff-6xlsyn",
+        "remoteCommit": "03b6ebc89d0035687dbafd89a91b5f870d1acc3f",
+        "summary": "0.4.0 contract folded into the functional adapter suite; standalone copy removed",
+        "nextAction": "Complete WI-0010 and confirm PR #50 CI",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-09T00:31:13.094Z"
     }
   ]
 }
