@@ -501,10 +501,10 @@
         "folio,ui-conformance,evidence"
       ],
       "priority": "high",
-      "status": "ready",
+      "status": "complete",
       "attachments": [],
       "createdAt": "2026-10-13T18:41:54.581Z",
-      "updatedAt": "2026-10-13T18:41:55.000Z",
+      "updatedAt": "2026-10-13T18:50:36.000Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

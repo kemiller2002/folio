@@ -20,7 +20,7 @@
 | GH-45 | Integrate Forma icon assets into Folio print output | complete |  | high |
 | GH-45-PIN | Move Folio's Forma pin to the published 0.5.0 icon release (GH-45 follow-up) | complete |  | high |
 | GH-54 | Assess and adopt universal UI layout/action conformance (ULI 0.1.0/1.0.0) for Folio print/PDF and site previews | complete | folio,ui-conformance,print,site | high |
-| GH-54-EVID | Emit visual-engineering 1.0.0 ui-conformance.schema.json evidence (print-ui) from results.json and validate it in tests/CI (GH-54 follow-up) | ready | folio,ui-conformance,evidence | high |
+| GH-54-EVID | Emit visual-engineering 1.0.0 ui-conformance.schema.json evidence (print-ui) from results.json and validate it in tests/CI (GH-54 follow-up) | complete | folio,ui-conformance,evidence | high |
 | GH-54-ULI1 | Repin Folio ULI conformance to UI-LAYOUT-INTERACTION@1.0.0 (visual-engineering 8da8fbc): map L12 page numbers / separate preview vs PDF and L13; keep folio#55 CI green (GH-54 follow-up) | complete | folio,ui-conformance,print | high |
 | GH-6 | Harden Folio documentation site for mobile | complete | folio,mobile,documentation | high |
 | GH-8 | Finalize Folio mobile governance cleanup | complete | folio,governance,cleanup | high |
