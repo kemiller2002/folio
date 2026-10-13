@@ -42,8 +42,9 @@ Important limitation: Playwright exposes Chromium PDF generation, but not equiva
 
 `npm run ui:conformance` verifies Folio against the Visual Engineering contract
 `framework/standards/UI-LAYOUT-INTERACTION.md` in
-`kemiller2002/visual-engineering` (version pinned in
-`tests/conformance/uli.mjs`; the standard is referenced, never copied). It
+`kemiller2002/visual-engineering`, pinned to
+`visual-engineering/UI-LAYOUT-INTERACTION@1.0.0` at revision `8da8fbc`
+(`tests/conformance/uli.mjs`; the standard is referenced, never copied). It
 builds the site, runs the pure-rule unit tests
 (`npm run test:ui-conformance:rules`, also part of `npm test`) and then
 `tests/run-ui-conformance.mjs`. `npm run ui:conformance:print` and
@@ -77,7 +78,16 @@ and preview under `site-dist`) are verified in two separate legs (ULI-L12):
    shrink-to-fit), every rendered word present in the text layer, repeated
    table headers on continuation pages, `break-after: avoid` content kept with
    what follows, and declared running content (`data-uli-running-text`) on
-   every page.
+   every page, with its page counter equal to the page's position
+   (ULI-L12 page numbers). `ef-print-page-number` markers in P0 output carry
+   authored fallback text only and are reported `UNKNOWN`.
+
+The two legs are summarised separately (`print.byLeg` in `results.json`), as
+1.0.0 requires browser print preview and PDF rendering to be verified
+separately. ULI-L13 is checked statically on `src/styles/print.css`,
+`site/site.css` and `site/demo.css`: no literal negative offsets (margins,
+insets, absolute-unit translations); token-derived values and self-relative
+percentage translations are allowed.
 
 The adversarial fixtures in `tests/fixtures/conformance/` stress long
 paragraphs, a table spanning pages, unbroken words and URLs inside every flow

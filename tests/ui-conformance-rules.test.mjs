@@ -12,12 +12,14 @@ import {
   checkNumericIntegrity,
   checkOwnBoxSpill,
   checkPageBoxContainment,
+  checkPageNumbers,
   checkPdfPages,
   checkPdfScale,
   checkPdfTextCompleteness,
   checkPdfWordPlacement,
   checkRunningContent,
   checkTableHeaderRepeat,
+  checkTokenizedOffsets,
   flatText,
   parseBboxXhtml,
   parseLengthIn,
@@ -44,6 +46,13 @@ const letter = resolvePageBox({ size: "Letter", margin: "0.7in" }, {});
 test("standard is referenced by path and version, not forked", () => {
   assert.equal(ULI_STANDARD.path, "framework/standards/UI-LAYOUT-INTERACTION.md");
   assert.match(ULI_STANDARD.version, /^\d+\.\d+\.\d+$/);
+});
+
+test("standard is pinned to the canonical 1.0.0 release and revision", () => {
+  assert.equal(ULI_STANDARD.version, "1.0.0");
+  assert.equal(ULI_STANDARD.canonicalReference, "visual-engineering/UI-LAYOUT-INTERACTION@1.0.0");
+  assert.match(ULI_STANDARD.revision, /^8da8fbc[0-9a-f]{33}$/);
+  assert.equal(finding({ rule: "ULI-L13/no-one-off-offsets", status: STATUS.PASS, location: "x" }).rule, "ULI-L13/no-one-off-offsets");
 });
 
 test("finding() validates rule ids and statuses", () => {
@@ -180,6 +189,10 @@ test("PDF text completeness: missing LTR words FAIL; unmatched RTL words are UNK
   assert.deepEqual(statusOf(checkPdfTextCompleteness({ ...ctx, domText: "", pdfText: "x" })), [STATUS.UNKNOWN]);
   assert.deepEqual(statusOf(checkPdfTextCompleteness({ ...ctx, domText: "ROW-030", pdfText: "ROW-   Ledger\n030    Ledger" })), [STATUS.PASS]);
   assert.deepEqual(statusOf(checkPdfTextCompleteness({ ...ctx, domText: "ROW-030", pdfText: "ROW-   Ledger" })), [STATUS.FAIL]);
+  // Chromium 153 hyphenates across a page break; running matter sits between the halves.
+  const acrossPages = "reconciles the appar\u2010\nFenwick J. Journal 14\f\nently contradictory findings";
+  assert.deepEqual(statusOf(checkPdfTextCompleteness({ ...ctx, domText: "reconciles the apparently contradictory", pdfText: acrossPages })), [STATUS.PASS]);
+  assert.deepEqual(statusOf(checkPdfTextCompleteness({ ...ctx, domText: "apparently", pdfText: "appar\u2010\nFenwick" })), [STATUS.FAIL]);
 });
 
 test("table header repetition across continuation pages", () => {
@@ -267,4 +280,21 @@ test("responsive overflow and navigation label integrity", () => {
   const offscreen = [{ path: "nav", containedScroller: false, items: [item("Far", 330, 400)] }];
   assert.deepEqual(statusOf(checkNavLabels({ ...sitectx, navs: offscreen, viewportWidth: 320 })), [STATUS.FAIL]);
   assert.deepEqual(statusOf(checkNavLabels({ ...sitectx, navs: [{ ...offscreen[0], containedScroller: true }], viewportWidth: 320 })), [STATUS.PASS]);
+});
+
+test("page numbers: P1 counters must match page order; P0 markers stay UNKNOWN", () => {
+  const ok = ["body uli-running-footer 1", "body uli-running-footer 2"].map(flatText);
+  assert.deepEqual(statusOf(checkPageNumbers({ ...ctx, runningText: "ULI-RUNNING-FOOTER", pageFlats: ok })), [STATUS.PASS]);
+  const wrong = ["body uli-running-footer 1", "body uli-running-footer 1"].map(flatText);
+  assert.deepEqual(statusOf(checkPageNumbers({ ...ctx, runningText: "ULI-RUNNING-FOOTER", pageFlats: wrong })), [STATUS.FAIL]);
+  assert.deepEqual(statusOf(checkPageNumbers({ ...ctx, runningText: "ULI-RUNNING-FOOTER", pageFlats: ["uli-running-footer"].map(flatText) })), [STATUS.NOT_APPLICABLE]);
+  assert.deepEqual(statusOf(checkPageNumbers({ ...ctx, runningText: "", pageFlats: [], pageNumberMarkers: 2 })), [STATUS.UNKNOWN]);
+  assert.deepEqual(statusOf(checkPageNumbers({ ...ctx, runningText: "", pageFlats: [] })), [STATUS.NOT_APPLICABLE]);
+});
+
+test("ULI-L13: literal negative offsets fail; tokens and self-relative percentages pass", () => {
+  assert.deepEqual(statusOf(checkTokenizedOffsets({ source: "a.css", cssText: ".x { margin-inline-start: calc(-1 * var(--w)); translate: -50% -50%; transform: translateY(-150%); }" })), [STATUS.PASS]);
+  assert.deepEqual(statusOf(checkTokenizedOffsets({ source: "a.css", cssText: ".x { inset-block-start: -.11in; }" })), [STATUS.FAIL]);
+  assert.deepEqual(statusOf(checkTokenizedOffsets({ source: "a.css", cssText: ".x { margin-top: -3px; }" })), [STATUS.FAIL]);
+  assert.deepEqual(statusOf(checkTokenizedOffsets({ source: "a.css", cssText: "/* margin: -3px; */" })), [STATUS.UNKNOWN]);
 });

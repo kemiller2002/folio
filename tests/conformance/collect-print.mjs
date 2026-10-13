@@ -222,6 +222,7 @@ function measurePrintLayout() {
     regions,
     tables,
     numericCells,
+    pageNumberMarkers: document.querySelectorAll("ef-print-page-number").length,
     keeps,
     reference,
     forcedBreaks,

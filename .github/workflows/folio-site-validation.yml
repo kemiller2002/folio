@@ -56,10 +56,10 @@ jobs:
       - name: Run Folio documentation browser checks
         run: npm run site:test:browser
 
-  # GH-54: universal UI layout/interaction conformance (Visual Engineering
-  # framework/standards/UI-LAYOUT-INTERACTION.md, rules ULI-L12 for print/PDF
-  # and ULI-A01..A10 / L05 / L06 / L09 for the site and previews). Runs beside
-  # the existing validation job; it disables nothing.
+  # GH-54: universal UI layout/interaction conformance
+  # (visual-engineering/UI-LAYOUT-INTERACTION@1.0.0: ULI-L12 print preview and
+  # PDF, ULI-L13 stylesheets, ULI-A01..A10 / L05 / L06 / L09 for the site and
+  # previews). Runs beside the existing validation job; it disables nothing.
   ui-conformance:
     runs-on: ubuntu-latest
     env:

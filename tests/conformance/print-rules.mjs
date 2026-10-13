@@ -429,10 +429,20 @@ export function checkPdfTextCompleteness({ surface, state, domText, pdfText, rea
   if (!tokens.length) return [finding({ rule: "ULI-L12/pdf-truncation", status: STATUS.UNKNOWN, location, state, evidence: "No print-media text was captured." })];
   const pdfFlat = `${flatText(pdfText)}\n${flatText(readingText)}`;
   const pdfWords = new Set(`${pdfText ?? ""} ${readingText ?? ""}`.split(/\s+/).map(flatText));
+  // Fragments a renderer hyphenated at a line end. When the line end is also a
+  // page or column end, running matter or a neighbouring column separates the
+  // two halves in every extraction order, so join them explicitly.
+  const hyphenHeads = new Set(`${pdfText ?? ""} ${readingText ?? ""}`.split(/\s+/)
+    .filter(word => /[\u00ad\u2010\u2011-]$/.test(word))
+    .map(flatText)
+    .filter(Boolean));
+  const splitAcrossBreak = token => [...hyphenHeads].some(head =>
+    head.length < token.length && token.startsWith(head) && (pdfWords.has(token.slice(head.length)) || pdfFlat.includes(token.slice(head.length))));
   const missing = [];
   const unknown = [];
   for (const token of new Set(tokens)) {
     if (pdfWords.has(token) || pdfFlat.includes(token)) continue;
+    if (splitAcrossBreak(token)) continue;
     const pieces = parts.get(token) ?? [];
     if (pieces.length > 1 && pieces.every(piece => pdfWords.has(piece) || pdfFlat.includes(piece))) continue;
     if (isRtlText(token)) {
@@ -587,5 +597,80 @@ export function checkNumericIntegrity({ surface, state, layout }) {
     state,
     evidence: broken.length ? `${broken.length} of ${cells.length} numeric cell(s) wrap a value across lines.` : `All ${cells.length} numeric cells render each value on one line.`,
     measured: { cells: cells.length, broken: broken.slice(0, 10) },
+  })];
+}
+
+/**
+ * ULI-L12/page-number (1.0.0 extends L12 to page numbers).
+ * - P1 margin-box counters: when the surface declares running text followed by
+ *   a counter (data-uli-running-text), the number printed after it on each PDF
+ *   page must equal that page's 1-based index.
+ * - P0 ef-print-page-number markers carry authored fallback text only; mapping
+ *   them to real counters needs a P1/P2 renderer adapter, so they are UNKNOWN.
+ */
+export function checkPageNumbers({ surface, state, runningText, pageFlats, pageNumberMarkers = 0 }) {
+  const location = `${surface} (PDF)`;
+  const results = [];
+  if (runningText) {
+    const needle = flatText(runningText).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const observed = pageFlats.map(text => {
+      const match = text.match(new RegExp(`${needle}(\\d+)`));
+      return match ? Number(match[1]) : null;
+    });
+    if (observed.every(value => value === null)) {
+      results.push(finding({ rule: "ULI-L12/page-number", status: STATUS.NOT_APPLICABLE, location, state, evidence: "Declared running text carries no page counter." }));
+    } else {
+      const wrong = observed.flatMap((value, index) => (value === index + 1 ? [] : [{ page: index + 1, printed: value }]));
+      results.push(finding({
+        rule: "ULI-L12/page-number",
+        status: wrong.length ? STATUS.FAIL : STATUS.PASS,
+        location,
+        state,
+        evidence: wrong.length ? `${wrong.length} page(s) print a missing or wrong page number.` : `Pages print counters 1..${observed.length} in order.`,
+        measured: { printed: observed, wrong: wrong.slice(0, 10) },
+      }));
+    }
+  }
+  if (pageNumberMarkers > 0) {
+    results.push(finding({
+      rule: "ULI-L12/page-number",
+      status: STATUS.UNKNOWN,
+      location: `${surface} (print preview) ef-print-page-number`,
+      state,
+      evidence: `${pageNumberMarkers} ef-print-page-number marker(s) render authored fallback text; P0 core does not compute page numbers and no P1/P2 adapter was exercised.`,
+      measured: { markers: pageNumberMarkers },
+    }));
+  }
+  if (!results.length) {
+    results.push(finding({ rule: "ULI-L12/page-number", status: STATUS.NOT_APPLICABLE, location, state, evidence: "No page counter or ef-print-page-number marker is declared." }));
+  }
+  return results;
+}
+
+const OFFSET_PROPERTY = /^(margin(-[a-z-]+)?|inset(-[a-z-]+)?|top|right|bottom|left|translate|transform)$/;
+
+/**
+ * ULI-L13/no-one-off-offsets: spacing, sizing and alignment come from tokens
+ * and composition primitives. A literal negative length on an offset property
+ * (negative margin, inset or translate in absolute units) is an arbitrary
+ * positional correction. Percent translations (self-relative centering or
+ * hide-until-focus) and token-derived values (calc(-1 * var(--token))) are
+ * composition, not nudges.
+ */
+export function checkTokenizedOffsets({ source, cssText }) {
+  const location = `${source} (stylesheet)`;
+  const declarations = [...String(cssText ?? "").replace(/\/\*[\s\S]*?\*\//g, "").matchAll(/([a-z-]+)\s*:\s*([^;{}]+);/g)];
+  if (!declarations.length) return [finding({ rule: "ULI-L13/no-one-off-offsets", status: STATUS.UNKNOWN, location, state: "static stylesheet", evidence: "No declarations were read." })];
+  const offenders = declarations
+    .filter(([, property]) => OFFSET_PROPERTY.test(property))
+    .filter(([, , value]) => /(^|[\s(,])-\d*\.?\d+(px|rem|em|in|pt|pc|mm|cm|ch|ex|vw|vh|q)\b/i.test(value))
+    .map(([, property, value]) => `${property}: ${value.trim()}`);
+  return [finding({
+    rule: "ULI-L13/no-one-off-offsets",
+    status: offenders.length ? STATUS.FAIL : STATUS.PASS,
+    location,
+    state: "static stylesheet",
+    evidence: offenders.length ? `${offenders.length} literal negative offset(s): ${offenders.slice(0, 5).join("; ")}.` : `${declarations.length} declarations use no literal negative offsets.`,
+    measured: { declarations: declarations.length, offenders },
   })];
 }

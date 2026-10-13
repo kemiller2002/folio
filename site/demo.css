@@ -155,9 +155,10 @@ body {
 .folio-demo ef-print-break[page]::after {
   content: "page break";
   position: absolute;
-  inset-block-start: -.11in;
+  /* Centered on the dashed rule by self-relative translation, not a fixed nudge (ULI-L13). */
+  inset-block-start: 0;
   inset-inline-start: 50%;
-  translate: -50% 0;
+  translate: -50% -50%;
   padding-inline: .08in;
   background: var(--folio-paper);
   color: var(--folio-muted);

@@ -9,8 +9,11 @@
 export const ULI_STANDARD = Object.freeze({
   repository: "kemiller2002/visual-engineering",
   path: "framework/standards/UI-LAYOUT-INTERACTION.md",
-  version: "0.1.0",
-  note: "Rollout baseline; promotion to 1.0.0 is tracked in kemiller2002/visual-engineering#47. Re-pin this version when 1.0.0 is published.",
+  version: "1.0.0",
+  revision: "8da8fbcdfa4344cc2ec248102e8a2741f9e95c08",
+  canonicalReference: "visual-engineering/UI-LAYOUT-INTERACTION@1.0.0",
+  evidenceSchema: "framework/contracts/ui-conformance.schema.json",
+  note: "Pinned to the first canonical release (visual-engineering main 8da8fbc). Folio applies ULI-L12 (print/PDF, preview and PDF verified separately, including page numbers), ULI-L13 (tokens and primitives over one-off offsets) and the site/demo rules ULI-A01..A10, L05, L06, L09.",
 });
 
 export const STATUS = Object.freeze({

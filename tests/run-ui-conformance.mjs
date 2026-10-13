@@ -1,9 +1,10 @@
 // GH-54: Folio universal UI layout/interaction conformance runner.
 //
 // Standard: kemiller2002/visual-engineering framework/standards/UI-LAYOUT-INTERACTION.md
-// (version pinned in tests/conformance/uli.mjs). Folio adopts ULI-L12 for print
-// and paged media and ULI-A01..A10 plus ULI-L05/L06/L09 for its documentation
-// site and interactive print previews.
+// (UI-LAYOUT-INTERACTION@1.0.0, pinned with its revision in tests/conformance/uli.mjs).
+// Folio adopts ULI-L12 for print and paged media (including page numbers),
+// ULI-L13 for its stylesheets, and ULI-A01..A10 plus ULI-L05/L06/L09 for its
+// documentation site and interactive print previews.
 //
 // Print evidence is collected in two separate legs per surface:
 //   (a) browser print preview: page.emulateMedia({ media: "print" }) with the
@@ -33,8 +34,10 @@ import {
   checkPdfPages,
   checkPdfScale,
   checkPdfTextCompleteness,
+  checkPageNumbers,
   checkPdfWordPlacement,
   checkRunningContent,
+  checkTokenizedOffsets,
   checkTableHeaderRepeat,
 } from "./conformance/print-rules.mjs";
 import {
@@ -174,6 +177,7 @@ async function runPrint(browser, baseUrl) {
         ...checkTableHeaderRepeat({ surface: surface.id, state: pdfState, tables: evidence.layout.tables, pageFlats: evidence.pageFlats }),
         ...checkKeepWithNext({ surface: surface.id, state: pdfState, keeps: evidence.layout.keeps, pageFlats: evidence.pageFlats }),
         ...checkRunningContent({ surface: surface.id, state: pdfState, runningText: evidence.contract.runningText, marginBoxesDeclared: evidence.contract.marginBoxes, pageFlats: evidence.pageFlats }),
+        ...checkPageNumbers({ surface: surface.id, state: pdfState, runningText: evidence.contract.runningText, pageFlats: evidence.pageFlats, pageNumberMarkers: evidence.layout.pageNumberMarkers }),
       ];
       return { surface: surface.id, pages: evidence.pdf.pages.length, pageSize: evidence.pageBox?.sizeText ?? null, findings };
     } catch (error) {
@@ -191,6 +195,10 @@ async function runPrint(browser, baseUrl) {
     surfaces: perSurface.map(({ surface, pages, pageSize, findings }) => ({ surface, pages, pageSize, summary: summarize(findings) })),
     findings: [
       ...perSurface.flatMap(item => item.findings),
+      // ULI-L13: Folio primitives and the documentation/demo styles compose
+      // from tokens; no literal negative positional corrections.
+      ...["src/styles/print.css", "site/site.css", "site/demo.css"].flatMap(source =>
+        checkTokenizedOffsets({ source, cssText: readFileSync(resolve(root, source), "utf8") })),
       ...["menus", "business cards"].map(family => finding({
         rule: "ULI-L12/surface-family",
         status: STATUS.NOT_APPLICABLE,
@@ -401,7 +409,17 @@ const report = {
   siteEngines,
   summary: summarize(allFindings),
   byRule: summarizeByRule(allFindings),
-  print: print ? { inventory: print.inventory, surfaces: print.surfaces, summary: summarize(applyExceptions(print.findings, exceptions)) } : null,
+  // ULI-L12 (1.0.0): browser print preview and PDF rendering are separate evidence legs.
+  print: print ? {
+    inventory: print.inventory,
+    surfaces: print.surfaces,
+    summary: summarize(applyExceptions(print.findings, exceptions)),
+    byLeg: {
+      printPreview: summarize(applyExceptions(print.findings, exceptions).filter(item => item.location.includes("(print preview)"))),
+      pdf: summarize(applyExceptions(print.findings, exceptions).filter(item => item.location.includes("(PDF)"))),
+      stylesheet: summarize(applyExceptions(print.findings, exceptions).filter(item => item.location.includes("(stylesheet)"))),
+    },
+  } : null,
   site: site ? { inventory: site.inventory, summary: summarize(applyExceptions(site.findings, exceptions)) } : null,
   exceptions,
   failures,
@@ -410,8 +428,8 @@ const report = {
 };
 await writeFile(resolve(outputDir, "results.json"), `${JSON.stringify(report, null, 2)}\n`);
 
-console.log(`ULI conformance (${ULI_STANDARD.path} v${ULI_STANDARD.version}), scope=${scope}`);
-if (print) console.log(`print: ${print.inventory.surfaces} surfaces -> ${JSON.stringify(report.print.summary)}`);
+console.log(`ULI conformance (${ULI_STANDARD.canonicalReference} @ ${ULI_STANDARD.revision.slice(0, 7)}), scope=${scope}`);
+if (print) console.log(`print: ${print.inventory.surfaces} surfaces -> ${JSON.stringify(report.print.summary)}; by leg ${JSON.stringify(report.print.byLeg)}`);
 if (site) console.log(`site: ${site.inventory.documentationPages ?? 0} documentation + ${site.inventory.previewPages ?? 0} preview pages, ${site.inventory.controls ?? 0} controls -> ${JSON.stringify(report.site.summary)}`);
 console.log(`by rule: ${JSON.stringify(report.byRule)}`);
 for (const item of failures.slice(0, 40)) console.log(`FAIL ${item.rule} @ ${item.location} [${item.state}] ${item.evidence}`);
