@@ -7,7 +7,7 @@ export const coreComponentMetadata = {
     category: "Running content",
     capability: "P0 in-flow · P1/P2 running capability",
     maturity: "implemented / capability-bound",
-    summary: "A semantic three-region document header that stays in normal flow portably and can express running-page intent without faking pagination.",
+    summary: "A semantic three-region document header that stays in normal flow portably and can express running-page intent without faking pagination. Slots name physical positions: left, center and right keep their edges even when a region is omitted or the document is right-to-left.",
     caution: "repeat='page' records running-header intent only. Repetition into physical page margins requires a renderer profile that actually supports and maps running content.",
     examples: [
       {
@@ -58,7 +58,7 @@ export const coreComponentMetadata = {
     category: "Running content",
     capability: "P0 in-flow · P1/P2 running capability",
     maturity: "implemented / capability-bound",
-    summary: "A semantic document footer with three regions and explicit running-page intent while preserving a visible P0 fallback.",
+    summary: "A semantic document footer with three regions and explicit running-page intent while preserving a visible P0 fallback. Slots name physical positions: left, center and right keep their edges even when a region is omitted or the document is right-to-left.",
     caution: "Portable browsers do not all expose the same page-margin feature set. repeat='page' must not be described as universally repeated output.",
     examples: [
       {
@@ -377,7 +377,9 @@ export const coreComponentMetadata = {
           "    <li><a href='#summary'>Executive summary</a><span data-page>2</span></li>",
           "    <li><a href='#evidence'>Evidence</a><span data-page>7</span></li>",
           "  </ol></nav>",
-          "</ef-print-toc>"
+          "</ef-print-toc>",
+          "<section id='summary'><h2>Executive summary</h2><p>The summary states the decision and its evidence boundary.</p></section>",
+          "<section id='evidence'><h2>Evidence</h2><p>Evidence records support each finding.</p></section>"
         )
       },
       {
@@ -389,7 +391,9 @@ export const coreComponentMetadata = {
           "    <li><a href='#context'>Context</a></li>",
           "    <li><a href='#decision'>Decision</a></li>",
           "  </ol></nav>",
-          "</ef-print-toc>"
+          "</ef-print-toc>",
+          "<section id='context'><h2>Context</h2><p>The context section frames the question.</p></section>",
+          "<section id='decision'><h2>Decision</h2><p>The decision section records the chosen option.</p></section>"
         )
       },
       {
@@ -401,7 +405,9 @@ export const coreComponentMetadata = {
           "    <li><a href='#one'>1. Architecture</a><span data-page>3</span></li>",
           "    <li><a href='#two'>2. Evidence</a><span data-page>9</span></li>",
           "  </ol></nav>",
-          "</ef-print-toc>"
+          "</ef-print-toc>",
+          "<section id='one'><h2>1. Architecture</h2><p>Architecture describes the document structure.</p></section>",
+          "<section id='two'><h2>2. Evidence</h2><p>Evidence lists the observations.</p></section>"
         )
       }
     ]

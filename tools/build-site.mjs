@@ -211,6 +211,7 @@ const components = {
         title: "Legal back matter",
         note: "Back-page content stays semantic and selectable rather than becoming a flattened image.",
         html: `<ef-print-document>
+  <p>Distribution and handling notes follow on the closing page.</p>
   <ef-print-break page></ef-print-break>
   <ef-print-back-page>
     <div class="folio-back">
@@ -225,6 +226,7 @@ const components = {
         title: "Branded final statement",
         note: "Consumers can compose a quiet closing page without changing Folio internals.",
         html: `<ef-print-document>
+  <p>The closing statement follows on its own page.</p>
   <ef-print-break page></ef-print-break>
   <ef-print-back-page>
     <div class="folio-back">

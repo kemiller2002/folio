@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ULI-PRINT-ADVERSARIAL-LETTER</title>
+  <!--
+    GH-54 ULI-L12 adversarial print fixture (Visual Engineering UI-LAYOUT-INTERACTION.md).
+    Default Folio page contract (Letter, 0.7in margins). Content stresses long
+    paragraphs, multipage tables, unbroken words and URLs inside every flow
+    primitive, RTL runs, enlarged text, empty sections and dense numeric data.
+    Static HTML only: content is complete before custom-element upgrade.
+  -->
+  <link rel="stylesheet" href="../../../src/styles/print.css">
+  <script type="module" src="../../../src/components/register.js"></script>
+  <style>
+    /*
+     * Dense numeric data uses the supported authoring path: a landscape named
+     * page. Folio keeps numeric values unbroken, so a table wider than every
+     * available page would (correctly) fail ULI-L12/page-box instead.
+     */
+    @page uli-landscape { size: Letter landscape; }
+    #dense { page: uli-landscape; font-size: 8pt; }
+  </style>
+</head>
+<body>
+<ef-print-document data-uli-fixture="adversarial-letter">
+  <ef-print-header>
+    <span slot="left">ULI-HEADER-LEFT</span>
+    <span slot="center">Adversarial print fixture</span>
+    <span slot="right">ULI-HEADER-RIGHT</span>
+  </ef-print-header>
+
+  <h1>Adversarial print conformance</h1>
+  <p>Sentence 1 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 2 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 3 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 4 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 5 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 6 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 7 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 8 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 9 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 10 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 11 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 12 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 13 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 14 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 15 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 16 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 17 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 18 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 19 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 20 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 21 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 22 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 23 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 24 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 25 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 26 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 27 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 28 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 29 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 30 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 31 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 32 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 33 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 34 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 35 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 36 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 37 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 38 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 39 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 40 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word.</p>
+
+  <h2>Unbroken words and URLs</h2>
+  <p>Paragraph URL: <a href="https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf">https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</a></p>
+  <p>Paragraph word: PneumonoultramicroscopicsilicovolcanoconiosisSupercalifragilisticexpialidociousSupercalifragilisticexpialidocious</p>
+
+  <ef-print-callout><strong>Callout.</strong> https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf and PneumonoultramicroscopicsilicovolcanoconiosisSupercalifragilisticexpialidociousSupercalifragilisticexpialidocious</ef-print-callout>
+  <ef-print-note>Note: https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</ef-print-note>
+
+  <ef-print-columns>
+    <p>Column flow begins. Sentence 1 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 2 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 3 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 4 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 5 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 6 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word.</p>
+    <p>Column URL: https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</p>
+    <p>Column word: PneumonoultramicroscopicsilicovolcanoconiosisSupercalifragilisticexpialidociousSupercalifragilisticexpialidocious</p>
+  </ef-print-columns>
+
+  <ef-print-sidebar>
+    <div><p>Main rail. Sentence 1 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 2 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 3 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 4 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word.</p></div>
+    <aside><p>Side rail URL: https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</p><p>Side rail word: PneumonoultramicroscopicsilicovolcanoconiosisSupercalifragilisticexpialidociousSupercalifragilisticexpialidocious</p></aside>
+  </ef-print-sidebar>
+
+  <ef-print-sidebar position="left">
+    <aside><p>Left rail URL: https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</p></aside>
+    <div><p>Main rail with a left sidebar. Sentence 1 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 2 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 3 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word.</p></div>
+  </ef-print-sidebar>
+
+  <ef-print-toc>
+    <ol>
+      <li><a href="#long-table">Long table PneumonoultramicroscopicsilicovolcanoconiosisSupercalifragilisticexpialidociousSupercalifragilisticexpialidocious</a><span data-page>3</span></li>
+      <li><a href="#dense">Dense data https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</a><span data-page>5</span></li>
+    </ol>
+  </ef-print-toc>
+
+  <ef-print-figure>
+    <figure>
+      <svg role="img" aria-label="Wide diagram" viewBox="0 0 1200 120" width="1200" height="120">
+        <rect x="2" y="10" width="1196" height="100" fill="none" stroke="currentColor"></rect>
+      </svg>
+      <figcaption>Figure 1. Caption with https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</figcaption>
+    </figure>
+  </ef-print-figure>
+
+  <ef-print-code><pre><code>const evidence = "https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf"; // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></pre></ef-print-code>
+
+  <ef-print-finding>
+    <h2>Finding with long values</h2>
+    <dl>
+      <div><dt>Observation</dt><dd>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</dd></div>
+      <div><dt>PneumonoultramicroscopicsilicovolcanoconiosisSupercalifragilisticexpialidociousSupercalifragilisticexpialidocious</dt><dd>Label is unbroken.</dd></div>
+    </dl>
+  </ef-print-finding>
+
+  <ef-print-metric><span data-label>Metric</span><strong data-value>999999999999999999999999999999999999999999999999999999999999</strong><span data-detail>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</span></ef-print-metric>
+
+  <ef-print-section id="long-table" break-before="page">
+    <h2>Long table spanning pages</h2>
+    <ef-print-table>
+      <table>
+        <caption>ULI-LONG-TABLE</caption>
+        <thead><tr><th>ULI-REPEAT-HEADER</th><th>Description</th><th data-align="number">Amount</th><th>Notes</th></tr></thead>
+        <tbody>
+      <tr><td>LONGROW-001</td><td>Ledger line 1</td><td data-align="number">137.25</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-002</td><td>Ledger line 2</td><td data-align="number">274.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-003</td><td>Ledger line 3</td><td data-align="number">411.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-004</td><td>Ledger line 4</td><td data-align="number">549.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-005</td><td>Ledger line 5</td><td data-align="number">686.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-006</td><td>Ledger line 6</td><td data-align="number">823.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-007</td><td>Ledger line 7</td><td data-align="number">960.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-008</td><td>Ledger line 8</td><td data-align="number">1098.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-009</td><td>Ledger line 9</td><td data-align="number">1235.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-010</td><td>Ledger line 10</td><td data-align="number">1372.50</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-011</td><td>Ledger line 11</td><td data-align="number">1509.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-012</td><td>Ledger line 12</td><td data-align="number">1647.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-013</td><td>Ledger line 13</td><td data-align="number">1784.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-014</td><td>Ledger line 14</td><td data-align="number">1921.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-015</td><td>Ledger line 15</td><td data-align="number">2058.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-016</td><td>Ledger line 16</td><td data-align="number">2196.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-017</td><td>Ledger line 17</td><td data-align="number">2333.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-018</td><td>Ledger line 18</td><td data-align="number">2470.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-019</td><td>Ledger line 19</td><td data-align="number">2607.75</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-020</td><td>Ledger line 20</td><td data-align="number">2745.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-021</td><td>Ledger line 21</td><td data-align="number">2882.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-022</td><td>Ledger line 22</td><td data-align="number">3019.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-023</td><td>Ledger line 23</td><td data-align="number">3156.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-024</td><td>Ledger line 24</td><td data-align="number">3294.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-025</td><td>Ledger line 25</td><td data-align="number">3431.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-026</td><td>Ledger line 26</td><td data-align="number">3568.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-027</td><td>Ledger line 27</td><td data-align="number">3705.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-028</td><td>Ledger line 28</td><td data-align="number">3843.00</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-029</td><td>Ledger line 29</td><td data-align="number">3980.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-030</td><td>Ledger line 30</td><td data-align="number">4117.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-031</td><td>Ledger line 31</td><td data-align="number">4254.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-032</td><td>Ledger line 32</td><td data-align="number">4392.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-033</td><td>Ledger line 33</td><td data-align="number">4529.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-034</td><td>Ledger line 34</td><td data-align="number">4666.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-035</td><td>Ledger line 35</td><td data-align="number">4803.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-036</td><td>Ledger line 36</td><td data-align="number">4941.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-037</td><td>Ledger line 37</td><td data-align="number">5078.25</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-038</td><td>Ledger line 38</td><td data-align="number">5215.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-039</td><td>Ledger line 39</td><td data-align="number">5352.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-040</td><td>Ledger line 40</td><td data-align="number">5490.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-041</td><td>Ledger line 41</td><td data-align="number">5627.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-042</td><td>Ledger line 42</td><td data-align="number">5764.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-043</td><td>Ledger line 43</td><td data-align="number">5901.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-044</td><td>Ledger line 44</td><td data-align="number">6039.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-045</td><td>Ledger line 45</td><td data-align="number">6176.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-046</td><td>Ledger line 46</td><td data-align="number">6313.50</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-047</td><td>Ledger line 47</td><td data-align="number">6450.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-048</td><td>Ledger line 48</td><td data-align="number">6588.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-049</td><td>Ledger line 49</td><td data-align="number">6725.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-050</td><td>Ledger line 50</td><td data-align="number">6862.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-051</td><td>Ledger line 51</td><td data-align="number">6999.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-052</td><td>Ledger line 52</td><td data-align="number">7137.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-053</td><td>Ledger line 53</td><td data-align="number">7274.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-054</td><td>Ledger line 54</td><td data-align="number">7411.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-055</td><td>Ledger line 55</td><td data-align="number">7548.75</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-056</td><td>Ledger line 56</td><td data-align="number">7686.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-057</td><td>Ledger line 57</td><td data-align="number">7823.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-058</td><td>Ledger line 58</td><td data-align="number">7960.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-059</td><td>Ledger line 59</td><td data-align="number">8097.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-060</td><td>Ledger line 60</td><td data-align="number">8235.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-061</td><td>Ledger line 61</td><td data-align="number">8372.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-062</td><td>Ledger line 62</td><td data-align="number">8509.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-063</td><td>Ledger line 63</td><td data-align="number">8646.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-064</td><td>Ledger line 64</td><td data-align="number">8784.00</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-065</td><td>Ledger line 65</td><td data-align="number">8921.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-066</td><td>Ledger line 66</td><td data-align="number">9058.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-067</td><td>Ledger line 67</td><td data-align="number">9195.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-068</td><td>Ledger line 68</td><td data-align="number">9333.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-069</td><td>Ledger line 69</td><td data-align="number">9470.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-070</td><td>Ledger line 70</td><td data-align="number">9607.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-071</td><td>Ledger line 71</td><td data-align="number">9744.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-072</td><td>Ledger line 72</td><td data-align="number">9882.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-073</td><td>Ledger line 73</td><td data-align="number">10019.25</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-074</td><td>Ledger line 74</td><td data-align="number">10156.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-075</td><td>Ledger line 75</td><td data-align="number">10293.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-076</td><td>Ledger line 76</td><td data-align="number">10431.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-077</td><td>Ledger line 77</td><td data-align="number">10568.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-078</td><td>Ledger line 78</td><td data-align="number">10705.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-079</td><td>Ledger line 79</td><td data-align="number">10842.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-080</td><td>Ledger line 80</td><td data-align="number">10980.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-081</td><td>Ledger line 81</td><td data-align="number">11117.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-082</td><td>Ledger line 82</td><td data-align="number">11254.50</td><td>https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</td></tr>
+      <tr><td>LONGROW-083</td><td>Ledger line 83</td><td data-align="number">11391.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-084</td><td>Ledger line 84</td><td data-align="number">11529.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-085</td><td>Ledger line 85</td><td data-align="number">11666.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-086</td><td>Ledger line 86</td><td data-align="number">11803.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-087</td><td>Ledger line 87</td><td data-align="number">11940.75</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-088</td><td>Ledger line 88</td><td data-align="number">12078.00</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-089</td><td>Ledger line 89</td><td data-align="number">12215.25</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+      <tr><td>LONGROW-090</td><td>Ledger line 90</td><td data-align="number">12352.50</td><td>Routine entry that wraps across a couple of lines in the notes column.</td></tr>
+        </tbody>
+      </table>
+    </ef-print-table>
+  </ef-print-section>
+
+  <ef-print-section id="dense">
+    <h2>Dense data</h2>
+    <ef-print-table>
+      <table>
+        <caption>ULI-DENSE-TABLE</caption>
+        <thead><tr><th>Series</th><th data-align="number">M01</th><th data-align="number">M02</th><th data-align="number">M03</th><th data-align="number">M04</th><th data-align="number">M05</th><th data-align="number">M06</th><th data-align="number">M07</th><th data-align="number">M08</th><th data-align="number">M09</th><th data-align="number">M10</th><th data-align="number">M11</th><th data-align="number">M12</th></tr></thead>
+        <tbody>
+      <tr><th scope="row">DENSE-01</th><td data-align="number">123456.789</td><td data-align="number">123494.289</td><td data-align="number">123531.789</td><td data-align="number">123569.289</td><td data-align="number">123606.789</td><td data-align="number">123644.289</td><td data-align="number">123681.789</td><td data-align="number">123719.289</td><td data-align="number">123756.789</td><td data-align="number">123794.289</td><td data-align="number">123831.789</td><td data-align="number">123869.289</td></tr>
+      <tr><th scope="row">DENSE-02</th><td data-align="number">124456.789</td><td data-align="number">124494.289</td><td data-align="number">124531.789</td><td data-align="number">124569.289</td><td data-align="number">124606.789</td><td data-align="number">124644.289</td><td data-align="number">124681.789</td><td data-align="number">124719.289</td><td data-align="number">124756.789</td><td data-align="number">124794.289</td><td data-align="number">124831.789</td><td data-align="number">124869.289</td></tr>
+      <tr><th scope="row">DENSE-03</th><td data-align="number">125456.789</td><td data-align="number">125494.289</td><td data-align="number">125531.789</td><td data-align="number">125569.289</td><td data-align="number">125606.789</td><td data-align="number">125644.289</td><td data-align="number">125681.789</td><td data-align="number">125719.289</td><td data-align="number">125756.789</td><td data-align="number">125794.289</td><td data-align="number">125831.789</td><td data-align="number">125869.289</td></tr>
+      <tr><th scope="row">DENSE-04</th><td data-align="number">126456.789</td><td data-align="number">126494.289</td><td data-align="number">126531.789</td><td data-align="number">126569.289</td><td data-align="number">126606.789</td><td data-align="number">126644.289</td><td data-align="number">126681.789</td><td data-align="number">126719.289</td><td data-align="number">126756.789</td><td data-align="number">126794.289</td><td data-align="number">126831.789</td><td data-align="number">126869.289</td></tr>
+      <tr><th scope="row">DENSE-05</th><td data-align="number">127456.789</td><td data-align="number">127494.289</td><td data-align="number">127531.789</td><td data-align="number">127569.289</td><td data-align="number">127606.789</td><td data-align="number">127644.289</td><td data-align="number">127681.789</td><td data-align="number">127719.289</td><td data-align="number">127756.789</td><td data-align="number">127794.289</td><td data-align="number">127831.789</td><td data-align="number">127869.289</td></tr>
+      <tr><th scope="row">DENSE-06</th><td data-align="number">128456.789</td><td data-align="number">128494.289</td><td data-align="number">128531.789</td><td data-align="number">128569.289</td><td data-align="number">128606.789</td><td data-align="number">128644.289</td><td data-align="number">128681.789</td><td data-align="number">128719.289</td><td data-align="number">128756.789</td><td data-align="number">128794.289</td><td data-align="number">128831.789</td><td data-align="number">128869.289</td></tr>
+      <tr><th scope="row">DENSE-07</th><td data-align="number">129456.789</td><td data-align="number">129494.289</td><td data-align="number">129531.789</td><td data-align="number">129569.289</td><td data-align="number">129606.789</td><td data-align="number">129644.289</td><td data-align="number">129681.789</td><td data-align="number">129719.289</td><td data-align="number">129756.789</td><td data-align="number">129794.289</td><td data-align="number">129831.789</td><td data-align="number">129869.289</td></tr>
+      <tr><th scope="row">DENSE-08</th><td data-align="number">130456.789</td><td data-align="number">130494.289</td><td data-align="number">130531.789</td><td data-align="number">130569.289</td><td data-align="number">130606.789</td><td data-align="number">130644.289</td><td data-align="number">130681.789</td><td data-align="number">130719.289</td><td data-align="number">130756.789</td><td data-align="number">130794.289</td><td data-align="number">130831.789</td><td data-align="number">130869.289</td></tr>
+      <tr><th scope="row">DENSE-09</th><td data-align="number">131456.789</td><td data-align="number">131494.289</td><td data-align="number">131531.789</td><td data-align="number">131569.289</td><td data-align="number">131606.789</td><td data-align="number">131644.289</td><td data-align="number">131681.789</td><td data-align="number">131719.289</td><td data-align="number">131756.789</td><td data-align="number">131794.289</td><td data-align="number">131831.789</td><td data-align="number">131869.289</td></tr>
+      <tr><th scope="row">DENSE-10</th><td data-align="number">132456.789</td><td data-align="number">132494.289</td><td data-align="number">132531.789</td><td data-align="number">132569.289</td><td data-align="number">132606.789</td><td data-align="number">132644.289</td><td data-align="number">132681.789</td><td data-align="number">132719.289</td><td data-align="number">132756.789</td><td data-align="number">132794.289</td><td data-align="number">132831.789</td><td data-align="number">132869.289</td></tr>
+      <tr><th scope="row">DENSE-11</th><td data-align="number">133456.789</td><td data-align="number">133494.289</td><td data-align="number">133531.789</td><td data-align="number">133569.289</td><td data-align="number">133606.789</td><td data-align="number">133644.289</td><td data-align="number">133681.789</td><td data-align="number">133719.289</td><td data-align="number">133756.789</td><td data-align="number">133794.289</td><td data-align="number">133831.789</td><td data-align="number">133869.289</td></tr>
+      <tr><th scope="row">DENSE-12</th><td data-align="number">134456.789</td><td data-align="number">134494.289</td><td data-align="number">134531.789</td><td data-align="number">134569.289</td><td data-align="number">134606.789</td><td data-align="number">134644.289</td><td data-align="number">134681.789</td><td data-align="number">134719.289</td><td data-align="number">134756.789</td><td data-align="number">134794.289</td><td data-align="number">134831.789</td><td data-align="number">134869.289</td></tr>
+      <tr><th scope="row">DENSE-13</th><td data-align="number">135456.789</td><td data-align="number">135494.289</td><td data-align="number">135531.789</td><td data-align="number">135569.289</td><td data-align="number">135606.789</td><td data-align="number">135644.289</td><td data-align="number">135681.789</td><td data-align="number">135719.289</td><td data-align="number">135756.789</td><td data-align="number">135794.289</td><td data-align="number">135831.789</td><td data-align="number">135869.289</td></tr>
+      <tr><th scope="row">DENSE-14</th><td data-align="number">136456.789</td><td data-align="number">136494.289</td><td data-align="number">136531.789</td><td data-align="number">136569.289</td><td data-align="number">136606.789</td><td data-align="number">136644.289</td><td data-align="number">136681.789</td><td data-align="number">136719.289</td><td data-align="number">136756.789</td><td data-align="number">136794.289</td><td data-align="number">136831.789</td><td data-align="number">136869.289</td></tr>
+      <tr><th scope="row">DENSE-15</th><td data-align="number">137456.789</td><td data-align="number">137494.289</td><td data-align="number">137531.789</td><td data-align="number">137569.289</td><td data-align="number">137606.789</td><td data-align="number">137644.289</td><td data-align="number">137681.789</td><td data-align="number">137719.289</td><td data-align="number">137756.789</td><td data-align="number">137794.289</td><td data-align="number">137831.789</td><td data-align="number">137869.289</td></tr>
+      <tr><th scope="row">DENSE-16</th><td data-align="number">138456.789</td><td data-align="number">138494.289</td><td data-align="number">138531.789</td><td data-align="number">138569.289</td><td data-align="number">138606.789</td><td data-align="number">138644.289</td><td data-align="number">138681.789</td><td data-align="number">138719.289</td><td data-align="number">138756.789</td><td data-align="number">138794.289</td><td data-align="number">138831.789</td><td data-align="number">138869.289</td></tr>
+      <tr><th scope="row">DENSE-17</th><td data-align="number">139456.789</td><td data-align="number">139494.289</td><td data-align="number">139531.789</td><td data-align="number">139569.289</td><td data-align="number">139606.789</td><td data-align="number">139644.289</td><td data-align="number">139681.789</td><td data-align="number">139719.289</td><td data-align="number">139756.789</td><td data-align="number">139794.289</td><td data-align="number">139831.789</td><td data-align="number">139869.289</td></tr>
+      <tr><th scope="row">DENSE-18</th><td data-align="number">140456.789</td><td data-align="number">140494.289</td><td data-align="number">140531.789</td><td data-align="number">140569.289</td><td data-align="number">140606.789</td><td data-align="number">140644.289</td><td data-align="number">140681.789</td><td data-align="number">140719.289</td><td data-align="number">140756.789</td><td data-align="number">140794.289</td><td data-align="number">140831.789</td><td data-align="number">140869.289</td></tr>
+      <tr><th scope="row">DENSE-19</th><td data-align="number">141456.789</td><td data-align="number">141494.289</td><td data-align="number">141531.789</td><td data-align="number">141569.289</td><td data-align="number">141606.789</td><td data-align="number">141644.289</td><td data-align="number">141681.789</td><td data-align="number">141719.289</td><td data-align="number">141756.789</td><td data-align="number">141794.289</td><td data-align="number">141831.789</td><td data-align="number">141869.289</td></tr>
+      <tr><th scope="row">DENSE-20</th><td data-align="number">142456.789</td><td data-align="number">142494.289</td><td data-align="number">142531.789</td><td data-align="number">142569.289</td><td data-align="number">142606.789</td><td data-align="number">142644.289</td><td data-align="number">142681.789</td><td data-align="number">142719.289</td><td data-align="number">142756.789</td><td data-align="number">142794.289</td><td data-align="number">142831.789</td><td data-align="number">142869.289</td></tr>
+      <tr><th scope="row">DENSE-21</th><td data-align="number">143456.789</td><td data-align="number">143494.289</td><td data-align="number">143531.789</td><td data-align="number">143569.289</td><td data-align="number">143606.789</td><td data-align="number">143644.289</td><td data-align="number">143681.789</td><td data-align="number">143719.289</td><td data-align="number">143756.789</td><td data-align="number">143794.289</td><td data-align="number">143831.789</td><td data-align="number">143869.289</td></tr>
+      <tr><th scope="row">DENSE-22</th><td data-align="number">144456.789</td><td data-align="number">144494.289</td><td data-align="number">144531.789</td><td data-align="number">144569.289</td><td data-align="number">144606.789</td><td data-align="number">144644.289</td><td data-align="number">144681.789</td><td data-align="number">144719.289</td><td data-align="number">144756.789</td><td data-align="number">144794.289</td><td data-align="number">144831.789</td><td data-align="number">144869.289</td></tr>
+      <tr><th scope="row">DENSE-23</th><td data-align="number">145456.789</td><td data-align="number">145494.289</td><td data-align="number">145531.789</td><td data-align="number">145569.289</td><td data-align="number">145606.789</td><td data-align="number">145644.289</td><td data-align="number">145681.789</td><td data-align="number">145719.289</td><td data-align="number">145756.789</td><td data-align="number">145794.289</td><td data-align="number">145831.789</td><td data-align="number">145869.289</td></tr>
+      <tr><th scope="row">DENSE-24</th><td data-align="number">146456.789</td><td data-align="number">146494.289</td><td data-align="number">146531.789</td><td data-align="number">146569.289</td><td data-align="number">146606.789</td><td data-align="number">146644.289</td><td data-align="number">146681.789</td><td data-align="number">146719.289</td><td data-align="number">146756.789</td><td data-align="number">146794.289</td><td data-align="number">146831.789</td><td data-align="number">146869.289</td></tr>
+        </tbody>
+      </table>
+    </ef-print-table>
+  </ef-print-section>
+
+  <ef-print-section>
+    <h2>Right-to-left content</h2>
+    <div dir="rtl" lang="ar">
+      <p>هذه فقرة عربية طويلة لاختبار اتجاه النص من اليمين إلى اليسار داخل مستند الطباعة. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. تستمر الجملة لتملأ السطر بالكامل. </p>
+      <ef-print-callout>تنبيه: https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</ef-print-callout>
+    </div>
+    <div dir="rtl" lang="he"><p>פסקה בעברית לבדיקת כיוון הטקסט. המשפט ממשיך הלאה. המשפט ממשיך הלאה. המשפט ממשיך הלאה. המשפט ממשיך הלאה. המשפט ממשיך הלאה. המשפט ממשיך הלאה. המשפט ממשיך הלאה. המשפט ממשיך הלאה. המשפט ממשיך הלאה. המשפט ממשיך הלאה. </p></div>
+  </ef-print-section>
+
+  <ef-print-section>
+    <h2>Enlarged text</h2>
+    <div style="font-size: 200%">
+      <p>Enlarged paragraph at two hundred percent. Sentence 1 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 2 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 3 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 4 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 5 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word.</p>
+      <p>Enlarged URL https://example.org/evidence/archive/2026/very-long-unbroken-path-segment-that-never-offers-a-break-opportunity-to-the-line-breaker/supplementary-material-version-0042.pdf</p>
+    </div>
+  </ef-print-section>
+
+  <ef-print-section>
+    <h2>Empty structures</h2>
+    <ef-print-section></ef-print-section>
+    <ef-print-callout></ef-print-callout>
+    <ef-print-columns></ef-print-columns>
+    <ef-print-table><table><thead><tr><th>Empty table header</th></tr></thead><tbody></tbody></table></ef-print-table>
+    <p>Content after empty structures remains in flow.</p>
+  </ef-print-section>
+
+  <div class="ef-dense">
+    <h2>Keep-with-next heading A</h2>
+    <p>Body A opens directly beneath its heading. Sentence 1 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 2 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 3 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 4 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 5 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 6 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 7 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 8 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 9 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 10 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 11 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 12 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 13 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 14 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word.</p>
+    <h2>Keep-with-next heading B</h2>
+    <p>Body B opens directly beneath its heading. Sentence 1 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 2 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 3 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 4 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 5 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 6 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 7 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 8 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 9 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 10 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 11 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 12 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 13 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 14 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word.</p>
+    <h2>Keep-with-next heading C</h2>
+    <p>Body C opens directly beneath its heading. Sentence 1 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 2 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 3 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 4 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 5 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 6 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 7 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 8 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 9 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 10 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 11 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 12 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 13 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word. Sentence 14 of the very long paragraph keeps flowing so the renderer must fragment it across columns and pages without dropping a single word.</p>
+  </div>
+
+  <ef-print-footer>
+    <span slot="left">ULI-FOOTER-LEFT</span>
+    <span slot="right">ULI-FOOTER-RIGHT</span>
+  </ef-print-footer>
+</ef-print-document>
+</body>
+</html>

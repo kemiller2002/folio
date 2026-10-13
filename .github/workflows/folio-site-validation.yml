@@ -21,6 +21,11 @@ on:
       - "package-lock.json"
       - ".github/workflows/folio-site-validation.yml"
       - ".github/workflows/deploy-folio-pages.yml"
+      - "src/**"
+      - "tests/conformance/**"
+      - "tests/fixtures/**"
+      - "tests/run-ui-conformance.mjs"
+      - "tests/ui-conformance-rules.test.mjs"
   workflow_dispatch:
 
 permissions:
@@ -50,3 +55,41 @@ jobs:
 
       - name: Run Folio documentation browser checks
         run: npm run site:test:browser
+
+  # GH-54: universal UI layout/interaction conformance (Visual Engineering
+  # framework/standards/UI-LAYOUT-INTERACTION.md, rules ULI-L12 for print/PDF
+  # and ULI-A01..A10 / L05 / L06 / L09 for the site and previews). Runs beside
+  # the existing validation job; it disables nothing.
+  ui-conformance:
+    runs-on: ubuntu-latest
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install PDF inspection tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install conformance browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Run ULI print/PDF and site conformance
+        run: npm run ui:conformance
+
+      - name: Upload conformance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-conformance-evidence
+          path: test-results/ui-conformance/
+          if-no-files-found: warn

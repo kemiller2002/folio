@@ -43,6 +43,15 @@
     font-family: var(--ef-print-font-family);
     font-size: var(--ef-print-font-size);
     line-height: var(--ef-print-line-height);
+    /*
+     * GH-54 / ULI-L12: an unbreakable word or URL must wrap inside its own box.
+     * Without this, one long token in a paragraph, column, side rail, callout,
+     * finding label or TOC entry widens the print layout and Chromium shrinks
+     * every page to fit (or, in right-to-left documents, clips the start edge).
+     * break-word only applies when a token cannot otherwise fit its line, so
+     * ordinary wrapping and min-content sizing are unchanged.
+     */
+    overflow-wrap: var(--ef-print-overflow-wrap, break-word);
   }
 
   body {
@@ -143,19 +152,56 @@
     gap: var(--ef-print-footer-gap);
   }
 
+  /*
+   * GH-54 / ULI-L12: slots name physical page positions. Place each slot in its
+   * own track so a left/right pair without a center item keeps "right" at the
+   * right edge (auto-placement put it in the middle track), and keep the
+   * physical positions in right-to-left documents (grid tracks otherwise run
+   * from the right, which swapped "left" and "right"). Dense flow keeps slots
+   * on the first row whatever their source order; :where() keeps specificity
+   * low so the narrow-screen inspection layout below still stacks them.
+   */
+  ef-print-header,
+  ef-print-footer {
+    grid-auto-flow: row dense;
+  }
+
   ef-print-header > [slot="left"],
   ef-print-footer > [slot="left"] {
+    grid-column: 1;
     text-align: left;
   }
 
   ef-print-header > [slot="center"],
   ef-print-footer > [slot="center"] {
+    grid-column: 2;
     text-align: center;
   }
 
   ef-print-header > [slot="right"],
   ef-print-footer > [slot="right"] {
+    grid-column: 3;
     text-align: right;
+  }
+
+  ef-print-header:where(:dir(rtl)) > [slot="left"],
+  ef-print-footer:where(:dir(rtl)) > [slot="left"] {
+    grid-column: 3;
+  }
+
+  ef-print-header:where(:dir(rtl)) > [slot="right"],
+  ef-print-footer:where(:dir(rtl)) > [slot="right"] {
+    grid-column: 1;
+  }
+
+  /*
+   * A page-number marker keeps short counters together, but authored fallback
+   * text inside a bounded header/footer track may wrap rather than overflow
+   * the page edge (GH-54 / ULI-L12).
+   */
+  ef-print-header ef-print-page-number,
+  ef-print-footer ef-print-page-number {
+    white-space: normal;
   }
 
   ef-print-header > :not([slot]),
@@ -427,11 +473,23 @@
 
   ef-print-table th {
     font-weight: 700;
+    /*
+     * GH-54 / ULI-L12: header labels break between words, never inside one.
+     * Data cells keep overflow-wrap: anywhere so a long URL cannot widen the
+     * table past the page; headers keep their words as the column minimum.
+     */
+    overflow-wrap: break-word;
   }
 
   ef-print-table [data-align="number"] {
     text-align: end;
     font-variant-numeric: tabular-nums;
+  }
+
+  /* A numeric value is one unit of meaning: never split it across lines. */
+  ef-print-table td[data-align="number"] {
+    overflow-wrap: normal;
+    white-space: nowrap;
   }
 
   ef-print-code {
