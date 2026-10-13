@@ -33,7 +33,7 @@
     "site:test": "node --test tests/site-build.test.mjs",
     "site:test:browser": "node tests/run-site-browser-tests.mjs",
     "site:check": "npm run site:build && npm run site:test",
-    "test:ui-conformance:rules": "node --test tests/ui-conformance-rules.test.mjs",
+    "test:ui-conformance:rules": "node --test tests/ui-conformance-rules.test.mjs tests/ui-conformance-evidence.test.mjs",
     "ui:conformance": "npm run site:build && npm run test:ui-conformance:rules && node tests/run-ui-conformance.mjs",
     "ui:conformance:print": "npm run site:build && node tests/run-ui-conformance.mjs --scope=print",
     "ui:conformance:site": "npm run site:build && node tests/run-ui-conformance.mjs --scope=site",
@@ -52,6 +52,7 @@
     "test:forma-icon-print": "node tests/run-forma-icon-print-tests.mjs"
   },
   "devDependencies": {
+    "ajv": "8.20.0",
     "playwright": "1.63.0"
   },
   "engines": {

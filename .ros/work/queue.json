@@ -492,6 +492,29 @@
       },
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/folio/issues/54"
+    },
+    {
+      "id": "GH-54-EVID",
+      "title": "Emit visual-engineering 1.0.0 ui-conformance.schema.json evidence (print-ui) from results.json and validate it in tests/CI (GH-54 follow-up)",
+      "description": null,
+      "tags": [
+        "folio,ui-conformance,evidence"
+      ],
+      "priority": "high",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-10-13T18:41:54.581Z",
+      "updatedAt": "2026-10-13T18:41:55.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/54"
     }
   ]
 }

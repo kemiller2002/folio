@@ -54,6 +54,8 @@ import {
 } from "./conformance/site-rules.mjs";
 import { collectPrintSurface } from "./conformance/collect-print.mjs";
 import { exerciseDisclosure, inventoryControls, measureResponsive, tabWalk } from "./conformance/collect-site.mjs";
+import { buildEvidence, evidenceValidator } from "./conformance/evidence.mjs";
+import { execFileSync } from "node:child_process";
 
 const root = resolve(new URL("..", import.meta.url).pathname);
 const siteRoot = resolve(root, "site-dist");
@@ -152,6 +154,8 @@ async function pool(items, size, worker) {
 // Print and PDF (ULI-L12)
 // ---------------------------------------------------------------------------
 
+const STYLESHEETS = Object.freeze(["src/styles/print.css", "site/site.css", "site/demo.css"]);
+
 async function runPrint(browser, baseUrl) {
   const surfaces = printSurfaces();
   const pdfDir = resolve(outputDir, "pdf");
@@ -179,9 +183,9 @@ async function runPrint(browser, baseUrl) {
         ...checkRunningContent({ surface: surface.id, state: pdfState, runningText: evidence.contract.runningText, marginBoxesDeclared: evidence.contract.marginBoxes, pageFlats: evidence.pageFlats }),
         ...checkPageNumbers({ surface: surface.id, state: pdfState, runningText: evidence.contract.runningText, pageFlats: evidence.pageFlats, pageNumberMarkers: evidence.layout.pageNumberMarkers }),
       ];
-      return { surface: surface.id, pages: evidence.pdf.pages.length, pageSize: evidence.pageBox?.sizeText ?? null, findings };
+      return { surface: surface.id, path: surface.url.replace(/^\/repo\//, "").replace(/^\//, "site-dist/"), pages: evidence.pdf.pages.length, pageSize: evidence.pageBox?.sizeText ?? null, findings };
     } catch (error) {
-      return { surface: surface.id, pages: null, findings: [finding({ rule: "ULI-L12/collection", status: STATUS.UNKNOWN, location: surface.id, state, evidence: `Evidence collection failed: ${error.message}` })] };
+      return { surface: surface.id, path: surface.url.replace(/^\/repo\//, "").replace(/^\//, "site-dist/"), pages: null, findings: [finding({ rule: "ULI-L12/collection", status: STATUS.UNKNOWN, location: surface.id, state, evidence: `Evidence collection failed: ${error.message}` })] };
     }
   });
   return {
@@ -192,12 +196,13 @@ async function runPrint(browser, baseUrl) {
       sitePreviews: surfaces.filter(item => item.id.endsWith("preview.html")).length,
       notApplicableFamilies: ["menus", "business cards"],
     },
-    surfaces: perSurface.map(({ surface, pages, pageSize, findings }) => ({ surface, pages, pageSize, summary: summarize(findings) })),
+    surfaces: perSurface.map(({ surface, path, pages, pageSize, findings }) => ({ surface, path, pages, pageSize, summary: summarize(findings) })),
+    stylesheets: STYLESHEETS,
     findings: [
       ...perSurface.flatMap(item => item.findings),
       // ULI-L13: Folio primitives and the documentation/demo styles compose
       // from tokens; no literal negative positional corrections.
-      ...["src/styles/print.css", "site/site.css", "site/demo.css"].flatMap(source =>
+      ...STYLESHEETS.flatMap(source =>
         checkTokenizedOffsets({ source, cssText: readFileSync(resolve(root, source), "utf8") })),
       ...["menus", "business cards"].map(family => finding({
         rule: "ULI-L12/surface-family",
@@ -242,6 +247,8 @@ async function runSite(baseUrl) {
     return { inventory: { pages: 0 }, findings: [finding({ rule: "ULI-A10/site", status: STATUS.UNKNOWN, location: "site-dist", state: "not built", evidence: "site-dist is missing; run npm run site:build." })] };
   }
   const findings = [];
+  const actions = [];
+  const pages = [...docs.map(route => ({ id: `site:${route}`, route, kind: "catalog" })), ...previews.map(route => ({ id: `site:${route}`, route, kind: "demo" }))];
   const inventory = { documentationPages: docs.length, previewPages: previews.length, controls: 0, byKind: {}, uniqueDestinations: 0, exercised: { clickedLinks: 0, popups: 0, disclosures: 0, tabWalks: 0, frames: 0 } };
   const browser = await chromium.launch(launchOptions("chromium"));
   const destinationCache = new Map();
@@ -258,6 +265,8 @@ async function runSite(baseUrl) {
       inventory.controls += controls.length;
       for (const control of controls) {
         const kind = controlKind(control);
+        const implicitRole = { a: "link", summary: "summary", iframe: "iframe", button: "button" }[control.tag] ?? control.tag;
+        actions.push({ page: pageId, path: control.path, kind, role: control.role ?? implicitRole, name: control.name ?? "" });
         inventory.byKind[kind] = (inventory.byKind[kind] ?? 0) + 1;
         findings.push(...checkControlSemantics({ page: pageId, state, control }));
         if (["internal-link", "fragment-link", "external-link", "protocol-link"].includes(kind)) {
@@ -374,7 +383,7 @@ async function runSite(baseUrl) {
       await engine.close();
     }
   }
-  return { inventory, findings };
+  return { inventory, findings, pages, actions };
 }
 
 // ---------------------------------------------------------------------------
@@ -401,8 +410,19 @@ try {
 
 const allFindings = applyExceptions([...(print?.findings ?? []), ...(site?.findings ?? [])], exceptions);
 const failures = allFindings.filter(item => item.status === STATUS.FAIL);
+// The revision evidence describes: the PR head when CI provides it, else HEAD.
+let revision = process.env.UI_CONFORMANCE_REVISION || "";
+if (!revision) {
+  try {
+    revision = execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
+  } catch {
+    revision = "unknown-revision";
+  }
+}
 const report = {
   standard: ULI_STANDARD,
+  repository: "kemiller2002/folio",
+  revision,
   startedAt,
   finishedAt: new Date().toISOString(),
   scope,
@@ -413,6 +433,7 @@ const report = {
   print: print ? {
     inventory: print.inventory,
     surfaces: print.surfaces,
+    stylesheets: print.stylesheets,
     summary: summarize(applyExceptions(print.findings, exceptions)),
     byLeg: {
       printPreview: summarize(applyExceptions(print.findings, exceptions).filter(item => item.location.includes("(print preview)"))),
@@ -420,13 +441,24 @@ const report = {
       stylesheet: summarize(applyExceptions(print.findings, exceptions).filter(item => item.location.includes("(stylesheet)"))),
     },
   } : null,
-  site: site ? { inventory: site.inventory, summary: summarize(applyExceptions(site.findings, exceptions)) } : null,
+  site: site ? { inventory: site.inventory, pages: site.pages ?? [], actions: site.actions ?? [], summary: summarize(applyExceptions(site.findings, exceptions)) } : null,
   exceptions,
   failures,
   unknowns: allFindings.filter(item => item.status === STATUS.UNKNOWN),
   findings: allFindings,
 };
 await writeFile(resolve(outputDir, "results.json"), `${JSON.stringify(report, null, 2)}\n`);
+
+// visual-engineering 1.0.0 evidence document, derived only from results.json.
+const evidenceDocument = buildEvidence(JSON.parse(readFileSync(resolve(outputDir, "results.json"), "utf8")));
+const evidenceCheck = evidenceValidator()(evidenceDocument);
+await writeFile(resolve(outputDir, "evidence.json"), `${JSON.stringify(evidenceDocument, null, 2)}\n`);
+const surfaceStatuses = evidenceDocument.surfaces.reduce((counts, item) => ({ ...counts, [item.status]: (counts[item.status] ?? 0) + 1 }), {});
+console.log(`evidence.json (ui-conformance.schema.json 1.0.0, ${evidenceDocument.classification}): ${evidenceCheck.valid ? "valid" : "INVALID"}; ${evidenceDocument.surfaces.length} surfaces ${JSON.stringify(surfaceStatuses)}`);
+if (!evidenceCheck.valid) {
+  for (const error of evidenceCheck.errors.slice(0, 20)) console.log(`SCHEMA ${error}`);
+  process.exitCode = 1;
+}
 
 console.log(`ULI conformance (${ULI_STANDARD.canonicalReference} @ ${ULI_STANDARD.revision.slice(0, 7)}), scope=${scope}`);
 if (print) console.log(`print: ${print.inventory.surfaces} surfaces -> ${JSON.stringify(report.print.summary)}; by leg ${JSON.stringify(report.print.byLeg)}`);
@@ -435,4 +467,4 @@ console.log(`by rule: ${JSON.stringify(report.byRule)}`);
 for (const item of failures.slice(0, 40)) console.log(`FAIL ${item.rule} @ ${item.location} [${item.state}] ${item.evidence}`);
 if (failures.length > 40) console.log(`... ${failures.length - 40} more failures in test-results/ui-conformance/results.json`);
 console.log(`Evidence: ${relative(root, resolve(outputDir, "results.json"))}`);
-process.exitCode = failures.length ? 1 : 0;
+if (failures.length) process.exitCode = 1;

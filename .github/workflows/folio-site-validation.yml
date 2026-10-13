@@ -26,6 +26,7 @@ on:
       - "tests/fixtures/**"
       - "tests/run-ui-conformance.mjs"
       - "tests/ui-conformance-rules.test.mjs"
+      - "tests/ui-conformance-evidence.test.mjs"
   workflow_dispatch:
 
 permissions:
@@ -84,6 +85,9 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run ULI print/PDF and site conformance
+        env:
+          # evidence.json records the commit under review, not the PR merge ref.
+          UI_CONFORMANCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
         run: npm run ui:conformance
 
       - name: Upload conformance evidence

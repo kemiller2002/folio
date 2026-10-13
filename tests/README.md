@@ -50,7 +50,21 @@ builds the site, runs the pure-rule unit tests
 `tests/run-ui-conformance.mjs`. `npm run ui:conformance:print` and
 `npm run ui:conformance:site` run one leg. The CI job `ui-conformance` in
 `.github/workflows/folio-site-validation.yml` runs the full command and uploads
-`test-results/ui-conformance/` (results.json plus every generated PDF).
+`test-results/ui-conformance/` (results.json, evidence.json and every
+generated PDF).
+
+`evidence.json` is the visual-engineering 1.0.0 evidence document
+(`framework/contracts/ui-conformance.schema.json`, classification `print-ui`).
+`tests/conformance/evidence.mjs` derives it mechanically from results.json:
+each surface and action takes the aggregate of its own findings (any FAIL ->
+fail, EXCEPTION -> exception, any UNKNOWN -> unknown, otherwise pass,
+not-applicable or unassessed), so no status is hand-written and UNKNOWN stays
+unknown. The runner validates it with Ajv against the schema copied verbatim
+from revision `8da8fbc` into
+`tests/fixtures/visual-engineering/ui-conformance-1.0.0/` (sha256 checked by
+`tests/ui-conformance-evidence.test.mjs`) and fails when it is invalid. Like
+the PDFs, it is a CI artifact rather than committed evidence; in CI it records
+the pull-request head commit (`UI_CONFORMANCE_REVISION`).
 
 Every check is a pure function in `tests/conformance/print-rules.mjs` or
 `tests/conformance/site-rules.mjs` mapping measurements to findings
