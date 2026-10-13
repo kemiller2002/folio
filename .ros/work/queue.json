@@ -469,6 +469,29 @@
       },
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/folio/issues/54"
+    },
+    {
+      "id": "GH-54-ULI1",
+      "title": "Repin Folio ULI conformance to UI-LAYOUT-INTERACTION@1.0.0 (visual-engineering 8da8fbc): map L12 page numbers / separate preview vs PDF and L13; keep folio#55 CI green (GH-54 follow-up)",
+      "description": null,
+      "tags": [
+        "folio,ui-conformance,print"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-13T18:19:24.293Z",
+      "updatedAt": "2026-10-13T18:34:18.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/54"
     }
   ]
 }
