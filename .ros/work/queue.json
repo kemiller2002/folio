@@ -446,6 +446,75 @@
       },
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/folio/issues/45"
+    },
+    {
+      "id": "GH-54",
+      "title": "Assess and adopt universal UI layout/action conformance (ULI 0.1.0/1.0.0) for Folio print/PDF and site previews",
+      "description": null,
+      "tags": [
+        "folio,ui-conformance,print,site"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-13T17:19:31.358Z",
+      "updatedAt": "2026-10-13T18:17:10.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/54"
+    },
+    {
+      "id": "GH-54-ULI1",
+      "title": "Repin Folio ULI conformance to UI-LAYOUT-INTERACTION@1.0.0 (visual-engineering 8da8fbc): map L12 page numbers / separate preview vs PDF and L13; keep folio#55 CI green (GH-54 follow-up)",
+      "description": null,
+      "tags": [
+        "folio,ui-conformance,print"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-13T18:19:24.293Z",
+      "updatedAt": "2026-10-13T18:34:18.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/54"
+    },
+    {
+      "id": "GH-54-EVID",
+      "title": "Emit visual-engineering 1.0.0 ui-conformance.schema.json evidence (print-ui) from results.json and validate it in tests/CI (GH-54 follow-up)",
+      "description": null,
+      "tags": [
+        "folio,ui-conformance,evidence"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-13T18:41:54.581Z",
+      "updatedAt": "2026-10-13T18:50:36.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/folio/issues/54"
     }
   ]
 }

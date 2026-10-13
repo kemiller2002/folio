@@ -9,7 +9,8 @@
   <style>
     body { padding: 16px; }
     ef-print-section { min-height: 260px; }
-    .wide-table { min-width: 760px; }
+    /* Screen-only: forces the contained narrow-screen table scroller. Print keeps the page width (GH-54 ULI-L12). */
+    @media screen { .wide-table { min-width: 760px; } }
   </style>
 </head>
 <body>

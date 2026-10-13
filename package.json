@@ -1,6 +1,6 @@
 {
   "name": "@echelon-foundry/print-components",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": false,
   "description": "Folio: standards-first web components and CSS primitives for professional HTML print documents.",
   "type": "module",
@@ -27,12 +27,16 @@
     "./src/styles/print.css"
   ],
   "scripts": {
-    "test": "node tests/run-primitive-component-tests.mjs && node tests/machine-operability-audit.test.mjs && npm run machine:audit:check && node tests/run-machine-operability-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-journal-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs && npm run test:forma-icons && npm run test:forma-icon-print",
+    "test": "node tests/run-primitive-component-tests.mjs && npm run test:ui-conformance:rules && node tests/machine-operability-audit.test.mjs && npm run machine:audit:check && node tests/run-machine-operability-tests.mjs && node tests/run-tutela-security-record-tests.mjs && node tests/run-print-experiments.mjs && node tests/run-report-fixture-tests.mjs && node tests/run-profile-fixture-tests.mjs && node tests/run-journal-fixture-tests.mjs && node tests/run-diagram-projection-tests.mjs && npm run test:forma-icons && npm run test:forma-icon-print",
     "test:print": "node tests/run-print-experiments.mjs",
     "site:build": "node tools/build-site.mjs",
     "site:test": "node --test tests/site-build.test.mjs",
     "site:test:browser": "node tests/run-site-browser-tests.mjs",
     "site:check": "npm run site:build && npm run site:test",
+    "test:ui-conformance:rules": "node --test tests/ui-conformance-rules.test.mjs tests/ui-conformance-evidence.test.mjs",
+    "ui:conformance": "npm run site:build && npm run test:ui-conformance:rules && node tests/run-ui-conformance.mjs",
+    "ui:conformance:print": "npm run site:build && node tests/run-ui-conformance.mjs --scope=print",
+    "ui:conformance:site": "npm run site:build && node tests/run-ui-conformance.mjs --scope=site",
     "pack:verify": "npm pack --dry-run",
     "test:report": "node tests/run-report-fixture-tests.mjs",
     "test:tutela": "node tests/run-tutela-security-record-tests.mjs",
@@ -48,6 +52,7 @@
     "test:forma-icon-print": "node tests/run-forma-icon-print-tests.mjs"
   },
   "devDependencies": {
+    "ajv": "8.20.0",
     "playwright": "1.63.0"
   },
   "engines": {

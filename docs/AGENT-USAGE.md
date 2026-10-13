@@ -27,7 +27,7 @@ Before creating or changing printable document UI:
 6. Keep source content useful when JavaScript is unavailable or the custom element has not upgraded.
 7. Prefer CSS/native browser pagination and fragmentation over DOM measurement.
 8. Use Limen/Ordo only for meaningful preview/configuration state, not physical pagination.
-9. Run print experiments and Folio site validation before claiming completion.
+9. Run print experiments, Folio site validation and `npm run ui:conformance` (`visual-engineering/UI-LAYOUT-INTERACTION@1.0.0`: ULI-L12 print preview and PDF including page numbers, ULI-L13 token-based offsets, ULI-A01..A10 site checks; see `tests/README.md`) before claiming completion.
 10. Preserve consumer-supplied object metadata only through an explicit visibility/transport policy; do not leak source-only metadata into print/PDF.
 11. When printing workflows/diagrams, preserve authored color where supported but ensure the same meaning survives grayscale and backgrounds-disabled output.
 12. Print Forma Studio diagrams through `tools/diagram-projection.mjs`. Call `inspectProjection` first, since the projection is untrusted input. Then call `planFit`, which never shrinks text below 7pt, and `composeDocument`, which embeds the markup verbatim inside `ef-print-figure`. Do not rewrite projection geometry or re-derive appearance from metadata.
