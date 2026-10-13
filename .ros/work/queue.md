@@ -19,6 +19,7 @@
 | GH-4 | Build Folio component documentation site | complete | folio,print,documentation | high |
 | GH-45 | Integrate Forma icon assets into Folio print output | complete |  | high |
 | GH-45-PIN | Move Folio's Forma pin to the published 0.5.0 icon release (GH-45 follow-up) | complete |  | high |
+| GH-54 | Assess and adopt universal UI layout/action conformance (ULI 0.1.0/1.0.0) for Folio print/PDF and site previews | complete | folio,ui-conformance,print,site | high |
 | GH-6 | Harden Folio documentation site for mobile | complete | folio,mobile,documentation | high |
 | GH-8 | Finalize Folio mobile governance cleanup | complete | folio,governance,cleanup | high |
 | GH-9 | Make Folio instructions and remaining components mobile-friendly | complete | folio,mobile,components,documentation | high |
