@@ -108,3 +108,9 @@ Metadata is not hidden application state inside Folio. Consumers decide which fi
 Workflow/diagram objects may preserve authored colors, but printed meaning must survive grayscale and backgrounds-disabled output. Folio owns page fitting, tiling, fragmentation, and renderer capability behavior; graph semantics/routing remain with the consuming application/Studio.
 
 See `docs/requirements/OBJECT-METADATA-AND-DIAGRAM-PRINT.md`.
+
+## License
+
+Source available under PolyForm Noncommercial 1.0.0 for permitted noncommercial uses. Commercial use requires a separate license from Echelon Foundry. Previously distributed versions remain subject to the licenses under which they were released.
+
+Commercial licensing information is forthcoming.
