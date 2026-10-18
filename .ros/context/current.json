@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-10-18T13:01:41.256Z",
+  "updatedAt": "2026-10-18T13:03:46.706Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -1209,13 +1209,35 @@
     {
       "id": "PRAXIS-EXECUTIONS-COMPAT-20261018",
       "type": "mechanical",
-      "state": "active",
-      "semanticState": "active",
+      "state": "complete",
+      "semanticState": "complete",
       "evidence": [],
-      "updatedAt": "2026-10-18T13:01:41.256Z",
+      "updatedAt": "2026-10-18T13:03:46.706Z",
       "telemetryExecutionIds": [
         "EXE-20261018T130141696Z-9ec17bdd"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "af54894c7b84cf23b0f9cc83",
+        "recordedAt": "2026-10-18T13:03:27.681Z",
+        "executionId": "EXE-20261018T130141696Z-9ec17bdd",
+        "repository": "echelon-print-components",
+        "branch": "codex/ingest-outstanding-requirements-20261018",
+        "commit": "499e469766ee27706b816aa91abc3fcacb074a9e",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio.git"
+        },
+        "remoteBranch": "codex/ingest-outstanding-requirements-20261018",
+        "remoteCommit": "499e469766ee27706b816aa91abc3fcacb074a9e",
+        "summary": "Aligned attribution policy with Praxis-managed execution state and verified pinned/current validators",
+        "nextAction": "Complete compatibility work and verify PR checks",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-18T13:03:46.706Z",
+      "conclusion": "Praxis-managed .ros/executions state is excluded from product attribution; pinned and current validator behavior was checked."
     }
   ]
 }
