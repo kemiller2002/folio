@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-10-13T18:50:36.000Z",
+  "updatedAt": "2026-10-18T13:03:46.706Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -1162,6 +1162,82 @@
         }
       },
       "completedAt": "2026-10-13T18:50:36.000Z"
+    },
+    {
+      "id": "INGEST-REQS-20261018",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "docs/requirements/DESIGN-BY-CONSTRUCTION.md"
+        },
+        {
+          "type": "tests",
+          "path": "docs/verification/requirements-ingestion-2026-10-18.md"
+        }
+      ],
+      "updatedAt": "2026-10-18T12:59:02.093Z",
+      "telemetryExecutionIds": [
+        "EXE-20261018T124842412Z-443641b9"
+      ],
+      "latestCheckpoint": {
+        "id": "36ebb6b581998f655c2ccf40",
+        "recordedAt": "2026-10-18T12:58:40.554Z",
+        "executionId": "EXE-20261018T124842412Z-443641b9",
+        "stepId": "STEP-20261018T124851176Z-5565d181",
+        "repository": "echelon-print-components",
+        "branch": "codex/ingest-outstanding-requirements-20261018",
+        "commit": "c8fd6538a0421ce5415f3f229d0b7ed1b0bcd5b3",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio.git"
+        },
+        "remoteBranch": "codex/ingest-outstanding-requirements-20261018",
+        "remoteCommit": "c8fd6538a0421ce5415f3f229d0b7ed1b0bcd5b3",
+        "summary": "Folio Design by Construction source ingested with canonical requirement and follow-up work",
+        "nextAction": "Complete the ingestion work item and open the review PR",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-18T12:59:02.093Z",
+      "conclusion": "All authorized source documents for this repository were canonically ingested; implementation requirements remain open."
+    },
+    {
+      "id": "PRAXIS-EXECUTIONS-COMPAT-20261018",
+      "type": "mechanical",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [],
+      "updatedAt": "2026-10-18T13:03:46.706Z",
+      "telemetryExecutionIds": [
+        "EXE-20261018T130141696Z-9ec17bdd"
+      ],
+      "latestCheckpoint": {
+        "id": "af54894c7b84cf23b0f9cc83",
+        "recordedAt": "2026-10-18T13:03:27.681Z",
+        "executionId": "EXE-20261018T130141696Z-9ec17bdd",
+        "repository": "echelon-print-components",
+        "branch": "codex/ingest-outstanding-requirements-20261018",
+        "commit": "499e469766ee27706b816aa91abc3fcacb074a9e",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio.git"
+        },
+        "remoteBranch": "codex/ingest-outstanding-requirements-20261018",
+        "remoteCommit": "499e469766ee27706b816aa91abc3fcacb074a9e",
+        "summary": "Aligned attribution policy with Praxis-managed execution state and verified pinned/current validators",
+        "nextAction": "Complete compatibility work and verify PR checks",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-18T13:03:46.706Z",
+      "conclusion": "Praxis-managed .ros/executions state is excluded from product attribution; pinned and current validator behavior was checked."
     }
   ]
 }
