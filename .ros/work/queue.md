@@ -27,6 +27,7 @@
 | GH-8 | Finalize Folio mobile governance cleanup | complete | folio,governance,cleanup | high |
 | GH-9 | Make Folio instructions and remaining components mobile-friendly | complete | folio,mobile,components,documentation | high |
 | INGEST-REQS-20261018 | Ingest outstanding Praxis requirement sources | complete | requirements, ingestion | high |
+| PRAXIS-EXECUTIONS-COMPAT-20261018 | Exclude Praxis-managed execution state from attribution | ready | governance, compatibility | high |
 | ROS-INSTALL-3-1-4 | ROS-INSTALL-3-1-4 | complete |  |  |
 | WI-0001 | Folio core: scope ef-print-title-page/section/back-page position:relative+isolation to pages containing ef-print-layer (:has) after reducing the Chromium 141 duplicated-border paint seen in JOURNAL-ISSUE-01 back cover; needs ART-01 regression evidence (GH-28 follow-up) | captured | folio,print,chromium,gh-28 | medium |
 | WI-0002 | Upgrade Limen to 0.7.0 (@echelon-foundry/limen) and declare boundary notApplicable until an interactive preview engine exists | complete | limen,dependencies | medium |
