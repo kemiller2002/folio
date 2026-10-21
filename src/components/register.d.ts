@@ -1,3 +1,5 @@
+import "../runtime.js";
+
 export declare const elementNames: readonly [
   "ef-print-document",
   "ef-print-title-page",

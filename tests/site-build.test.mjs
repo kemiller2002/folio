@@ -127,11 +127,17 @@ test("Folio site publishes the journal and scholarly publication family", async 
   await fs.access(path.join(site, "assets", "journal-journal.css"));
 });
 
-test("generated Folio documentation contains no browser scripts", async () => {
+test("generated Folio documentation loads only the runtime diagnostic outside print previews", async () => {
   const files = await walk(site);
   for (const file of files.filter(file => file.endsWith(".html"))) {
     const html = await fs.readFile(file, "utf8");
-    assert.doesNotMatch(html, /<script\b/i, path.relative(site, file));
+    const scripts = html.match(/<script\b[^>]*><\/script>/gi) ?? [];
+    if (path.basename(file) === "index.html") {
+      assert.equal(scripts.length, 1, path.relative(site, file));
+      assert.match(scripts[0], /type="module" src="(?:(?:\.\.\/)|(?:\.\/))*assets\/runtime\.js"/);
+    } else {
+      assert.equal(scripts.length, 0, path.relative(site, file));
+    }
     assert.doesNotMatch(html, /\bon[a-z]+\s*=/i, path.relative(site, file));
   }
 });
@@ -160,6 +166,9 @@ test("site artifact contains actual Folio print CSS and Pages marker", async () 
   assert.match(printCss, /ef-print-sidebar/);
   await fs.access(path.join(site, "assets", "site.css"));
   await fs.access(path.join(site, "assets", "demo.css"));
+  await fs.access(path.join(site, "assets", "runtime.js"));
+  await fs.access(path.join(site, "assets", "runtime-registry.js"));
+  await fs.access(path.join(site, "assets", "runtime-version.js"));
 });
 
 

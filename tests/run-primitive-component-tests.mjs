@@ -73,7 +73,14 @@ function serve() {
 const { server, baseURL } = await serve();
 
 try {
-  for (const [name, engine] of [["chromium", chromium], ["firefox", firefox], ["webkit", webkit]]) {
+  const availableEngines = [["chromium", chromium], ["firefox", firefox], ["webkit", webkit]];
+  const requestedEngine = process.env.FOLIO_BROWSER;
+  const engines = requestedEngine === undefined
+    ? availableEngines
+    : availableEngines.filter(([name]) => name === requestedEngine);
+  if (engines.length === 0) throw new Error(`Unsupported FOLIO_BROWSER: ${requestedEngine}`);
+
+  for (const [name, engine] of engines) {
     const browser = await engine.launch({ headless: true });
     const page = await browser.newPage({ viewport: { width: 1024, height: 900 } });
     await page.goto(baseURL + fixture);
@@ -162,7 +169,7 @@ try {
     await browser.close();
   }
 
-  console.log("Folio core primitive browser contract passed in Chromium, Firefox, and WebKit.");
+  console.log(`Folio core primitive browser contract passed in ${engines.map(([name]) => name).join(", ")}.`);
 } finally {
   await new Promise(resolve => server.close(resolve));
 }
