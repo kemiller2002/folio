@@ -529,6 +529,7 @@ function page(title, rootPath, body) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,650&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${rootPath}assets/site.css">
+  <script type="module" src="${rootPath}assets/runtime.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -1048,6 +1049,9 @@ for (const [name, component] of Object.entries(components)) {
 
 fs.copyFileSync(path.join(root, "site/site.css"), path.join(output, "assets/site.css"));
 fs.copyFileSync(path.join(root, "site/demo.css"), path.join(output, "assets/demo.css"));
+for (const file of ["runtime.js", "runtime-registry.js", "runtime-version.js"]) {
+  fs.copyFileSync(path.join(root, "src", file), path.join(output, "assets", file));
+}
 fs.copyFileSync(path.join(root, "src/styles/print.css"), path.join(output, "assets/folio-print.css"));
 fs.copyFileSync(path.join(root, "tests/fixtures/reports/signal-results.css"), path.join(output, "assets/signal-results.css"));
 const signalReportPreview = fs.readFileSync(path.join(root, "tests/fixtures/reports/signal-results.html"), "utf8")

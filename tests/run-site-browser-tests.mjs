@@ -9,6 +9,7 @@ const site = path.join(root, "site-dist");
 
 const mime = {
   ".html": "text/html; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".json": "application/json; charset=utf-8"
 };
@@ -70,13 +71,19 @@ async function assertMinTarget(page, locator, minimum, label) {
 }
 
 const { server, baseURL } = await serve();
-const engines = [
+const availableEngines = [
   ["chromium", chromium],
   ["firefox", firefox],
   ["webkit", webkit]
 ];
+const requestedEngine = process.env.FOLIO_BROWSER;
+const engines = requestedEngine === undefined
+  ? availableEngines
+  : availableEngines.filter(([name]) => name === requestedEngine);
+if (engines.length === 0) throw new Error(`Unsupported FOLIO_BROWSER: ${requestedEngine}`);
 const phoneWidths = [320, 390, 430];
 const siteManifest = JSON.parse(fs.readFileSync(path.join(site, "site-manifest.json"), "utf8"));
+const packageVersion = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")).version;
 const mobileRoutes = [
   "/",
   "/capabilities/",
@@ -96,8 +103,19 @@ try {
   for (const [name, engine] of engines) {
     const browser = await engine.launch({ headless: true });
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    const warnings = [];
+    page.on("console", message => {
+      if (message.type() === "warning") warnings.push(message.text());
+    });
 
     await page.goto(baseURL + "/");
+    const runtime = await page.evaluate(() => window.__ECHELON_RUNTIME__);
+    assert.deepEqual(runtime, {
+      schemaVersion: 1,
+      libraries: { folio: { version: packageVersion } }
+    }, `${name}: production runtime registry matches package metadata`);
+    await page.evaluate(() => import("/assets/runtime.js?repeat=1"));
+    assert.equal(warnings.length, 0, `${name}: repeated Folio initialization is silent`);
     assert.equal(await page.locator("h1").textContent(), "Folio", `${name}: home title`);
     assert.equal(await page.locator("#components .component-card").count(), siteManifest.componentCount, `${name}: component count`);
     assert.equal(await page.locator("#recipes .component-card").count(), siteManifest.recipeCount, `${name}: recipe count`);

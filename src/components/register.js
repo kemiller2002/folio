@@ -1,3 +1,5 @@
+import "../runtime.js";
+
 const elementNames = [
   "ef-print-document",
   "ef-print-title-page",

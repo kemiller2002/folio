@@ -39,3 +39,4 @@
 | WI-0008 | Move folio to Ordo 1.5.0 via echelon-current 1.2.0 (conditor upgrade --current) | complete |  | medium |
 | WI-0009 | Upgrade Limen from 0.7.1 to 0.9.0 (echelon-current) | complete |  | medium |
 | WI-0010 | Fold the Folio 0.4.0 forma-icons contract test into the functional adapter suite (GH-45 follow-up) | complete |  | high |
+| WI-0011 | Implement Folio runtime version registry and diagnostics | complete |  | medium |
