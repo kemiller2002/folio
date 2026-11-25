@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-10-21T14:02:23.000Z",
+  "updatedAt": "2026-11-25T18:00:41.449Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -1285,6 +1285,17 @@
       },
       "completedAt": "2026-10-21T14:02:23.000Z",
       "conclusion": "Folio 0.4.2 reports its exact packaged version through ECHELON-RUNTIME-1 without entering print documents; browser verification passed in Chromium and WebKit."
+    },
+    {
+      "id": "WI-0012",
+      "type": "task",
+      "state": "active",
+      "semanticState": "active",
+      "evidence": [],
+      "updatedAt": "2026-11-25T18:00:41.449Z",
+      "telemetryExecutionIds": [
+        "EXE-20261125T180042202Z-19ae0259"
+      ]
     }
   ]
 }

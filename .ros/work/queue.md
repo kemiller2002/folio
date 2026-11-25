@@ -40,3 +40,4 @@
 | WI-0009 | Upgrade Limen from 0.7.1 to 0.9.0 (echelon-current) | complete |  | medium |
 | WI-0010 | Fold the Folio 0.4.0 forma-icons contract test into the functional adapter suite (GH-45 follow-up) | complete |  | high |
 | WI-0011 | Implement Folio runtime version registry and diagnostics | complete |  | medium |
+| WI-0012 | Upgrade to echelon-current 1.42.0 (praxis 3.7.2 -> 3.25.0, ordo 1.5.0 -> 1.20.0, limen 0.9.0 -> 0.9.1) | ready |  | medium |
