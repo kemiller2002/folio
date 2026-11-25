@@ -1,8 +1,8 @@
 # Using Forma icons in Folio print and PDF output
 
 **Status:** Implemented, pinned and proven end to end (GH-45, GH-45-PIN,
-issue #45). Folio's Conditor pin is Forma **0.5.0** (echelon-current 1.13.0;
-release asset sha256 `c4ad3ae5…f558f`), so the committed pin prints verified
+issue #45). Folio's Conditor pin is Forma **1.0.1** (echelon-current 1.42.0;
+release asset sha256 `db4a8bf7…42056`), so the committed pin prints verified
 icon vectors. Forma 0.4.1, which publishes no icons, remains the control in the
 print suite: every reference prints as inert data and the words carry the
 meaning.
@@ -26,7 +26,10 @@ release bundles in `dist/icons/`:
   older than 0.5.0 is `unavailable` and never reads the disk. Otherwise the
   registry must match the pin's `formaVersion`, every SVG's bytes must match
   its `svgSha256`, and every SVG must match Forma's static grammar (24-unit
-  viewBox, `currentColor` 1.8 strokes, only `path`/`circle`/`rect`). Scripts,
+  viewBox, `currentColor` 1.8 strokes, only `path`/`circle`/`rect`). The SVG
+  root class follows the pinned release: `ef-icon__svg` before Forma 1.0.0 and
+  `forma-icon__svg` from it (Forma 1.0's `ef-` to `forma-` rename,
+  FORMA-NS-001); `svgRootClassFor(version)` names it. Scripts,
   `foreignObject`, `href`, `use`, `image`, `style`, event handlers, comments and
   `data:`/`javascript:` URLs are refused even when the digest is re-signed.
   Any finding makes the whole release unusable; nothing unverified is exposed.
@@ -86,7 +89,7 @@ import { renderFormaPrintIcon } from "@echelon-foundry/print-components/forma-ic
 
 const html = renderFormaPrintIcon("warning", {
   assetsRoot: "<pinned forma>/dist/icons",
-  expectedFormaVersion: "0.5.0", // omit to use the registry's stamped release
+  expectedFormaVersion: "1.0.1", // omit to use the registry's stamped release
   label: null,                   // decorative; set only for meaningful icons
   size: "14pt"
 });
@@ -107,7 +110,7 @@ and prints it offline with Chromium to `test-results/forma-icon-print/`:
 
 - Letter colour (612 x 792 pt, 2 pages), A4 colour (2 pages), Letter with
   `printBackground: false`, Letter converted to grayscale by Ghostscript, and
-  Letter under the committed pin (0.5.0, icons) and under the 0.4.1 control
+  Letter under the committed pin (1.0.1, icons) and under the 0.4.1 control
   (no icons);
 - no request in any document, plus a control showing the guard records one;
 - every status in words in every output, and icons add no extracted text;
@@ -127,7 +130,14 @@ icon in it.
 
 ## The pin
 
-The pin moved from 0.4.1 to 0.5.0 only through Conditor (v0.8.1, checksum
+The pin moved from 0.5.0 to 1.0.1 through Conditor 0.10.29
+(`conditor upgrade --current` with the echelon-current 1.42.0 linux-x64 set,
+sha256 `6be3bc97…a8ee8a`). The icon geometry is unchanged from 0.5.0; Forma 1.0
+renamed the SVG root class, so every `svgSha256` changed and the print fixture
+moved to `tests/fixtures/forma-icons/forma-1.0.1/` (the visual baseline was
+regenerated and its glyph masks are identical to the 0.5.0 ones).
+
+Earlier, the pin moved from 0.4.1 to 0.5.0 only through Conditor (v0.8.1, checksum
 verified): `conditor upgrade --current` with the exact echelon-registry
 `echelon-current` 1.13.0 linux-x64 resolved set (registry commit `eceb948`,
 sha256 `85a54366…c169`). The plan had no version transitions for declared

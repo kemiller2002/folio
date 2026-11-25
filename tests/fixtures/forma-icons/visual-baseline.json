@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "fixture": "FORMA-ICON-PRINT-01 geometry sheet (page 2), Letter colour PDF",
-  "formaVersion": "0.5.0",
+  "formaVersion": "1.0.1",
   "method": "Chromium page.pdf -> pdftoppm 144dpi; ink (luminance < 140) bounding box beside each GEOM-<name> label resampled to 16x16; cell is ink when >= 20% dark; compared by differing cells (tolerance 20) plus printed width/height within 1.5pt",
   "generatedWith": {
-    "chromium": "141.0.7390.37",
+    "chromium": "158.0.8127.36",
     "poppler": "pdftoppm version 24.02.0"
   },
   "tolerance": 20,

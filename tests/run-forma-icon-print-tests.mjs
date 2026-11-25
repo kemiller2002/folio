@@ -20,13 +20,13 @@ import { composeIconPrintDocument, openOfflineDocument, printOfflinePdf } from "
 
 const root = resolve(new URL("..", import.meta.url).pathname);
 const fixtureDir = resolve(root, "tests/fixtures/forma-icons");
-const fixtureIcons = resolve(fixtureDir, "forma-0.5.0/dist/icons");
+const fixtureIcons = resolve(fixtureDir, "forma-1.0.1/dist/icons");
 const outputDir = resolve(root, "test-results/forma-icon-print");
 const baselinePath = resolve(fixtureDir, "visual-baseline.json");
 const updateBaseline = process.env.FOLIO_UPDATE_ICON_BASELINE === "1";
 const packageDir = process.env.FOLIO_FORMA_PACKAGE_DIR;
 
-const provenance = JSON.parse(readFileSync(resolve(fixtureDir, "forma-0.5.0/PROVENANCE.json"), "utf8"));
+const provenance = JSON.parse(readFileSync(resolve(fixtureDir, "forma-1.0.1/PROVENANCE.json"), "utf8"));
 const fixtureRegistry = JSON.parse(readFileSync(resolve(fixtureIcons, "registry.json"), "utf8"));
 const body = readFileSync(resolve(fixtureDir, "status-report.html"), "utf8");
 const documentCss = readFileSync(resolve(fixtureDir, "status-report.css"), "utf8");
@@ -281,7 +281,7 @@ try {
       const embedded = fixtureLibrary.icons.get(entry.name).svg;
       assert.ok(documents.letter.html.includes(embedded.replace("<svg ", '<svg aria-hidden="true" focusable="false" ')), `${entry.name} geometry is embedded verbatim`);
     }
-    assert.ok(documents.letter.html.includes('data-ef-icon-forma="0.5.0"'));
+    assert.ok(documents.letter.html.includes(`data-ef-icon-forma="${provenance.formaVersion}"`));
     assert.deepEqual(documents.letter.references.filter((r) => r.state !== "rendered").map((r) => [r.name, r.state]), [["future-rocket", "unknown"]]);
     assert.ok(documents.iconlessLetter.references.every((r) => r.state === "unavailable"));
     assert.ok(!documents.iconlessLetter.html.includes("<svg"), "the icon-less pin embeds no geometry");

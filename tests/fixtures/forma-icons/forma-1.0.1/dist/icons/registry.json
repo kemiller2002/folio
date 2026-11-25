@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "formaVersion": "1.0.1",
+  "grid": 24,
+  "icons": [
+    {
+      "name": "clock",
+      "category": "status",
+      "label": "Time",
+      "keywords": [
+        "duration",
+        "schedule"
+      ],
+      "origin": "original",
+      "svg": "icons/clock.svg",
+      "html": "icons/html/clock.html",
+      "svgSha256": "13a73849f99c26c93fa011de3bb2f7aeb08d89b73b036c45381d885643bb847d"
+    },
+    {
+      "name": "close",
+      "category": "actions",
+      "label": "Close",
+      "keywords": [
+        "dismiss",
+        "cancel"
+      ],
+      "origin": "original",
+      "svg": "icons/close.svg",
+      "html": "icons/html/close.html",
+      "svgSha256": "a94a7fdffc1a49125a61d7cb0d989f7116beb6ef674de8748c19d36dcebce834"
+    },
+    {
+      "name": "print",
+      "category": "documents",
+      "label": "Print",
+      "keywords": [
+        "printer",
+        "paper"
+      ],
+      "origin": "original",
+      "svg": "icons/print.svg",
+      "html": "icons/html/print.html",
+      "svgSha256": "e7f062bd1403802f0191f5a95273196ffb978db8f737ff5c8efce8e30c47b1b1"
+    },
+    {
+      "name": "search",
+      "category": "actions",
+      "label": "Search",
+      "keywords": [
+        "find",
+        "filter"
+      ],
+      "origin": "original",
+      "svg": "icons/search.svg",
+      "html": "icons/html/search.html",
+      "svgSha256": "3d2e3099c7486af6b6b4b59b92179163b53c2f20a657d2ce62e0a440c8e8e236"
+    },
+    {
+      "name": "shield",
+      "category": "status",
+      "label": "Security",
+      "keywords": [
+        "protection",
+        "verified"
+      ],
+      "origin": "original",
+      "svg": "icons/shield.svg",
+      "html": "icons/html/shield.html",
+      "svgSha256": "d50b3faf73623c939a8f8054f36bc60701fec7d45b206f500da5ea7141b452fd"
+    },
+    {
+      "name": "success",
+      "category": "status",
+      "label": "Success",
+      "keywords": [
+        "complete",
+        "check"
+      ],
+      "origin": "original",
+      "svg": "icons/success.svg",
+      "html": "icons/html/success.html",
+      "svgSha256": "88366eb0e338170cabecfef7cbd02e64393e64302912bcade3e34b167dc7db5d"
+    },
+    {
+      "name": "warning",
+      "category": "status",
+      "label": "Warning",
+      "keywords": [
+        "caution",
+        "attention"
+      ],
+      "origin": "original",
+      "svg": "icons/warning.svg",
+      "html": "icons/html/warning.html",
+      "svgSha256": "6e8965ab2966f8586e00ea474a74c15c2e80e5fa808f22882409845ac73b1de7"
+    },
+    {
+      "name": "workflow",
+      "category": "workflow",
+      "label": "Workflow",
+      "keywords": [
+        "diagram",
+        "process"
+      ],
+      "origin": "original",
+      "svg": "icons/workflow.svg",
+      "html": "icons/html/workflow.html",
+      "svgSha256": "2b5b7c52344078495b9a17cb76af823a568f6371af957435c8fc7d8fba4a6ff3"
+    }
+  ]
+}

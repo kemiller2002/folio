@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "status": "published",
+  "formaVersion": "1.0.1",
+  "purpose": "test-fixture-only",
+  "source": {
+    "package": "@echelon-foundry/design-system",
+    "artifact": "echelon-foundry-design-system-1.0.1.tgz",
+    "artifactSha256": "db4a8bf7bcf6ba7826f1605c4265ea86c456464f2e2a3eef18d026f24c242056",
+    "release": "https://github.com/kemiller2002/forma/releases/tag/v1.0.1",
+    "releaseCommit": "0ddbfc968aeb79062513da97d06d1ea959dcf02a",
+    "verifiedAgainstRelease": "2026-11-25: the release asset was downloaded, its sha256 matched the echelon-current 1.42.0 Forma package artifact digest above, and the 8 SVGs and registry entries were copied from it byte for byte (FOLIO_FORMA_PACKAGE_DIR leg of tests/run-forma-icon-print-tests.mjs)",
+    "history": "Replaces the forma-0.5.0 fixture as the pinned print fixture when Folio moved to echelon-current 1.42.0 (Forma 1.0.1). Geometry is unchanged from 0.5.0; Forma 1.0 renamed the SVG root class ef-icon__svg to forma-icon__svg (FORMA-NS-001), which changes every svgSha256.",
+    "files": "dist/icons/registry.json (8 of 80 entries, copied verbatim) and the 8 matching dist/icons/<name>.svg files (bytes verbatim)"
+  },
+  "icons": [
+    "success",
+    "warning",
+    "close",
+    "clock",
+    "workflow",
+    "shield",
+    "search",
+    "print"
+  ],
+  "notAPin": "Folio's Forma pin is .conditor/authority/resolved-release-set.json (Forma 1.0.1 since echelon-current 1.42.0). This fixture never changes the pin; while the pin equals 1.0.1 the suite requires artifactSha256 to equal the pinned package sha256."
+}
