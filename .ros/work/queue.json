@@ -636,10 +636,10 @@
       "description": null,
       "tags": [],
       "priority": "medium",
-      "status": "ready",
+      "status": "complete",
       "attachments": [],
       "createdAt": "2026-11-25T20:43:28.814Z",
-      "updatedAt": "2026-11-25T20:43:38Z",
+      "updatedAt": "2026-11-25T20:55:24Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

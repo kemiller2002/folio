@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-11-25T20:43:38Z",
+  "updatedAt": "2026-11-25T20:55:24Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -1330,13 +1330,43 @@
     {
       "id": "WI-0013",
       "type": "task",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-11-25T20:43:38Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": ".github/workflows/print-experiments.yml"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-diagram-projection-tests.mjs"
+        }
+      ],
+      "updatedAt": "2026-11-25T20:55:24Z",
       "telemetryExecutionIds": [
         "EXE-20261125T204339523Z-83865cf9"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "38b685e63a9be9c7625a8f32",
+        "recordedAt": "2026-11-25T20:55:18Z",
+        "executionId": "EXE-20261125T204339523Z-83865cf9",
+        "repository": "echelon-print-components",
+        "branch": "claude/vigila-implementation-jdeps1",
+        "commit": "9a5fbcaf8c613ddc214a7c3ef49216638164b33e",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "claude/vigila-implementation-jdeps1",
+        "remoteCommit": "9a5fbcaf8c613ddc214a7c3ef49216638164b33e",
+        "summary": "print-experiments pinned to ubuntu-24.04; Ghostscript 10.06 drift isolated; all PR #68 checks green at 9a5fbca",
+        "nextAction": "complete WI-0013 with CI evidence",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-25T20:55:24Z"
     }
   ]
 }
