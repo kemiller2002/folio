@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-11-25T18:00:41.449Z",
+  "updatedAt": "2026-11-25T18:31:25.873Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -1289,13 +1289,43 @@
     {
       "id": "WI-0012",
       "type": "task",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-11-25T18:00:41.449Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "tools/forma-icons.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-forma-icon-tests.mjs"
+        }
+      ],
+      "updatedAt": "2026-11-25T18:31:25.873Z",
       "telemetryExecutionIds": [
         "EXE-20261125T180042202Z-19ae0259"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "b67c6edc4876baf506d52651",
+        "recordedAt": "2026-11-25T18:31:23.815Z",
+        "executionId": "EXE-20261125T180042202Z-19ae0259",
+        "repository": "echelon-print-components",
+        "branch": "claude/vigila-implementation-jdeps1",
+        "commit": "1f47e540d409707918811db0747f372b8868367d",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "claude/vigila-implementation-jdeps1",
+        "remoteCommit": "1f47e540d409707918811db0747f372b8868367d",
+        "summary": "echelon-current 1.42.0 upgrade, Limen 0.9.1, Forma 1.0.1 icon adapter and fixture committed and pushed",
+        "nextAction": "complete WI-0012, open draft PR",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-25T18:31:25.873Z"
     }
   ]
 }
