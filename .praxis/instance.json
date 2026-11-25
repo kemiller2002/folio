@@ -1,0 +1,12 @@
+{
+  "schema": "praxis.instance/1",
+  "instanceId": "pxi-fd5716a71c7842f28a316c5bd37349d0",
+  "createdAt": "2026-11-25T18:00:57.792Z",
+  "createdWith": "3.25.0",
+  "repository": {
+    "provider": "github",
+    "repositoryId": null,
+    "repository": "kemiller2002/folio"
+  },
+  "predecessors": []
+}
