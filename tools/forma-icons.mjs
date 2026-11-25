@@ -21,7 +21,11 @@ const stableName = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 const hexDigest = /^[0-9a-f]{64}$/;
 const semver = /^(\d+)\.(\d+)\.(\d+)(?:[-+].*)?$/;
 const safeSize = /^(?:\d+(?:\.\d+)?)(?:em|rem|px|pt)$/;
-const svgRoot = /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" class="ef-icon__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1\.8" stroke-linecap="round" stroke-linejoin="round">([\s\S]*)<\/svg>\s*$/;
+/** The first Forma release whose icons use the `forma-` namespace (Forma 1.0, FORMA-NS-001). */
+export const formaNamespaceMinimumFormaVersion = "1.0.0";
+const svgRootClasses = Object.freeze({ legacy: "ef-icon__svg", forma: "forma-icon__svg" });
+const svgRootPattern = (rootClass) => new RegExp(`^<svg xmlns="http:\\/\\/www\\.w3\\.org\\/2000\\/svg" class="${rootClass}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1\\.8" stroke-linecap="round" stroke-linejoin="round">([\\s\\S]*)<\\/svg>\\s*$`);
+const svgRoots = Object.freeze({ legacy: svgRootPattern(svgRootClasses.legacy), forma: svgRootPattern(svgRootClasses.forma) });
 const safeGeometry = /^(?:<path d="[MmLlHhVvCcSsQqTtAaZz0-9\s.,+-]+"\/>|<circle cx="[\d.]+" cy="[\d.]+" r="[\d.]+"\/>|<rect x="[\d.]+" y="[\d.]+" width="[\d.]+" height="[\d.]+"(?: rx="[\d.]+")?\/>)+$/;
 
 // Defence in depth: named so a finding says *what* was refused, even though the
@@ -121,11 +125,21 @@ export const inspectIconRegistry = (registry, pin) => {
   ]);
 };
 
-/** Checks one bundled SVG's bytes against its registry digest and the grammar (pure). */
-export const inspectIconAsset = (entry, bytes) => {
+/**
+ * The SVG root a pinned Forma release bundles (pure): Forma 1.0 renamed the
+ * `ef-` namespace to `forma-`, so `ef-icon__svg` before 1.0.0 and
+ * `forma-icon__svg` from it. With no version, the pre-1.0 root (Folio 0.4.0).
+ */
+export const svgRootClassFor = (formaVersion) =>
+  formaVersion !== undefined && formaVersion !== null && compareVersions(formaVersion, formaNamespaceMinimumFormaVersion) >= 0
+    ? svgRootClasses.forma
+    : svgRootClasses.legacy;
+
+/** Checks one bundled SVG's bytes against its registry digest and the grammar of its Forma release (pure). */
+export const inspectIconAsset = (entry, bytes, formaVersion = null) => {
   if (bytes === undefined || bytes === null) return freezeAll([finding("icon.missing", `Icon '${entry.name}' has no bundled SVG.`)]);
   const source = Buffer.from(bytes).toString("utf8");
-  const root = svgRoot.exec(source);
+  const root = (svgRootClassFor(formaVersion) === svgRootClasses.forma ? svgRoots.forma : svgRoots.legacy).exec(source);
   return freezeAll([
     ...(sha256Hex(bytes) === entry.svgSha256
       ? []
@@ -151,7 +165,7 @@ export const buildIconLibrary = ({ pin, registry, assets }) => {
   }
   const registryFindings = inspectIconRegistry(registry, pin);
   if (registryFindings.length) return unavailableLibrary(pin, "The icon registry failed verification.", registryFindings);
-  const assetFindings = registry.icons.flatMap((entry) => inspectIconAsset(entry, assets.get(entry.name)));
+  const assetFindings = registry.icons.flatMap((entry) => inspectIconAsset(entry, assets.get(entry.name), pin.version));
   if (assetFindings.length) return unavailableLibrary(pin, "Bundled icon geometry failed verification.", assetFindings);
   const icons = new Map(registry.icons.map((entry) => [
     entry.name,

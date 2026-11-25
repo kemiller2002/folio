@@ -1,24 +1,24 @@
 {
   "schemaVersion": 4,
   "project": "folio",
-  "manifestSha256": "19097feb845f1f165fcf8063c0b318b61fea1af6a9e827ba3fd6d63e94371ae1",
+  "manifestSha256": "62a93cbbadcb6cf5fb7aef5344faa88ceed41446cf6b53c4e4119f1beaee17d4",
   "manifest": {
     "schemaVersion": 1,
     "name": "folio",
     "registryAuthority": {
       "kind": "resolved-release-set",
       "path": ".conditor/authority/resolved-release-set.json",
-      "sha256": "85a54366126ea1e6ff19570d8eb36838637e639215cf22169276d7381712c169"
+      "sha256": "6be3bc97fbdd314abc4c712c2b1b47c1a18487995d9e1b9db445b4d141a8ee8a"
     },
     "components": [
       {
         "id": "ordo",
-        "version": "1.5.0",
+        "version": "1.20.0",
         "required": true
       },
       {
         "id": "praxis",
-        "version": "3.7.2",
+        "version": "3.25.0",
         "required": true
       },
       {
@@ -35,21 +35,21 @@
   "components": [
     {
       "id": "ordo",
-      "version": "1.5.0",
+      "version": "1.20.0",
       "distribution": "host-tool",
       "package": "ordo",
-      "descriptorSha256": "cac222af525161218391dade23d2a583c29315e8df255ffb9f11f0f2bb4eaf3a",
+      "descriptorSha256": "e0c49f0c717fd5afdd14699c77add4a12f68eded63231b80206cbe6a3cb374e5",
       "authority": "embedded-component-descriptor",
-      "sourceReference": "host:ordo@1.5.0"
+      "sourceReference": "host:ordo@1.20.0"
     },
     {
       "id": "praxis",
-      "version": "3.7.2",
+      "version": "3.25.0",
       "distribution": "host-tool",
       "package": "praxis",
-      "descriptorSha256": "476164cdd93d38e8b7960f37253334f1636204b6950c82e9f993605b269f0d45",
+      "descriptorSha256": "a6a854d426d865133e7d1440e2ca80245dbf425aecdf1aafdb7ffddf5bd4487a",
       "authority": "embedded-component-descriptor",
-      "sourceReference": "host:praxis@3.7.2"
+      "sourceReference": "host:praxis@3.25.0"
     },
     {
       "id": "visual-engineering",
@@ -68,7 +68,7 @@
       "code": "SDE-STRUCT-001",
       "band": "strong-review",
       "path": "tools/build-site.mjs",
-      "lineCount": 1221
+      "lineCount": 1227
     },
     {
       "component": "ordo",
@@ -81,6 +81,13 @@
       "component": "ordo",
       "code": "SDE-STRUCT-001",
       "band": "review",
+      "path": "tests/conformance/print-rules.mjs",
+      "lineCount": 676
+    },
+    {
+      "component": "ordo",
+      "code": "SDE-STRUCT-001",
+      "band": "review",
       "path": "tests/run-print-experiments.mjs",
       "lineCount": 615
     },
@@ -88,15 +95,15 @@
       "component": "ordo",
       "code": "SDE-STRUCT-001",
       "band": "review",
-      "path": "tests/run-journal-fixture-tests.mjs",
-      "lineCount": 597
+      "path": "tools/core-component-metadata.mjs",
+      "lineCount": 600
     },
     {
       "component": "ordo",
       "code": "SDE-STRUCT-001",
       "band": "review",
-      "path": "tools/core-component-metadata.mjs",
-      "lineCount": 594
+      "path": "tests/run-journal-fixture-tests.mjs",
+      "lineCount": 597
     },
     {
       "component": "ordo",

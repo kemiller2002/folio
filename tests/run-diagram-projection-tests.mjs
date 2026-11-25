@@ -126,6 +126,7 @@ async function startServer() {
   return { server, baseUrl: `http://127.0.0.1:${server.address().port}` };
 }
 
+const ghostscriptVersion = execFileSync("gs", ["--version"], { encoding: "utf8" }).trim();
 const pdfText = (path) => execFileSync("pdftotext", [path, "-"], { encoding: "utf8" }).replace(/\s+/g, " ").trim();
 const pdfInfo = (path) => {
   const info = execFileSync("pdfinfo", [path], { encoding: "utf8" });
@@ -269,7 +270,7 @@ try {
     // Ghostscript re-encodes fonts (ligatures such as "fi") and can change extraction
     // order inside tables, so grayscale is compared as a normalized multiset of words.
     const words = (text) => text.normalize("NFKC").split(" ").filter(Boolean).sort();
-    assert.deepEqual(words(texts.grayscale), words(texts.color), "grayscale conversion changed extracted text");
+    assert.deepEqual(words(texts.grayscale), words(texts.color), `grayscale conversion (Ghostscript ${ghostscriptVersion}) changed extracted text`);
   });
 
   check("PDF document metadata carries no withheld values", () => {

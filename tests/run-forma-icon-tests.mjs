@@ -18,7 +18,8 @@ import {
   renderFormaPrintIcon,
   renderFormaPrintIconGallery,
   renderIcon,
-  sha256Hex
+  sha256Hex,
+  svgRootClassFor
 } from "../tools/forma-icons.mjs";
 import { compileIconReferences, composeIconPrintDocument, inspectOfflineMarkup } from "../tools/forma-icon-print.mjs";
 
@@ -81,6 +82,26 @@ check("the Forma 0.5.0 fixture verifies against its own registry digests", () =>
   assert.equal(library.formaVersion, "0.5.0");
   assert.deepEqual([...library.icons.keys()].sort(), ["clock", "close", "print", "search", "shield", "success", "warning", "workflow"]);
   for (const entry of fixtureRegistry.icons) assert.equal(sha256Hex(fixtureAssets.get(entry.name)), entry.svgSha256);
+});
+
+check("Forma 1.0 icons verify under the forma- SVG root, and each root only under its own release", () => {
+  const icons101 = path.join(root, "tests/fixtures/forma-icons/forma-1.0.1/dist/icons");
+  const registry101 = JSON.parse(fs.readFileSync(path.join(icons101, "registry.json"), "utf8"));
+  const assets101 = new Map(registry101.icons.map((entry) => [entry.name, fs.readFileSync(path.join(icons101, `${entry.name}.svg`))]));
+  const pin101 = Object.freeze({ systemId: "forma", version: "1.0.1" });
+  assert.equal(svgRootClassFor("0.5.0"), "ef-icon__svg");
+  assert.equal(svgRootClassFor(null), "ef-icon__svg");
+  assert.equal(svgRootClassFor("1.0.0"), "forma-icon__svg");
+  const library101 = loadIconLibrary({ pin: pin101, assetsRoot: icons101 });
+  assert.equal(library101.status, "available", JSON.stringify(library101.findings));
+  assert.deepEqual([...library101.icons.keys()].sort(), [...library.icons.keys()].sort());
+  for (const entry of registry101.icons) {
+    assert.deepEqual(inspectIconAsset(entry, assets101.get(entry.name), "1.0.1"), []);
+    assert.deepEqual(codes(inspectIconAsset(entry, assets101.get(entry.name), "0.5.0")), ["icon.grammar"]);
+  }
+  for (const entry of fixtureRegistry.icons) {
+    assert.deepEqual(codes(inspectIconAsset(entry, fixtureAssets.get(entry.name), "1.0.1")), ["icon.grammar"]);
+  }
 });
 
 check("an icon-less pin (0.4.1) never reads the disk and renders nothing", () => {

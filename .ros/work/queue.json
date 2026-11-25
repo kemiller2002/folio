@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "echelon-print-components",
-  "nextSeq": 12,
+  "nextSeq": 14,
   "items": [
     {
       "id": "GH-3",
@@ -605,6 +605,48 @@
         "provider": "openai",
         "model": "unknown",
         "runtime": "codex"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0012",
+      "title": "Upgrade to echelon-current 1.42.0 (praxis 3.7.2 -> 3.25.0, ordo 1.5.0 -> 1.20.0, limen 0.9.0 -> 0.9.1)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-11-25T18:00:32.440Z",
+      "updatedAt": "2026-11-25T18:31:25.873Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0013",
+      "title": "Fix print-experiments CI failure: ubuntu-latest moved to 26.04 (Ghostscript 10.06) and grayscale PDF text extraction regressed; pin the job's runner",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-11-25T20:43:28.814Z",
+      "updatedAt": "2026-11-25T20:55:24Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
       },
       "source": "manual",
       "sourceReference": null

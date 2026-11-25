@@ -1,5 +1,22 @@
 # Forma icon fixture provenance
 
+`forma-1.0.1/` is the print fixture for Folio's current Forma pin (1.0.1,
+echelon-current 1.42.0). It contains 8 of the 80 entries of
+`dist/icons/registry.json` and the matching `dist/icons/<name>.svg` files of the
+**published** Forma 1.0.1 release, byte for byte:
+
+| Release asset | sha256 |
+|---|---|
+| [`echelon-foundry-design-system-1.0.1.tgz`](https://github.com/kemiller2002/forma/releases/tag/v1.0.1) (commit `0ddbfc968aeb79062513da97d06d1ea959dcf02a`) | `db4a8bf7bcf6ba7826f1605c4265ea86c456464f2e2a3eef18d026f24c242056` |
+
+The geometry is identical to 0.5.0; Forma 1.0 renamed the SVG root class
+`ef-icon__svg` to `forma-icon__svg`, so the digests differ.
+`tests/run-forma-icon-print-tests.mjs` uses `forma-1.0.1/`;
+`tests/run-forma-icon-tests.mjs` keeps `forma-0.5.0/` (below) to prove the
+pre-1.0 root still verifies under a pre-1.0 pin.
+
+## forma-0.5.0
+
 `forma-0.5.0/` is a **test fixture, not a pin**. It contains 8 of the 40
 entries of `dist/icons/registry.json` and the matching `dist/icons/<name>.svg`
 files of the **published** Forma 0.5.0 release, byte for byte:
@@ -15,9 +32,10 @@ fixture byte and registry entry was verified against it, so `PROVENANCE.json`
 now says `published`. No fixture file changed.
 
 Folio's actual Forma version is the Conditor pin in
-`.conditor/authority/resolved-release-set.json`: Forma 0.5.0 since the move to
-echelon-registry `echelon-current` 1.13.0, whose Forma package artifact sha256
-is the one above. `tests/run-forma-icon-print-tests.mjs` enforces the relationship:
+`.conditor/authority/resolved-release-set.json`: Forma 1.0.1 since
+echelon-current 1.42.0 (0.5.0 from echelon-current 1.13.0 until then, with the
+0.5.0 artifact sha256 above). `tests/run-forma-icon-print-tests.mjs` enforces
+the relationship between the pin and the print fixture (`forma-1.0.1/`):
 
 - pin older than the fixture: `PROVENANCE.json` says `pre-release-unpublished`
   or `published`;
