@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "echelon-print-components",
-  "nextSeq": 13,
+  "nextSeq": 14,
   "items": [
     {
       "id": "GH-3",
@@ -619,6 +619,27 @@
       "attachments": [],
       "createdAt": "2026-11-25T18:00:32.440Z",
       "updatedAt": "2026-11-25T18:31:25.873Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0013",
+      "title": "Fix print-experiments CI failure: ubuntu-latest moved to 26.04 (Ghostscript 10.06) and grayscale PDF text extraction regressed; pin the job's runner",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-11-25T20:43:28.814Z",
+      "updatedAt": "2026-11-25T20:43:38Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

@@ -34,7 +34,13 @@ permissions:
 jobs:
   print-experiments:
     if: github.actor != 'github-actions[bot]'
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: the grayscale-PDF text assertion is an oracle over
+    # Ghostscript's pdfwrite output. ubuntu-latest became ubuntu-26.04 (Ghostscript
+    # 10.06) around 2026-10-22, and 10.06 detaches ligature glyphs ("fi", "ff") from
+    # their words in the re-encoded fonts, so "Fulfilment" extracts as "Ful fi lment".
+    # Ghostscript 10.02 (ubuntu-24.04) preserves them. Move this pin deliberately,
+    # together with a re-verified oracle, not by image drift (WI-0013).
+    runs-on: ubuntu-24.04
     env:
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
     steps:
