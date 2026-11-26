@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-11-25T20:55:24Z",
+  "updatedAt": "2026-11-26T00:26:51Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -1367,6 +1367,47 @@
         }
       },
       "completedAt": "2026-11-25T20:55:24Z"
+    },
+    {
+      "id": "WI-0014",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "conditor.json"
+        },
+        {
+          "type": "tests",
+          "path": ".conditor/lock.json"
+        }
+      ],
+      "updatedAt": "2026-11-26T00:26:51Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T002225023Z-93b9679e"
+      ],
+      "latestCheckpoint": {
+        "id": "5a560a09793f7047e4b900f2",
+        "recordedAt": "2026-11-26T00:26:49Z",
+        "executionId": "EXE-20261126T002225023Z-93b9679e",
+        "repository": "echelon-print-components",
+        "branch": "claude/vigila-implementation-jdeps1",
+        "commit": "09da927cd4b2596e152291636b5437f160596fdc",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "claude/vigila-implementation-jdeps1",
+        "remoteCommit": "09da927cd4b2596e152291636b5437f160596fdc",
+        "summary": "Conditor upgrade to echelon-current 1.43.0 applied (Praxis 3.26.0); site:check 9/9, praxis validate passed",
+        "nextAction": "Complete WI-0014 and open draft PR",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-26T00:26:51Z"
     }
   ]
 }
