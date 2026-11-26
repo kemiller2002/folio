@@ -657,10 +657,10 @@
       "description": null,
       "tags": [],
       "priority": "medium",
-      "status": "ready",
+      "status": "complete",
       "attachments": [],
       "createdAt": "2026-11-26T00:22:20.648Z",
-      "updatedAt": "2026-11-26T00:22:24Z",
+      "updatedAt": "2026-11-26T00:26:51Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
