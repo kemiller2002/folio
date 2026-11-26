@@ -1,6 +1,6 @@
 {
   "name": "@echelon-foundry/print-components",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "private": false,
   "description": "Folio: standards-first web components and CSS primitives for professional HTML print documents.",
   "type": "module",
@@ -58,6 +58,7 @@
     "test:forma-icon-print": "node tests/run-forma-icon-print-tests.mjs",
     "runtime:build": "node tools/build-runtime-version.mjs",
     "runtime:check": "node tools/build-runtime-version.mjs --check",
+    "version": "npm run runtime:build",
     "prepack": "npm run runtime:check"
   },
   "devDependencies": {
