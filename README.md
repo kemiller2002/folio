@@ -69,7 +69,7 @@ The currently registered Folio components are:
 - `ef-print-toc`
 - `ef-print-note`
 
-The package identifier remains `@echelon-foundry/print-components`. Version 0.4.2 preserves zero runtime dependencies and CSS-first print behavior while adding production runtime metadata.
+The package identifier remains `@echelon-foundry/print-components`. Version 0.4.3 preserves zero runtime dependencies and CSS-first print behavior while adding production runtime metadata, and keeps that runtime metadata consistent when the package version changes.
 
 Applications that import the component entry point receive Folio's exact loaded
 version in `window.__ECHELON_RUNTIME__.libraries.folio`. Consumers that only

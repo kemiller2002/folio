@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "echelon-print-components",
-  "nextSeq": 16,
+  "nextSeq": 17,
   "items": [
     {
       "id": "GH-3",
@@ -682,6 +682,27 @@
       "attachments": [],
       "createdAt": "2026-11-26T03:13:02.018Z",
       "updatedAt": "2026-11-26T03:14:17Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0016",
+      "title": "Publish workflow main snapshot fails: npm version leaves src/runtime-version.js stale before prepack check",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-11-26T04:20:39.787Z",
+      "updatedAt": "2026-11-26T04:26:15Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

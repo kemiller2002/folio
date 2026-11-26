@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { execFileSync } from "node:child_process";
 import { FOLIO_VERSION, installEchelonRuntimeRegistrar } from "../src/runtime.js";
 
 const packageVersion = JSON.parse(fs.readFileSync("package.json", "utf8")).version;
@@ -55,4 +58,25 @@ test("conflicting registration warns and preserves the first version", () => {
   assert.deepEqual(browser.__ECHELON_RUNTIME__.libraries.folio, { version: packageVersion });
   assert.equal(browser.messages.warn.length, 1);
   assert.match(browser.messages.warn[0], /Folio .*already registered.*ignored v99\.0\.0/);
+});
+
+test("npm version regenerates the runtime stamp so prepack's freshness check passes", () => {
+  // publish.yml sets a prerelease snapshot version with `npm version` and then packs;
+  // the `version` lifecycle script must keep src/runtime-version.js in step with it.
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "folio-runtime-version-"));
+  try {
+    const { name, version, scripts } = JSON.parse(fs.readFileSync("package.json", "utf8"));
+    fs.writeFileSync(path.join(root, "package.json"), JSON.stringify({ name, version, private: true, scripts }, null, 2));
+    for (const file of ["tools/build-runtime-version.mjs", "src/runtime-version.js"]) {
+      fs.mkdirSync(path.join(root, path.dirname(file)), { recursive: true });
+      fs.copyFileSync(file, path.join(root, file));
+    }
+    const npm = (...args) => execFileSync("npm", args, { cwd: root, encoding: "utf8", stdio: "pipe" });
+    const snapshot = `${version}-main.1.1`;
+    npm("version", snapshot, "--no-git-tag-version");
+    npm("run", "runtime:check");
+    assert.match(fs.readFileSync(path.join(root, "src/runtime-version.js"), "utf8"), new RegExp(`FOLIO_VERSION = "${snapshot.replaceAll(".", "\\.")}"`));
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 });
