@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "echelon-print-components",
-  "nextSeq": 14,
+  "nextSeq": 15,
   "items": [
     {
       "id": "GH-3",
@@ -640,6 +640,27 @@
       "attachments": [],
       "createdAt": "2026-11-25T20:43:28.814Z",
       "updatedAt": "2026-11-25T20:55:24Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0014",
+      "title": "Upgrade to echelon-current 1.43.0 (Praxis 3.26.0)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-11-26T00:22:20.648Z",
+      "updatedAt": "2026-11-26T00:22:24Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
