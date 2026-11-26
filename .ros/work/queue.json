@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "echelon-print-components",
-  "nextSeq": 15,
+  "nextSeq": 16,
   "items": [
     {
       "id": "GH-3",
@@ -661,6 +661,27 @@
       "attachments": [],
       "createdAt": "2026-11-26T00:22:20.648Z",
       "updatedAt": "2026-11-26T00:26:51Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0015",
+      "title": "Fix publish CI: pin runner to ubuntu-24.04 (Ghostscript 10.06 drift) and skip stable release cleanly when an existing GitHub release has different bytes",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-11-26T03:13:02.018Z",
+      "updatedAt": "2026-11-26T03:13:08Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
