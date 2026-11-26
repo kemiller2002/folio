@@ -17,7 +17,13 @@ concurrency:
 jobs:
   publish:
     if: github.repository == 'kemiller2002/folio'
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest, for the same reason as print-experiments (WI-0013):
+    # `npm test` runs the grayscale-PDF text oracle over Ghostscript pdfwrite output.
+    # ubuntu-latest became ubuntu-26.04 (Ghostscript 10.06) around 2026-10-22, and
+    # 10.06 detaches ligature glyphs ("fi", "ff") from their words, so "Fulfilment"
+    # extracts as "Ful fi lment". Ghostscript 10.02 (ubuntu-24.04) preserves them.
+    # Move this pin deliberately, with a re-verified oracle, not by image drift (WI-0015).
+    runs-on: ubuntu-24.04
     env:
       NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_BOOTSTRAP || secrets.NPM_AUTH_TOKEN || secrets.NPM_TOKEN || secrets.NODE_AUTH_TOKEN }}
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
@@ -59,6 +65,8 @@ jobs:
 
       - name: Prepare stable package bytes
         id: stable
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
@@ -90,8 +98,20 @@ jobs:
               echo "::warning title=Stable version needs bump::$package_name@$package_version already exists on npm with different bytes. Registry stable publication is intentionally skipped until package.json is bumped."
             fi
           else
-            echo "publish=true" >> "$GITHUB_OUTPUT"
-            echo "eligible=true" >> "$GITHUB_OUTPUT"
+            # Not on npm. A GitHub release of this version may still exist (npm
+            # publication is optional); its bytes are immutable, so packaged
+            # changes without a version bump must not be published under it.
+            tag="v$package_version"
+            release_sums="$(mktemp -d)"
+            if gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern checksums.txt --dir "$release_sums" >/dev/null 2>&1 \
+              && ! grep -q "^$current_sha " "$release_sums/checksums.txt"; then
+              echo "publish=false" >> "$GITHUB_OUTPUT"
+              echo "eligible=false" >> "$GITHUB_OUTPUT"
+              echo "::warning title=Stable version needs bump::GitHub release $tag already exists with different package bytes. Stable publication is intentionally skipped until package.json is bumped."
+            else
+              echo "publish=true" >> "$GITHUB_OUTPUT"
+              echo "eligible=true" >> "$GITHUB_OUTPUT"
+            fi
           fi
 
       - name: Create stable checksums
