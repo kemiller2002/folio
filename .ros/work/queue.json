@@ -699,10 +699,10 @@
       "description": null,
       "tags": [],
       "priority": "medium",
-      "status": "ready",
+      "status": "complete",
       "attachments": [],
       "createdAt": "2026-11-26T04:20:39.787Z",
-      "updatedAt": "2026-11-26T04:20:52Z",
+      "updatedAt": "2026-11-26T04:26:15Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

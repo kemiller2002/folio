@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-11-26T04:20:53Z",
+  "updatedAt": "2026-11-26T04:26:15Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -1453,10 +1453,19 @@
     {
       "id": "WI-0016",
       "type": "task",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-11-26T04:20:53Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "package.json"
+        },
+        {
+          "type": "tests",
+          "path": "tests/runtime-version.test.mjs"
+        }
+      ],
+      "updatedAt": "2026-11-26T04:26:15Z",
       "telemetryExecutionIds": [
         "EXE-20261126T042054173Z-fce5ddbe"
       ],
@@ -1479,7 +1488,8 @@
           "status": "verified",
           "mechanism": "git-remote-observation"
         }
-      }
+      },
+      "completedAt": "2026-11-26T04:26:15Z"
     }
   ]
 }
