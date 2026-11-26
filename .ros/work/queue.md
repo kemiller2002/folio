@@ -43,4 +43,4 @@
 | WI-0012 | Upgrade to echelon-current 1.42.0 (praxis 3.7.2 -> 3.25.0, ordo 1.5.0 -> 1.20.0, limen 0.9.0 -> 0.9.1) | complete |  | medium |
 | WI-0013 | Fix print-experiments CI failure: ubuntu-latest moved to 26.04 (Ghostscript 10.06) and grayscale PDF text extraction regressed; pin the job's runner | complete |  | medium |
 | WI-0014 | Upgrade to echelon-current 1.43.0 (Praxis 3.26.0) | complete |  | medium |
-| WI-0015 | Fix publish CI: pin runner to ubuntu-24.04 (Ghostscript 10.06 drift) and skip stable release cleanly when an existing GitHub release has different bytes | ready |  | medium |
+| WI-0015 | Fix publish CI: pin runner to ubuntu-24.04 (Ghostscript 10.06 drift) and skip stable release cleanly when an existing GitHub release has different bytes | complete |  | medium |

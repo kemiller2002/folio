@@ -4,7 +4,7 @@
   "repository": "echelon-print-components",
   "actor": "claude-code",
   "startedAt": "2026-09-22T01:08:47.354Z",
-  "updatedAt": "2026-11-26T03:13:08Z",
+  "updatedAt": "2026-11-26T03:14:17Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -1412,13 +1412,43 @@
     {
       "id": "WI-0015",
       "type": "task",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-11-26T03:13:08Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": ".github/workflows/publish.yml"
+        },
+        {
+          "type": "tests",
+          "path": "tests/run-diagram-projection-tests.mjs"
+        }
+      ],
+      "updatedAt": "2026-11-26T03:14:17Z",
       "telemetryExecutionIds": [
         "EXE-20261126T031312392Z-ebc0b63a"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "87f87f778498e9f5f73f8b01",
+        "recordedAt": "2026-11-26T03:14:16Z",
+        "executionId": "EXE-20261126T031312392Z-ebc0b63a",
+        "repository": "echelon-print-components",
+        "branch": "claude/vigila-implementation-jdeps1",
+        "commit": "9d057e86dc2e4d6b5af28b2246219cbbc709650d",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/folio"
+        },
+        "remoteBranch": "claude/vigila-implementation-jdeps1",
+        "remoteCommit": "9d057e86dc2e4d6b5af28b2246219cbbc709650d",
+        "summary": "publish.yml pinned to ubuntu-24.04 and stable eligibility checks existing GitHub release bytes; committed and pushed",
+        "nextAction": "complete WI-0015, open draft PR",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-26T03:14:17Z"
     }
   ]
 }

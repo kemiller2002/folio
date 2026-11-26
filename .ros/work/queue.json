@@ -678,10 +678,10 @@
       "description": null,
       "tags": [],
       "priority": "medium",
-      "status": "ready",
+      "status": "complete",
       "attachments": [],
       "createdAt": "2026-11-26T03:13:02.018Z",
-      "updatedAt": "2026-11-26T03:13:08Z",
+      "updatedAt": "2026-11-26T03:14:17Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
